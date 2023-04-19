@@ -8,7 +8,7 @@ import arxiv
 import itertools as it
 
 
-def parse_items(items, tag, categories=None, max_age=200):
+def parse_items(items, tag, categories=None, max_age=2):
     for result in items.results():
         if categories:
             print(list(it.product(categories, result.categories)))
@@ -40,7 +40,7 @@ def main():
         for query in section["queries"]:
             items = arxiv.Search(
                 query=query["query"],
-                max_results=int(300),
+                max_results=int(10),
                 sort_by=arxiv.SortCriterion.SubmittedDate,
             )
             parsed = list(
