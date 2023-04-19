@@ -3,17 +3,31 @@ n: 12
 threshold: 0.7
 sections:
   - name: "Prompt Engineering"
+    instructions: |
+      This tag represents arxiv articles that discuss prompt engineering.
+      When annotating, it's important that the sentence in question clearly confirms,
+      without a doubt, that the article is about prompt engineering. It can include 
+      comparisons between prompt engineering and ML, but general articles about large
+      language models that don't discuss the design of the prompt is not of interest.
     tag: "prompt-eng"
     queries:
       - query: "prompt AND engineering"
       - query: "chatgpt"
     threshold: 0.7
   - name: "New Datasets"
+    instructions: | 
+      This tag represents arxiv articles that discuss the release of a new dataset. 
+      When annotating, it's important that the sentence in question clearly confirms,
+      without a doubt, that the article is about a new dataset or corpus. New benchmarks
+      on a existing dataset are not of interest.
     tag: "new-dataset"
     threshold: 0.7
     queries:
       - query: "dataset OR corpus OR database"
   - name: "Data Quality"
+    instructions: |
+      This tag represents arxiv articles that discuss data quality issues in existing 
+      dataset.
     tag: "data-quality"
     queries:
       - query: "label AND error"
