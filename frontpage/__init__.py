@@ -65,7 +65,7 @@ class Frontpage:
         for tag in self.tags:
             msg.text(f"Setting up index for tag: {tag}", color="cyan")
             stream = srsly.read_jsonl(RAW_CONTENT_FILE)
-            stream = (ex["text"] for ex in self.to_sentence_examples(stream, nlp=nlp, tag=tag))
+            stream = (ex["text"] for ex in self.to_sentence_examples(stream, tag=tag))
             create_index(list(stream), self.encoder, path=Path("indices") / tag)
 
     def preprocess(self):
@@ -76,7 +76,7 @@ class Frontpage:
         msg.text("Created raw/content.jsonl file.", color="cyan")
         self.index()
 
-    def run_questionaire(self):
+    def annotate(self):
         results = {}
         results["label"] = questionary.select(
             "Which label do you want to annotate?",
@@ -107,10 +107,6 @@ class Frontpage:
         ctrl_data = arxiv_sentence(results['label'], results['tactic'], results['setting'])
         controller = Controller.from_components("textcat.arxiv.sentence", ctrl_data)
         server(controller, controller.config)
-
-    def annotate(self):
-        results = self.run_questionaire()
-        print(results)
 
     def show_annot_stats(self):
         """Show the annotation statistics."""

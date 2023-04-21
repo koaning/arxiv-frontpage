@@ -23,5 +23,11 @@ def annotate():
     fp.annotate()
 
 
+@cli.command("train")
+def train():
+    """Trains a new model on the data."""
+    fp.train()
+
+
 if __name__ == "__main__":
     cli.run()
