@@ -1,10 +1,7 @@
-import srsly
 import numpy as np
-from embetter.text import SentenceEncoder
 from sklearn.linear_model import LogisticRegression
 from wasabi import Printer
-from prodigy.components.db import connect
-from icepickle.linear_model import save_coefficients, load_coefficients
+from skops.io import dump, load
 from pathlib import Path
 
 msg = Printer() 
@@ -39,15 +36,13 @@ class SentenceModel:
 
     def to_disk(self, path):
         for name, clf in self._models.items():
-            save_coefficients(clf, Path(path) / f"{name}.h5")
+            dump(clf, Path(path) / f"{name}.h5")
 
     @classmethod
     def from_disk(cls, path, encoder):
         models = {}
         for f in Path(path).glob("*.h5"):
-            clf_reloaded = LogisticRegression()
-            load_coefficients(clf_reloaded, f)
-            models[f.stem] = clf_reloaded
+            models[f.stem] = load(f, trusted=True)
 
         model = SentenceModel(encoder=encoder, tasks=models.keys())
         model._models = models
