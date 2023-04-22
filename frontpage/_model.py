@@ -14,7 +14,7 @@ class SentenceModel:
     def __init__(self, encoder, tasks):
         self._encoder = encoder
         self._tasks = tasks
-        self._models = {k: LogisticRegression() for k in self._tasks}
+        self._models = {k: LogisticRegression(class_weight="balanced") for k in self._tasks}
 
     def update(self, examples):
         X = self._encoder.transform([ex["text"] for ex in examples])

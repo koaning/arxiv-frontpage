@@ -11,6 +11,7 @@ from ._download import main as _download
 msg = Printer()
 
 RAW_CONTENT_FILE = "raw/content.jsonl"
+TRAINED_FOLDER_FOLDER = "training"
 
 def dedup_stream(stream):
     uniq = {}
@@ -46,6 +47,11 @@ class Frontpage:
     def nlp(self):
         import spacy
         return spacy.load("en_core_web_sm")
+
+    @cached_property
+    def model(self):
+        from ._model import SentenceModel
+        return SentenceModel.from_disk(TRAINED_FOLDER_FOLDER, encoder=self.encoder)
 
     def to_sentence_examples(self, stream, tag):
         for ex in stream:
@@ -137,11 +143,11 @@ class Frontpage:
         tasks = [s["tag"] for s in self.sections if s["tag"] in db.datasets]
         model = SentenceModel(encoder=self.encoder, tasks=tasks)
         model.update(train_data)
-        model.to_disk("training")
+        model.to_disk(TRAINED_FOLDER_FOLDER)
         # print(model("download my stuff from github yo"))
-        # loaded = SentenceModel.from_disk("training", encoder=SentenceEncoder())
+        # loaded = SentenceModel.from_disk(TRAINED_FOLDER_FOLDER, encoder=SentenceEncoder())
         # print(loaded("download my stuff from github yo"))
-
+    
     def evaluate(self):
         ...
 

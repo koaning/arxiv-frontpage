@@ -29,5 +29,18 @@ def train():
     fp.train()
 
 
+@cli.command("explore")
+def explore():
+    """explores a model."""
+    import questionary
+
+    while True:
+        mod = fp.model
+        sent = questionary.text(
+            "Got a sentence?",
+        ).ask()
+        print(mod(sent))
+
+
 if __name__ == "__main__":
     cli.run()
