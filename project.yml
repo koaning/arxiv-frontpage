@@ -46,6 +46,11 @@ commands:
       - ptc datasets export 74e149a1-6fad-4a03-b4e0-f056cfe16ce1 --output annot/prompt-eng.jsonl
       - ptc datasets export 19293796-5755-4ad5-a728-23dec2f95a1c --output annot/new-dataset.jsonl
       - ptc datasets export 8aa23d32-35fd-40d6-83b6-d43a6518484f --output annot/data-quality.jsonl
+  - name: upload-annot
+    help: "Upload annotations to wandb as an artifact"
+    script:
+      - wandb init --project frontpage
+      - wandb artifact put annot --name "frontpage-annotations"
 
 workflows:
   fetch:
