@@ -30,10 +30,9 @@ def parse_items(items, tag, categories=None, max_age=2):
             yield content
 
 
-def main():
+def main(config):
     """Fetch data from arxiv."""
     msg = Printer()
-    config = srsly.read_yaml("config.yml")
     downloaded = []
     for section in config["sections"]:
         msg.text(f"Downloading data for {section['name']}", color="cyan")
@@ -58,4 +57,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    config = srsly.read_yaml("config.yml")
+    main(config)
