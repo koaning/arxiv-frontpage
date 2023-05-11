@@ -29,6 +29,11 @@ def train():
     fp.train()
 
 
+@cli.command("ptc-gen")
+def generate():
+    """Creates scripts for Prodigy Teams"""
+    fp.teams_create()
+
 @cli.command("explore")
 def explore():
     """explores a model."""

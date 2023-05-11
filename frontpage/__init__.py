@@ -1,3 +1,4 @@
+import json 
 import itertools as it
 from pathlib import Path
 from functools import cached_property
@@ -64,6 +65,15 @@ class Frontpage:
     def raw_content_stream(self):
         return srsly.read_jsonl(RAW_CONTENT_FILE)
 
+    def tag_content_stream(self, tag):
+        assert tag in self.tags
+        glob = Path("downloads").glob("**/*.jsonl")
+        full_data = it.chain(*list(srsly.read_jsonl(file) for file in glob))
+        return (item for item in dedup_stream(full_data) if item['meta']['tag'] == tag)
+
+    def tag_content_path(self, tag):
+        return Path("raw") / f"{tag}.jsonl"
+
     def index(self):
         """Index annotation examples for quick annotation."""
         from simsity import create_index
@@ -74,13 +84,43 @@ class Frontpage:
             stream = (ex["text"] for ex in self.to_sentence_examples(stream, tag=tag))
             create_index(list(stream), self.encoder, path=Path("indices") / tag)
 
-    def preprocess(self):
+    def preprocess(self, index=False):
         glob = Path("downloads").glob("**/*.jsonl")
         full_data = it.chain(*list(srsly.read_jsonl(file) for file in glob))
         stream = (item for item in dedup_stream(full_data))
         srsly.write_jsonl(RAW_CONTENT_FILE, stream)
         msg.text("Created raw/content.jsonl file.", color="cyan")
-        self.index()
+        for tag in self.tags:
+            stream = self.tag_content_stream(tag)
+            srsly.write_jsonl(self.tag_content_path(tag) , self.to_sentence_examples(stream, tag=tag))
+            msg.text(f"Created {self.tag_content_path(tag)} file.", color="cyan")
+        if index:
+            self.index()
+    
+    def teams_create(self):
+        for section in self.sections:
+            stream_file = f"raw/{section['tag']}.jsonl"
+            cloud_path_prefix = "{assets}/vdw/"
+            asset_name = '"' + str(section['name']) + '"'
+            asset_cmd = "ptc assets create "
+            asset_cmd += asset_name + " "
+            asset_cmd += cloud_path_prefix + stream_file + " "
+            meta = {"loader": "jsonl"}
+            asset_cmd += "--kind input --meta " + f"'{json.dumps(meta)}'"
+            print(asset_cmd)
+            
+            file_cmd = "ptc files cp -r "
+            file_cmd += f"{stream_file} "
+            file_cmd += f"{cloud_path_prefix}/{stream_file} --make-dirs --overwrite"
+            print(file_cmd)
+
+            task_cmd = "ptc tasks create textcat "
+            task_cmd += f"frontpage-{section['tag']} "
+            task_cmd += f"--dataset frontpage-{section['tag']} "
+            task_cmd += f"--input {asset_name} --label {section['tag']} "
+            print(task_cmd)
+            print(" ")
+            # f372f8bc-f4a4-47b2-b055-44e7723a01bc
 
     def annotate(self):
         results = {}
