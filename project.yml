@@ -25,16 +25,15 @@ commands:
   - name: "download"
     help: "Download data from sources."
     script:
-      - python scripts/download.py
+      - python -m frontpage download
     deps:
-      - scripts/download.py
+      - frontpage/_download.py
     outputs:
       - downloads
   - name: "preprocess"
     help: "Process data into Prodigy format."
     script:
-      - python scripts/preprocess.py downloads ${vars.annot_stream}
-      - python -m prodigy textcat.index -F recipes/recipe.py
+      - python -m frontpage preprocess
     deps:
       - downloads
       - scripts/preprocess.py
