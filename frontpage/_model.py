@@ -31,9 +31,6 @@ class SentenceModel:
             result[task] = float(proba)
         return result
 
-    def performance(self, valid_examples):
-        pass
-
     def to_disk(self, path):
         for name, clf in self._models.items():
             dump(clf, Path(path) / f"{name}.h5")
