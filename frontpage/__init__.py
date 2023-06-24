@@ -48,7 +48,7 @@ class Frontpage:
     @cached_property
     def nlp(self):
         import spacy
-        return spacy.load("en_core_web_sm", disable=["ner", "lemmatizer"])
+        return spacy.load("en_core_web_sm", disable=["ner", "lemmatizer", "tagger"])
 
     @cached_property
     def model(self):
@@ -80,11 +80,12 @@ class Frontpage:
 
         for tag in self.tags:
             msg.text(f"Setting up index for tag: {tag}", color="cyan")
-            stream = srsly.read_jsonl(RAW_CONTENT_FILE)
-            stream = (ex["text"] for ex in self.to_sentence_examples(stream, tag=tag))
+            stream = (read_jsonl(self.tag_content_path(tag))
+                      .progress()
+                      .map(lambda d: d['text']))
             create_index(list(stream), self.encoder, path=Path("indices") / tag)
 
-    def preprocess(self, index=False):
+    def preprocess(self, index=True):
         glob = Path("downloads").glob("**/*.jsonl")
         msg.text("Generating raw/content.jsonl file.", color="cyan")
         full_stream = it.chain(*(srsly.read_jsonl(file) for file in glob))

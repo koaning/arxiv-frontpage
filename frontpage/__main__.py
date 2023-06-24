@@ -17,6 +17,12 @@ def preprocess():
     fp.preprocess()
 
 
+@cli.command("index")
+def index():
+    """Create indices to aid with data annotation."""
+    fp.index()
+
+
 @cli.command("annotate")
 def annotate():
     """Annotate new examples."""
