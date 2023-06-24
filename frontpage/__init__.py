@@ -6,6 +6,7 @@ from functools import cached_property
 import srsly
 import questionary
 from wasabi import Printer
+from lazylines import LazyLines, read_jsonl
 
 from ._download import main as _download
 
@@ -47,7 +48,7 @@ class Frontpage:
     @cached_property
     def nlp(self):
         import spacy
-        return spacy.load("en_core_web_sm")
+        return spacy.load("en_core_web_sm", disable=["ner", "lemmatizer"])
 
     @cached_property
     def model(self):
@@ -56,11 +57,10 @@ class Frontpage:
 
     def to_sentence_examples(self, stream, tag):
         for ex in stream:
-            if ex["meta"]["tag"] == tag:
-                base = {"meta": ex["meta"], "label": tag}
-                yield {"text": ex["title"], **base}
-                for sent in self.nlp(ex["abstract"]).sents:
-                    yield {"text": sent.text, **base}
+            base = {"meta": ex["meta"], "label": tag}
+            yield {"text": ex["title"], **base}
+            for sent in self.nlp(ex["abstract"]).sents:
+                yield {"text": sent.text, **base}
 
     def raw_content_stream(self):
         return srsly.read_jsonl(RAW_CONTENT_FILE)
@@ -86,14 +86,17 @@ class Frontpage:
 
     def preprocess(self, index=False):
         glob = Path("downloads").glob("**/*.jsonl")
-        full_data = it.chain(*list(srsly.read_jsonl(file) for file in glob))
-        stream = (item for item in dedup_stream(full_data))
+        msg.text("Generating raw/content.jsonl file.", color="cyan")
+        full_stream = it.chain(*(srsly.read_jsonl(file) for file in glob))
+        stream = LazyLines(full_stream).progress().pipe(dedup_stream)
         srsly.write_jsonl(RAW_CONTENT_FILE, stream)
-        msg.text("Created raw/content.jsonl file.", color="cyan")
         for tag in self.tags:
-            stream = self.tag_content_stream(tag)
-            srsly.write_jsonl(self.tag_content_path(tag) , self.to_sentence_examples(stream, tag=tag))
-            msg.text(f"Created {self.tag_content_path(tag)} file.", color="cyan")
+            msg.text(f"Generating data for {tag}.", color="cyan")
+            stream = (read_jsonl(RAW_CONTENT_FILE)
+                      .progress()
+                      .keep(lambda d: d['meta']['tag'] == tag)
+                      .pipe(self.to_sentence_examples, tag=tag))
+            srsly.write_jsonl(self.tag_content_path(tag), stream)
         if index:
             self.index()
     
