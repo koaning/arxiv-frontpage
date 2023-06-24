@@ -3,7 +3,6 @@ from sklearn.linear_model import LogisticRegression
 from wasabi import Printer
 from skops.io import dump, load
 from pathlib import Path
-
 msg = Printer() 
 
 

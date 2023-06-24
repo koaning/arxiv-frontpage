@@ -7,6 +7,7 @@ import srsly
 import questionary
 from wasabi import Printer
 from lazylines import LazyLines, read_jsonl
+from embetter.utils import cached
 
 from ._download import main as _download
 
@@ -43,7 +44,9 @@ class Frontpage:
     @cached_property
     def encoder(self):
         from embetter.text import SentenceEncoder
-        return SentenceEncoder()
+        encoder = SentenceEncoder()
+        encoder = cached(f"cache/{str(type(encoder))}", encoder)
+        return encoder
 
     @cached_property
     def nlp(self):
@@ -79,22 +82,21 @@ class Frontpage:
         from simsity import create_index
 
         for tag in self.tags:
-            msg.text(f"Setting up index for tag: {tag}", color="cyan")
             stream = (read_jsonl(self.tag_content_path(tag))
-                      .progress()
+                      .progress(f"Encoding examples for tag: {tag}")
                       .map(lambda d: d['text']))
-            create_index(list(stream), self.encoder, path=Path("indices") / tag)
+            create_index(list(stream), self.encoder, path=Path("indices") / tag, pbar=False)
 
     def preprocess(self, index=True):
         glob = Path("downloads").glob("**/*.jsonl")
-        msg.text("Generating raw/content.jsonl file.", color="cyan")
         full_stream = it.chain(*(srsly.read_jsonl(file) for file in glob))
-        stream = LazyLines(full_stream).progress().pipe(dedup_stream)
+        stream = (LazyLines(full_stream)
+                  .progress(desc="Generating raw/content.jsonl file.")
+                  .pipe(dedup_stream))
         srsly.write_jsonl(RAW_CONTENT_FILE, stream)
         for tag in self.tags:
-            msg.text(f"Generating data for {tag}.", color="cyan")
             stream = (read_jsonl(RAW_CONTENT_FILE)
-                      .progress()
+                      .progress(desc=f"Generating data for {tag}.")
                       .keep(lambda d: d['meta']['tag'] == tag)
                       .pipe(self.to_sentence_examples, tag=tag))
             srsly.write_jsonl(self.tag_content_path(tag), stream)
@@ -147,7 +149,7 @@ class Frontpage:
         if results["tactic"] == "active-learning":
             results["setting"] = questionary.select(
                 "What should the active learning method prefer?",
-                choices=["uncertainty", "positive class", "negative class"],
+                choices=["positive class", "uncertainty", "negative class"],
             ).ask()
 
         from .recipe import arxiv_sentence

@@ -1,9 +1,11 @@
+import random 
 from pathlib import Path 
 
 
 import prodigy
 from wasabi import Printer
 from frontpage import Frontpage
+from prodigy import set_hashes
 
 msg = Printer()
 
@@ -13,33 +15,44 @@ fp = Frontpage.from_config_file("config.yml")
 
 def get_stream_index(label:str, setting:str):
     from simsity import load_index
-    from prodigy import set_hashes
     idx = load_index(Path("indices") / label, encoder=fp.encoder)
-    for txt in idx.query(setting, n=150)[0]:
+    texts, scores = idx.query(setting, n=150)
+    for txt, score in zip(texts, scores):
         example = {"text": txt}
-        yield set_hashes(example)
+        example = set_hashes(example)
+        example["meta"] = {"score": score}
+        yield example
 
 
 def get_stream_random(label: str):
     stream = fp.raw_content_stream()
-    return fp.to_sentence_examples(stream, tag=label)
+    return (ex for ex in fp.to_sentence_examples(stream, tag=label) if random.random() < 0.05)
 
 
 def get_stream_active_learn(label: str, setting:str):
     from ._model import SentenceModel
     from prodigy.components.sorters import prefer_uncertain, prefer_high_scores, prefer_low_scores
 
-    stream = fp.raw_content_stream()
+    stream = fp.tag_content_stream(tag=label)
     stream = fp.to_sentence_examples(stream, tag=label)
-    ex = next(stream)
     model = SentenceModel.from_disk("training", encoder=fp.encoder)
-    scored_stream = ((model(ex['text'])[label], ex) for ex in stream)
+    
+    def make_scored_stream(stream, model):
+        for ex in stream: 
+            ex = set_hashes(ex)
+            score = model(ex['text'])[label]
+            if 'meta' not in ex:
+                ex['meta'] = {}
+            ex['meta']['score'] = score
+            yield score, ex 
+        
+    scored_stream = make_scored_stream(stream, model)
     if setting == "uncertainty":
         return prefer_uncertain(scored_stream)
     if setting == "positive class":
-        return prefer_high_scores(scored_stream)
+        return prefer_high_scores(((s, ex) for s, ex in scored_stream if s > 0.5))
     if setting == "negative class":
-        return prefer_low_scores(scored_stream)
+        return prefer_low_scores(((s, ex) for s, ex in scored_stream if s < 0.5))
 
 
 @prodigy.recipe("textcat.arxiv.sentence",
