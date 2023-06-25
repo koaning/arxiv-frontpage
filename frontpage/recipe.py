@@ -16,22 +16,22 @@ fp = Frontpage.from_config_file("config.yml")
 def get_stream_index(label:str, setting:str):
     from simsity import load_index
     idx = load_index(Path("indices") / label, encoder=fp.encoder)
-    texts, scores = idx.query(setting, n=150)
+    print(setting)
+    texts, scores = idx.query([setting], n=150)
     for txt, score in zip(texts, scores):
         example = {"text": txt}
-        example = set_hashes(example)
-        example["meta"] = {"score": score}
+        example["meta"] = {"score": float(score)}
         yield example
 
 
 def get_stream_random(label: str):
-    stream = fp.raw_content_stream()
+    stream = fp.tag_content_stream(tag=label)
     return (ex for ex in fp.to_sentence_examples(stream, tag=label) if random.random() < 0.05)
 
 
 def get_stream_active_learn(label: str, setting:str):
     from ._model import SentenceModel
-    from prodigy.components.sorters import prefer_uncertain, prefer_high_scores, prefer_low_scores
+    from prodigy.components.sorters import prefer_uncertain
 
     stream = fp.tag_content_stream(tag=label)
     stream = fp.to_sentence_examples(stream, tag=label)
@@ -50,9 +50,9 @@ def get_stream_active_learn(label: str, setting:str):
     if setting == "uncertainty":
         return prefer_uncertain(scored_stream)
     if setting == "positive class":
-        return prefer_high_scores(((s, ex) for s, ex in scored_stream if s > 0.5))
+        return ((s, ex) for s, ex in scored_stream if s > 0.5)
     if setting == "negative class":
-        return prefer_low_scores(((s, ex) for s, ex in scored_stream if s < 0.5))
+        return ((s, ex) for s, ex in scored_stream if s < 0.5)
 
 
 @prodigy.recipe("textcat.arxiv.sentence",
@@ -76,6 +76,6 @@ def arxiv_sentence(label, tactic, setting):
     
     return {
         "dataset": label,
-        "stream": ({**ex, "label": label} for ex in stream),
+        "stream": (set_hashes({**ex, "label": label}) for ex in stream),
         "view_id": "classification",
     }

@@ -1,4 +1,4 @@
-from radicli import Radicli, Arg
+from radicli import Radicli
 from . import Frontpage
 
 cli = Radicli()
@@ -35,10 +35,23 @@ def train():
     fp.train()
 
 
+@cli.command("stats")
+def stats():
+    """Show annotation stats"""
+    fp.show_annot_stats()
+
+
+@cli.command("build")
+def build():
+    """Build a new site"""
+    fp.build()
+
+
 @cli.command("ptc-gen")
 def generate():
     """Creates scripts for Prodigy Teams"""
     fp.teams_create()
+
 
 @cli.command("explore")
 def explore():

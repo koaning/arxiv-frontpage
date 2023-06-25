@@ -1,5 +1,4 @@
 import datetime as dt
-from datetime import date
 from pathlib import Path
 
 from wasabi import Printer

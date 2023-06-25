@@ -126,7 +126,6 @@ class Frontpage:
             task_cmd += f"--input {asset_name} --label {section['tag']} "
             print(task_cmd)
             print(" ")
-            # f372f8bc-f4a4-47b2-b055-44e7723a01bc
 
     def annotate(self):
         results = {}
@@ -162,37 +161,59 @@ class Frontpage:
 
     def show_annot_stats(self):
         """Show the annotation statistics."""
-        pass
+        data = {}
+        for tag in self.tags:
+            if tag in self.db.datasets:
+                examples = self.db.get_dataset_examples(tag)
+                data[tag] = [
+                    tag,
+                    sum(1 for ex in examples if ex['answer'] == 'accept'),
+                    sum(1 for ex in examples if ex['answer'] == 'ignore'),
+                    sum(1 for ex in examples if ex['answer'] == 'reject')
+                ]
+        msg.table(data.values(), 
+                  header=["label", "accept", "ignore", "reject"], 
+                  divider=True, 
+                  aligns="r,r,r,r".split(","))
 
     def gridsearch(self):
         """Show the annotation statistics."""
         pass
 
-    def train(self):
-        from ._model import SentenceModel
+    @cached_property
+    def db(self):
         from prodigy.components.db import connect
         
         db = connect()
+        return db
+
+    def train(self):
+        from ._model import SentenceModel
 
         train_data = {}
+        found_tags = []
         for tag in self.tags:
-            if tag in db.datasets:
-                for ex in db.get_dataset_examples(tag):
-                    if ex["answer"] != "ignore":
-                        h = ex["_input_hash"]
-                        if h not in train_data:
-                            train_data[h] = {"text": ex["text"]}
-                        train_data[h][tag] = int(ex["answer"] == "accept")
+            if tag in self.db.datasets:
+                if len(self.db.get_dataset_examples(tag)) == 0:
+                    msg.warn(f"Skipping training for {tag}. No training examples.")
+                else:
+                    msg.info(f"Preparing data for {tag}.")
+                    found_tags.append(tag)
+                    for ex in self.db.get_dataset_examples(tag):
+                        if ex["answer"] != "ignore":
+                            h = ex["_input_hash"]
+                            if h not in train_data:
+                                train_data[h] = {"text": ex["text"]}
+                            train_data[h][tag] = int(ex["answer"] == "accept")
 
         train_data = train_data.values()
 
-        tasks = [s["tag"] for s in self.sections if s["tag"] in db.datasets]
-        model = SentenceModel(encoder=self.encoder, tasks=tasks)
+        model = SentenceModel(encoder=self.encoder, tasks=found_tags)
         model.update(train_data)
         model.to_disk(TRAINED_FOLDER_FOLDER)
-        # print(model("download my stuff from github yo"))
-        # loaded = SentenceModel.from_disk(TRAINED_FOLDER_FOLDER, encoder=SentenceEncoder())
-        # print(loaded("download my stuff from github yo"))
+    
+    def build(self):
+        (read_jsonl(RAW_CONTENT_FILE).mutate(timestamp=lambda d: d["created_at"]))
     
     def evaluate(self):
         ...
