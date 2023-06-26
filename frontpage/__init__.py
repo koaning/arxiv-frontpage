@@ -1,7 +1,13 @@
+import jinja2 
+import datetime as dt 
 import json 
 import itertools as it
 from pathlib import Path
 from functools import cached_property
+
+import spacy
+from spacy.tokens import Span
+from spacy.language import Language
 
 import srsly
 import questionary
@@ -15,6 +21,8 @@ msg = Printer()
 
 RAW_CONTENT_FILE = "raw/content.jsonl"
 TRAINED_FOLDER_FOLDER = "training"
+TEMPLATE_PATH = "templates/home.html"
+CONFIG_FILE = "config.yml"
 
 def dedup_stream(stream):
     uniq = {}
@@ -212,8 +220,53 @@ class Frontpage:
         model.update(train_data)
         model.to_disk(TRAINED_FOLDER_FOLDER)
     
+    def fetch_tag_candidates(self, tag:str):
+        from ._model import SentenceModel
+
+        model = SentenceModel.from_disk(TRAINED_FOLDER_FOLDER, encoder=self.encoder)
+        stream = self.tag_content_stream(tag=tag)
+
+        def sentence_classifier(doc):
+            doc.spans["sc"] = []
+            for sent in doc.sents:
+                preds = model(sent.text)
+                for k, p in preds.items():
+                    if p >= 0.6:
+                        doc.spans["sc"].append(Span(doc, sent.start, sent.end, k))
+                        doc.cats[k] = max(doc.cats.get(k, 0.0), p)
+            return doc
+
+        def render_html(doc):
+            text = doc.text
+            for span in doc.spans["sc"]:
+                text = text.replace(span.text, f"<span style='background-color: rgb(254 240 138);'>{span.text}</span>")
+            return f"<p>{text}</p>"
+
+        
+        return (LazyLines(stream)
+            .head(100)
+            .mutate(datetime=lambda d: dt.datetime.fromisoformat(d['created']),
+                    timestamp=lambda d: -dt.datetime.timestamp(d['datetime']))
+            .sort_by("timestamp")
+            .mutate(doc = lambda d: sentence_classifier(self.nlp(d['abstract'])),
+                    cats = lambda d: d['doc'].cats)
+            .keep(lambda d: d['cats'].get(tag, 0.0) > 0.6)
+            .mutate(html=lambda d: render_html(d['doc']),
+                    n_sents=lambda d: len(d['doc'].spans["sc"]))
+            .keep(lambda d: d['n_sents'] == 1)
+            .select("title", "cats", "created", "html")
+            .collect())
+
     def build(self):
-        (read_jsonl(RAW_CONTENT_FILE).mutate(timestamp=lambda d: d["created_at"]))
+        config = srsly.read_yaml(CONFIG_FILE)
+        for section in config['sections']:
+            section["content"] = self.fetch_tag_candidates(tag=section['tag'])
+        from rich import print 
+        print(config)
+        
+        template = jinja2.Template(Path(TEMPLATE_PATH).read_text())
+        Path("site.html").write_text(template.render(sections=config['sections'], today=dt.date.today()))
+
     
     def evaluate(self):
         ...

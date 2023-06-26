@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+  <div class="relative mx-auto h-full max-w-2xl text-md">
+    <table class="table-auto">
+      <tbody>
+        <tr>
+          <td></td>
+          <td>
+            <h1 class="text-6xl pt-4 font-bold"><span class="underline">Your</span> FrontPage</h1>
+            <br>
+            <p>Generated on {{today}}.</p>
+            <p class="text-sm text-gray-500 pt-2">This frontpage is made by scraping arxiv and by runnig a spaCy model that detects if the abstract describes a paper about a new specific topic. Right now we try to find interesting articles about new dataset or about prompt engineering. Many datasets will be about NLP, but typically this also has some computer vision, humanities and physics datasets in the mix too.</p>
+            <br>
+          </td>
+        </tr>
+        {%- for section in sections -%}
+        <tr>
+          <td></td>
+          <td>
+            <h2 class="text-4xl pt-4 font-bold">{{section['name']}}</h2>
+            <span class='px-2 mx-1 bg-yellow-200 text-xs'>tag:{{section['tag']}}</span>
+          </td>
+        </tr>
+        {%- for content in section['content'] -%}
+        <tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>{{content['created']}}</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                {{content['title']}}
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2">
+                  {%- for key in content['cats'] -%}
+                  <span class='text-black px-2 mx-1 bg-blue-200 text-xs'>cls:{{key}}: 0.{{(content['cats'][key] * 1000) | int | round}}</span>
+                  {%- endfor -%}
+                </div>
+                <p class="pt-2">
+                  {{content['html']}}
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='{{content["link"]}}' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr>
+      {%- endfor -%}  
+      {%- endfor -%}
+    </tbody>
+  </table>
+  <br><br>
+</div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.body, {
+      // customised options
+      // • auto-render specific keys, e.g.:
+      delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$', right: '$', display: false},
+      {left: '\\(', right: '\\)', display: false},
+      {left: '\\[', right: '\\]', display: true}
+      ],
+      // • rendering keys, e.g.:
+      throwOnError : false
+    });
+  });
+</script>
+</body>
+</html>
