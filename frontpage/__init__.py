@@ -85,13 +85,13 @@ class Frontpage:
     def raw_content_stream(self):
         return srsly.read_jsonl(RAW_CONTENT_FILE)
 
-    def tag_content_stream(self, tag):
+    def tag_content_stream(self, tag:str):
         assert tag in self.tags
         glob = reversed(list(Path("downloads").glob("**/*.jsonl")))
         full_data = it.chain(*list(srsly.read_jsonl(file) for file in glob))
         return (item for item in dedup_stream(full_data) if item['meta']['tag'] == tag)
 
-    def tag_content_path(self, tag):
+    def tag_content_path(self, tag:str):
         return Path("raw") / f"{tag}.jsonl"
 
     def index(self):
@@ -100,7 +100,7 @@ class Frontpage:
 
         for tag in self.tags:
             stream = (read_jsonl(self.tag_content_path(tag))
-                      .progress(f"Encoding examples for tag: {tag}")
+                      .progress(f"Encoding examples for tag: {tag:>15}")
                       .map(lambda d: d['text']))
             create_index(list(stream), self.encoder, path=Path("indices") / tag, pbar=False)
 
@@ -108,12 +108,11 @@ class Frontpage:
         glob = Path("downloads").glob("**/*.jsonl")
         full_stream = it.chain(*(srsly.read_jsonl(file) for file in glob))
         stream = (LazyLines(full_stream)
-                  .progress(desc="Generating raw/content.jsonl file.")
                   .pipe(dedup_stream))
         srsly.write_jsonl(RAW_CONTENT_FILE, stream)
         for tag in self.tags:
             stream = (read_jsonl(RAW_CONTENT_FILE)
-                      .progress(desc=f"Generating data for {tag}.")
+                      .progress(desc=f"Generating data for {tag:>15}.")
                       .keep(lambda d: d['meta']['tag'] == tag)
                       .pipe(self.to_sentence_examples, tag=tag))
             srsly.write_jsonl(self.tag_content_path(tag), stream)
@@ -281,8 +280,7 @@ class Frontpage:
     def evaluate(self):
         from ._benchmark import benchmark
         annotated, found_tags = self.fetch_annotated_data()
-        for tag in found_tags:
-            benchmark(annotated, tag=tag)
+        benchmark(annotated, tags=["new-dataset", "data-quality"])
 
     def push_wandb(self):
         ...

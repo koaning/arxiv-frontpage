@@ -14,13 +14,7 @@ def download():
 @cli.command("preprocess")
 def preprocess():
     """Preprocess downloaded data for annotation."""
-    fp.preprocess()
-
-
-@cli.command("index")
-def index():
-    """Create indices to aid with data annotation."""
-    fp.index()
+    fp.preprocess(index=True)
 
 
 @cli.command("annotate")
