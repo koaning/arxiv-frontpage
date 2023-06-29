@@ -38,7 +38,7 @@ def main(config):
         for query in section["queries"]:
             items = arxiv.Search(
                 query=query["query"],
-                max_results=int(10),
+                max_results=10,
                 sort_by=arxiv.SortCriterion.SubmittedDate,
             )
             parsed = list(

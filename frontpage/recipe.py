@@ -29,6 +29,12 @@ def get_stream_random(label: str):
     return (ex for ex in fp.to_sentence_examples(stream, tag=label) if random.random() < 0.05)
 
 
+def get_stream_second_opinion(label: str):
+    stream = fp.fetch_tag_candidate_stream(tag=label)
+    stream = (ex for ex in stream if len(ex['doc'].spans) == 1)
+    return (ex for ex in fp.to_sentence_examples(stream, tag=label))
+
+
 def get_stream_active_learn(label: str, setting:str):
     from ._model import SentenceModel
     from prodigy.components.sorters import prefer_uncertain
@@ -41,18 +47,15 @@ def get_stream_active_learn(label: str, setting:str):
         for ex in stream: 
             ex = set_hashes(ex)
             score = model(ex['text'])[label]
-            if 'meta' not in ex:
-                ex['meta'] = {}
-            ex['meta']['score'] = score
             yield score, ex 
         
     scored_stream = make_scored_stream(stream, model)
     if setting == "uncertainty":
         return prefer_uncertain(scored_stream)
     if setting == "positive class":
-        return ((s, ex) for s, ex in scored_stream if s > 0.5)
+        return (ex for s, ex in scored_stream if s > 0.6)
     if setting == "negative class":
-        return ((s, ex) for s, ex in scored_stream if s < 0.5)
+        return (ex for s, ex in scored_stream if s < 0.4)
 
 
 @prodigy.recipe("textcat.arxiv.sentence",
@@ -71,6 +74,9 @@ def arxiv_sentence(label, tactic, setting):
     elif tactic == "active-learning":
         msg.info("Setting up active learning")
         stream = get_stream_active_learn(label, setting)
+    elif tactic == "second-opinion":
+        msg.info("Setting up second opinion")
+        stream = get_stream_second_opinion(label)
     else:
         raise ValueError("This should never happen.")
     

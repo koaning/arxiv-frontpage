@@ -1,5 +1,6 @@
-n: 12
+n: 20
 threshold: 0.7
+encoder: "sbert"
 sections:
   - name: "Prompt Engineering"
     instructions: |
@@ -23,7 +24,7 @@ sections:
     threshold: 0.7
     queries:
       - query: "dataset OR corpus OR database"
-  - name: "Data Quality Issues"
+  - name: "Data Quality in Datasets"
     instructions: |
       This tag represents arxiv articles that discuss data quality issues in existing 
       datasets.
@@ -36,10 +37,12 @@ sections:
     threshold: 0.7
   - name: "Data Annotation"
     instructions: |
-      This tag represents arxiv articles that discuss data annotation.
+      This tag represents arxiv articles that discuss data annotation. 
     tag: "data-annotation"
     queries:
       - query: "data AND annotation"
       - query: "data AND labelling"
       - query: "human in the loop"
+      - query: "annotator disagreement"
+      - query: "LLM AND annotation"
     threshold: 0.7

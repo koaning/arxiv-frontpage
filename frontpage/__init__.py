@@ -1,3 +1,4 @@
+from tqdm.rich import tqdm
 import jinja2 
 import datetime as dt 
 import json 
@@ -5,17 +6,19 @@ import itertools as it
 from pathlib import Path
 from functools import cached_property
 
-import spacy
 from spacy.tokens import Span
-from spacy.language import Language
 
 import srsly
 import questionary
 from wasabi import Printer
 from lazylines import LazyLines, read_jsonl
 from embetter.utils import cached
+import warnings
+from tqdm import TqdmExperimentalWarning
 
-from ._download import main as _download
+warnings.filterwarnings("ignore", category=TqdmExperimentalWarning)
+
+from frontpage._download import main as _download
 
 msg = Printer()
 
@@ -52,7 +55,13 @@ class Frontpage:
     @cached_property
     def encoder(self):
         from embetter.text import SentenceEncoder
-        encoder = SentenceEncoder()
+        from embetter.external import OpenAIEncoder, CohereEncoder
+        if self.config['encoder'] == "sbert":
+            encoder = SentenceEncoder()
+        if self.config['encoder'] == "openai":
+            encoder = OpenAIEncoder()
+        if self.config['encoder'] == "cohere":
+            encoder = CohereEncoder()
         encoder = cached(f"cache/{str(type(encoder))}", encoder)
         return encoder
 
@@ -66,9 +75,9 @@ class Frontpage:
         from ._model import SentenceModel
         return SentenceModel.from_disk(TRAINED_FOLDER_FOLDER, encoder=self.encoder)
 
-    def to_sentence_examples(self, stream, tag):
+    def to_sentence_examples(self, stream, tag:str):
         for ex in stream:
-            base = {"meta": ex["meta"], "label": tag}
+            base = {"meta": ex.get("meta", {}), "label": tag}
             yield {"text": ex["title"], **base}
             for sent in self.nlp(ex["abstract"]).sents:
                 yield {"text": sent.text, **base}
@@ -78,7 +87,7 @@ class Frontpage:
 
     def tag_content_stream(self, tag):
         assert tag in self.tags
-        glob = Path("downloads").glob("**/*.jsonl")
+        glob = reversed(list(Path("downloads").glob("**/*.jsonl")))
         full_data = it.chain(*list(srsly.read_jsonl(file) for file in glob))
         return (item for item in dedup_stream(full_data) if item['meta']['tag'] == tag)
 
@@ -144,7 +153,7 @@ class Frontpage:
 
         results["tactic"] = questionary.select(
             "Which tactic do you want to apply?",
-            choices=["simsity", "random", "active-learning"],
+            choices=["simsity", "random", "active-learning", "second-opinion"],
         ).ask()
 
         results['setting'] = ''
@@ -195,9 +204,7 @@ class Frontpage:
         db = connect()
         return db
 
-    def train(self):
-        from ._model import SentenceModel
-
+    def fetch_annotated_data(self):
         train_data = {}
         found_tags = []
         for tag in self.tags:
@@ -214,17 +221,29 @@ class Frontpage:
                                 train_data[h] = {"text": ex["text"]}
                             train_data[h][tag] = int(ex["answer"] == "accept")
 
-        train_data = train_data.values()
+        return train_data.values(), found_tags
+        
+    
+    def train(self):
+        from ._model import SentenceModel
+
+        annotated_data, found_tags = self.fetch_annotated_data()
 
         model = SentenceModel(encoder=self.encoder, tasks=found_tags)
-        model.update(train_data)
+        model.update(annotated_data)
         model.to_disk(TRAINED_FOLDER_FOLDER)
     
-    def fetch_tag_candidates(self, tag:str):
-        from ._model import SentenceModel
+    def fetch_tag_candidate_stream(self, tag:str):
+        from frontpage._model import SentenceModel
 
         model = SentenceModel.from_disk(TRAINED_FOLDER_FOLDER, encoder=self.encoder)
         stream = self.tag_content_stream(tag=tag)
+
+        def attach_docs(lines, nlp):
+            tuples = ((eg['abstract'], eg) for eg in lines)
+            for doc, eg in nlp.pipe(tuples, as_tuples=True):
+                eg['doc'] = sentence_classifier(doc)
+                yield eg
 
         def sentence_classifier(doc):
             doc.spans["sc"] = []
@@ -242,37 +261,35 @@ class Frontpage:
                 text = text.replace(span.text, f"<span style='background-color: rgb(254 240 138);'>{span.text}</span>")
             return f"<p>{text}</p>"
 
-        
         return (LazyLines(stream)
-            .head(100)
-            .mutate(datetime=lambda d: dt.datetime.fromisoformat(d['created']),
-                    timestamp=lambda d: -dt.datetime.timestamp(d['datetime']))
-            .sort_by("timestamp")
-            .mutate(doc = lambda d: sentence_classifier(self.nlp(d['abstract'])),
-                    cats = lambda d: d['doc'].cats)
+            .pipe(attach_docs, nlp=self.nlp)
+            .mutate(cats = lambda d: d['doc'].cats)
             .keep(lambda d: d['cats'].get(tag, 0.0) > 0.6)
             .mutate(html=lambda d: render_html(d['doc']),
-                    n_sents=lambda d: len(d['doc'].spans["sc"]))
-            .keep(lambda d: d['n_sents'] == 1)
-            .select("title", "cats", "created", "html")
-            .collect())
+                    n_sents=lambda d: len(d['doc'].spans["sc"]),
+                    link=lambda d: d['meta']['link']))
 
     def build(self):
         config = srsly.read_yaml(CONFIG_FILE)
-        for section in config['sections']:
-            section["content"] = self.fetch_tag_candidates(tag=section['tag'])
-        from rich import print 
-        print(config)
+        for section in tqdm(config['sections'], desc="Looping over tags."):
+            section["content"] = self.fetch_tag_candidate_stream(tag=section['tag']).head(20).collect()
         
         template = jinja2.Template(Path(TEMPLATE_PATH).read_text())
         Path("site.html").write_text(template.render(sections=config['sections'], today=dt.date.today()))
 
     
     def evaluate(self):
-        ...
+        from ._benchmark import benchmark
+        annotated, found_tags = self.fetch_annotated_data()
+        for tag in found_tags:
+            benchmark(annotated, tag=tag)
 
     def push_wandb(self):
         ...
 
     def pull_wandb(self):
         ...
+
+
+if __name__ == "__main__":
+    Frontpage(config=srsly.read_yaml("config.yml")).build()
