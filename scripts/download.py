@@ -1,61 +1,53 @@
-import datetime as dt
-from datetime import date
-from pathlib import Path
+import datetime as dt 
 
-from wasabi import Printer
+import tqdm
 import srsly
 import arxiv
-import itertools as it
+from pathlib import Path
+from arxiv import Result
+import spacy
+from spacy.language import Language
+from frontpage._types import ArxivArticle
 
 
-def parse_items(items, tag, categories=None, max_age=200):
-    for result in items.results():
-        if categories:
-            print(list(it.product(categories, result.categories)))
-            if not any(a in b for a, b in it.product(categories, result.categories)):
-                continue
+def total_seconds(res: Result) -> float:
+    """Get total seconds from now from Arxiv result"""
+    now = dt.datetime.now(dt.timezone.utc)
+    return (now - res.published).total_seconds() / 3600 / 24
 
-        created = result.published.date()
-        limit = dt.date.today() - dt.timedelta(days=max_age)
-        if created > limit:
-            content = {
-                "title": result.title,
-                "abstract": str(result.summary).replace("\n", " "),
-                "created": str(created)[:10],
-                "meta": {
-                    "link": result.entry_id,
-                    "tag": tag,
-                },
-            }
-            yield content
+
+def parse(res: Result, nlp: Language) -> ArxivArticle:
+    """Parse proper Pydantic object from Arxiv"""
+    summary = res.summary.replace("\n", " ")
+    doc = nlp(summary)
+    sents = [s.text for s in doc.sents]
+    
+    return ArxivArticle(
+        created=str(res.published)[:19], 
+        title=res.title,
+        abstract=summary,
+        sentences=sents,
+        url=res.entry_id
+    )
 
 
 def main():
-    """Fetch data from arxiv."""
-    msg = Printer()
-    config = srsly.read_yaml("config.yml")
-    downloaded = []
-    for section in config["sections"]:
-        msg.text(f"Downloading data for {section['name']}", color="cyan")
-        for query in section["queries"]:
-            items = arxiv.Search(
-                query=query["query"],
-                max_results=int(300),
-                sort_by=arxiv.SortCriterion.SubmittedDate,
-            )
-            parsed = list(
-                parse_items(
-                    items, categories=query.get("section", None), tag=section["tag"]
-                )
-            )
-            msg.text(f"  Found {len(parsed)} items via `{query['query']}`")
+    nlp = spacy.load("en_core_web_sm", disable=["ner", "lemmatizer", "tagger"])
 
-            downloaded.extend(list(parsed))
+    items = arxiv.Search(
+        query="and",
+        max_results=500,
+        sort_by=arxiv.SortCriterion.SubmittedDate,
+    )
 
-    write_path = Path("downloads") / f"{dt.date.today()}.jsonl"
-    srsly.write_jsonl(write_path, downloaded, append=True, append_new_line=False)
-    msg.good(f"Written {len(downloaded)} results in `{write_path}`.")
+    results = list(items.results())
 
+    articles = [parse(r, nlp=nlp) 
+                for r in tqdm.tqdm(results) 
+                if total_seconds(r) < 2.5 and r.primary_category.startswith("cs")]
+
+    filename = str(dt.datetime.now()).replace(" ", "-")[:13] + "h.jsonl"
+    srsly.write_jsonl(Path("downloads") / filename, [dict(a) for a in articles])
 
 if __name__ == "__main__":
     main()
