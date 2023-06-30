@@ -48,10 +48,6 @@ class Frontpage:
         """Loads from a config file."""
         return cls(config=srsly.read_yaml(path))
 
-    def download(self):
-        """Download new data for today."""
-        _download(self.config)
-
     @cached_property
     def encoder(self):
         from embetter.text import SentenceEncoder

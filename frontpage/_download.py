@@ -48,4 +48,3 @@ def main():
 
     filename = str(dt.datetime.now()).replace(" ", "-")[:13] + "h.jsonl"
     srsly.write_jsonl(Path("downloads") / filename, [dict(a) for a in articles])
-
