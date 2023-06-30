@@ -62,15 +62,16 @@ def benchmark_tag(annot_data, tag, resample=10):
 def benchmark(annot_data, tags):
     results = []
     for tag in tags:
-        results.extend(benchmark_tag(annot_data, tag))
-    df = (pl.DataFrame(results)
-          .groupby(pl.col("tag"), pl.col("enc"), pl.col("mod"))
-          .agg(
-            pl.mean("acc_train"),
-            pl.mean("acc_valid"),
-            pl.mean("precision"),
-            pl.mean("recall"),
-            pl.mean("f1-score"),
-          )
-          .sort("tag", "enc", "mod", descending=True))
-    print(df)
+        new_results = benchmark_tag(annot_data, tag)
+        results.extend(new_results)
+        df = (pl.DataFrame(new_results)
+            .groupby(pl.col("tag"), pl.col("enc"), pl.col("mod"))
+            .agg(
+                pl.mean("acc_train"),
+                pl.mean("acc_valid"),
+                pl.mean("precision"),
+                pl.mean("recall"),
+                pl.mean("f1-score"),
+            )
+            .sort("tag", "enc", "mod", descending=True))
+        print(df)
