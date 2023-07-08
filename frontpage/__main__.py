@@ -3,7 +3,7 @@ from . import Frontpage
 from ._download import main as download_data
 
 cli = Radicli()
-fp = Frontpage.from_config_file("config.yml")
+fp = Frontpage()
 
 
 @cli.command("download")
@@ -12,10 +12,10 @@ def download():
     download_data()
 
 
-@cli.command("preprocess")
+@cli.command("index")
 def preprocess():
     """Preprocess downloaded data for annotation."""
-    fp.preprocess(index=True)
+    fp.index()
 
 
 @cli.command("annotate")

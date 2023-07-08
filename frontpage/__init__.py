@@ -7,57 +7,38 @@ from pathlib import Path
 from functools import cached_property
 
 from spacy.tokens import Span
-
 import srsly
 import questionary
+from lunr import lunr
 from wasabi import Printer
 from lazylines import LazyLines, read_jsonl
 from embetter.utils import cached
 import warnings
 from tqdm import TqdmExperimentalWarning
+from ._pipeline import dedup_stream, add_rownum
 
 warnings.filterwarnings("ignore", category=TqdmExperimentalWarning)
 
-from frontpage._download import main as _download
-
 msg = Printer()
 
-RAW_CONTENT_FILE = "raw/content.jsonl"
 TRAINED_FOLDER_FOLDER = "training"
 TEMPLATE_PATH = "templates/home.html"
 CONFIG_FILE = "config.yml"
 
-def dedup_stream(stream):
-    uniq = {}
-    for ex in stream:
-        uniq[hash(ex["title"])] = ex
-    for ex in uniq.values():
-        yield ex
 
 
 class Frontpage:
     """This is the main object that contains all project verbs."""
 
-    def __init__(self, config):
-        self.config = config
+    def __init__(self):
+        self.config = srsly.read_yaml(CONFIG_FILE)
         self.sections = self.config["sections"]
         self.tags = [s["tag"] for s in self.config["sections"]]
-
-    @classmethod
-    def from_config_file(cls, path):
-        """Loads from a config file."""
-        return cls(config=srsly.read_yaml(path))
 
     @cached_property
     def encoder(self):
         from embetter.text import SentenceEncoder
-        from embetter.external import OpenAIEncoder, CohereEncoder
-        if self.config['encoder'] == "sbert":
-            encoder = SentenceEncoder()
-        if self.config['encoder'] == "openai":
-            encoder = OpenAIEncoder()
-        if self.config['encoder'] == "cohere":
-            encoder = CohereEncoder()
+        encoder = SentenceEncoder()
         encoder = cached(f"cache/{str(type(encoder))}", encoder)
         return encoder
 
@@ -71,90 +52,87 @@ class Frontpage:
         from ._model import SentenceModel
         return SentenceModel.from_disk(TRAINED_FOLDER_FOLDER, encoder=self.encoder)
 
-    def to_sentence_examples(self, stream, tag:str):
-        for ex in stream:
-            base = {"meta": ex.get("meta", {}), "label": tag}
-            yield {"text": ex["title"], **base}
-            for sent in self.nlp(ex["abstract"]).sents:
-                yield {"text": sent.text, **base}
+    def _dataset_name(self, label:str, view:str) -> str:
+        return f"{view}-{label}"
+    
+    def _index_path(self, kind:str, view:str) -> Path:
+        """kind is lunr vs. simsity, view is sentence vs. abstract"""
+        path = Path("indices") / kind / view
+        if kind == "simsity":
+            return path
+        path = Path(f"{path}.json")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        return path
+    
+    @property
+    def _annotation_views(self):
+        return ["sentence", "abstract"]
 
-    def raw_content_stream(self):
-        return srsly.read_jsonl(RAW_CONTENT_FILE)
-
-    def tag_content_stream(self, tag:str):
-        assert tag in self.tags
+    def content_stream(self, view:str):
+        # Fetch all downloaded files, make sure most recent ones come first
         glob = reversed(list(Path("downloads").glob("**/*.jsonl")))
-        full_data = it.chain(*list(srsly.read_jsonl(file) for file in glob))
-        return (item for item in dedup_stream(full_data) if item['meta']['tag'] == tag)
-
-    def tag_content_path(self, tag:str):
-        return Path("raw") / f"{tag}.jsonl"
+        # Make lazy generator for all the items
+        stream = it.chain(*list(srsly.read_jsonl(file) for file in glob))
+        # Generate two streams lazily
+        abstract_stream = ({"text": ex["abstract"], "meta": {"url": ex["url"]}} for ex in stream)
+        sentences_stream = ({"text": sent, "meta": {"url": ex["url"]}} 
+                            for ex in stream for sent in ex['sentences'])
+        return dedup_stream(abstract_stream) if view == "abstract" else dedup_stream(sentences_stream)
 
     def index(self):
         """Index annotation examples for quick annotation."""
         from simsity import create_index
 
-        for tag in self.tags:
-            stream = (read_jsonl(self.tag_content_path(tag))
-                      .progress(f"Encoding examples for tag: {tag:>15}")
-                      .map(lambda d: d['text']))
-            create_index(list(stream), self.encoder, path=Path("indices") / tag, pbar=False)
+        for view in self._annotation_views:
+            msg.info(f"Preparing simsity index for {view}")
+            stream = (LazyLines(self.content_stream(view=view)).map(lambda d: d['text']))
+            create_index(list(stream), self.encoder, path=self._index_path(kind="simsity", view=view), pbar=True)
 
-    def preprocess(self, index=True):
-        glob = Path("downloads").glob("**/*.jsonl")
-        full_stream = it.chain(*(srsly.read_jsonl(file) for file in glob))
-        stream = (LazyLines(full_stream)
-                  .pipe(dedup_stream))
-        srsly.write_jsonl(RAW_CONTENT_FILE, stream)
-        for tag in self.tags:
-            stream = (read_jsonl(RAW_CONTENT_FILE)
-                      .progress(desc=f"Generating data for {tag:>15}.")
-                      .keep(lambda d: d['meta']['tag'] == tag)
-                      .pipe(self.to_sentence_examples, tag=tag))
-            srsly.write_jsonl(self.tag_content_path(tag), stream)
-        if index:
-            self.index()
-    
-    def teams_create(self):
-        for section in self.sections:
-            stream_file = f"raw/{section['tag']}.jsonl"
-            cloud_path_prefix = "{assets}/vdw/"
-            asset_name = '"' + str(section['name']) + '"'
-            asset_cmd = "ptc assets create "
-            asset_cmd += asset_name + " "
-            asset_cmd += cloud_path_prefix + stream_file + " "
-            meta = {"loader": "jsonl"}
-            asset_cmd += "--kind input --meta " + f"'{json.dumps(meta)}'"
-            print(asset_cmd)
+            msg.info(f"Preparing lunr index for {view}")
             
-            file_cmd = "ptc files cp -r "
-            file_cmd += f"{stream_file} "
-            file_cmd += f"{cloud_path_prefix}/{stream_file} --make-dirs --overwrite"
-            print(file_cmd)
+            stream = (LazyLines(self.content_stream(view=view)).pipe(add_rownum))
+            index = lunr(ref='idx', fields=('text',), documents=list(stream))
+            serialized = index.serialize()
+            with open(self._index_path(kind="lunr", view=view), 'w') as fd:
+                json.dump(serialized, fd)
 
-            task_cmd = "ptc tasks create textcat "
-            task_cmd += f"frontpage-{section['tag']} "
-            task_cmd += f"--dataset frontpage-{section['tag']} "
-            task_cmd += f"--input {asset_name} --label {section['tag']} "
-            print(task_cmd)
-            print(" ")
 
     def annotate(self):
+        """
+        Methods for abstract level.
+            - filter by patterns
+            - active learn by abstract
+            - second opinion
+            - simsity
+            - search-engine
+
+        Methods for sentence level.
+            - filter by patterns
+            - active learn by sentence
+            - second opinion
+            - simsity
+            - search-engine
+        """
         results = {}
         results["label"] = questionary.select(
             "Which label do you want to annotate?",
             choices=self.tags,
         ).ask()
 
+        results["view"] = questionary.select(
+            "What view of the data do you want to take?",
+            choices=self._annotation_views,
+        ).ask()
+
         results["tactic"] = questionary.select(
             "Which tactic do you want to apply?",
-            choices=["simsity", "random", "active-learning", "second-opinion"],
+            choices=["patterns", "simsity", "active-learning", "second-opinion", "search-engine"],
         ).ask()
 
         results['setting'] = ''
-        if results["tactic"] == "simsity":
+        if results["tactic"] in ["simsity", "search-engine"]:
             results["setting"] = questionary.text(
-                "What query sentence would you like to use?", ""
+                "What query would you like to use?", ""
             ).ask()
 
         if results["tactic"] == "active-learning":
@@ -163,13 +141,18 @@ class Frontpage:
                 choices=["positive class", "uncertainty", "negative class"],
             ).ask()
 
-        from .recipe import arxiv_sentence
+        from .recipe import arxiv_sentence, arxiv_abstract
         from prodigy.app import server 
         from prodigy.core import Controller
 
-        ctrl_data = arxiv_sentence(results['label'], results['tactic'], results['setting'])
-        controller = Controller.from_components("textcat.arxiv.sentence", ctrl_data)
-        server(controller, controller.config)
+        dataset_name = f"{results['label']}-{results['view']}"
+        name = "textcat.arxiv.sentence" if results['view'] == 'sentence' else "textcat.arxiv.abstract"
+        if results['view'] == 'sentence':
+            ctrl_data = arxiv_sentence(dataset_name, results['label'], results['tactic'], results['setting'])
+        else:
+            ctrl_data = arxiv_abstract(dataset_name, results['label'], results['tactic'], results['setting'])
+        controller = Controller.from_components(name, ctrl_data)
+        server(controller, controller.config)   
 
     def show_annot_stats(self):
         """Show the annotation statistics."""

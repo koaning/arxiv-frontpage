@@ -1,9 +1,7 @@
 import datetime as dt 
-
-import tqdm
 import srsly
+import tqdm
 import arxiv
-from pathlib import Path
 from arxiv import Result
 import spacy
 from spacy.language import Language
@@ -31,7 +29,7 @@ def parse(res: Result, nlp: Language) -> ArxivArticle:
     )
 
 
-def main():
+def main(config):
     nlp = spacy.load("en_core_web_sm", disable=["ner", "lemmatizer", "tagger"])
 
     items = arxiv.Search(
@@ -47,4 +45,5 @@ def main():
                 if total_seconds(r) < 2.5 and r.primary_category.startswith("cs")]
 
     filename = str(dt.datetime.now()).replace(" ", "-")[:13] + "h.jsonl"
-    srsly.write_jsonl(Path("downloads") / filename, [dict(a) for a in articles])
+    srsly.write_jsonl(filename, articles)
+
