@@ -35,12 +35,12 @@
         {%- for content in section['content'] -%}
         <tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>{{content['created']}}</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>{{content['meta']['created']}}</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                {{content['title']}}
+                {{content['meta']['title']}}
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2">

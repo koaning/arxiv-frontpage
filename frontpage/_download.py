@@ -29,7 +29,7 @@ def parse(res: Result, nlp: Language) -> ArxivArticle:
     )
 
 
-def main(config):
+def main():
     nlp = spacy.load("en_core_web_sm", disable=["ner", "lemmatizer", "tagger"])
 
     items = arxiv.Search(

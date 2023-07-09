@@ -8,7 +8,7 @@ import prodigy
 from lazylines import LazyLines
 from wasabi import Printer
 from . import Frontpage
-from ._pipeline import add_rownum, attach_docs
+from .pipeline import add_rownum, attach_docs
 from prodigy import set_hashes
 from prodigy.components.preprocess import add_tokens
 
@@ -78,7 +78,6 @@ def get_stream_second_opinion(label: str):
 
 def get_stream_active_learn(view:str, label: str, setting:str):
     from ._model import SentenceModel
-    from prodigy.components.sorters import prefer_uncertain
 
     stream = fp.content_stream(view=view)
     model = SentenceModel.from_disk("training", encoder=fp.encoder)
@@ -92,7 +91,7 @@ def get_stream_active_learn(view:str, label: str, setting:str):
         
     scored_stream = make_scored_stream(stream, model)
     if setting == "uncertainty":
-        return prefer_uncertain(scored_stream)
+        return (ex for s, ex in scored_stream if s < 0.6 and s > 0.5)
     if setting == "positive class":
         return (ex for s, ex in scored_stream if s > 0.6)
     if setting == "negative class":

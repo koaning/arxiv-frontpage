@@ -1,6 +1,3 @@
-n: 20
-threshold: 0.7
-encoder: "sbert"
 sections:
   - name: "Prompt Engineering"
     instructions: |
@@ -9,10 +6,7 @@ sections:
       without a doubt, that the article is about prompt engineering. It can include 
       comparisons between prompt engineering and ML, but general articles about large
       language models that don't discuss the design of the prompt is not of interest.
-    tag: "prompt-eng"
-    queries:
-      - query: "prompt AND engineering"
-      - query: "chatgpt"
+    label: "prompt-eng"
     threshold: 0.7
   - name: "New Datasets"
     instructions: | 
@@ -20,40 +14,11 @@ sections:
       When annotating, it's important that the sentence in question clearly confirms,
       without a doubt, that the article is about a new dataset or corpus. New benchmarks
       on a existing dataset are not of interest.
-    tag: "new-dataset"
+    label: "new-dataset"
     threshold: 0.7
-    queries:
-      - query: "dataset OR corpus OR database"
   - name: "Data Quality in Datasets"
     instructions: |
       This tag represents arxiv articles that discuss data quality issues in existing 
       datasets.
-    tag: "data-quality"
-    queries:
-      - query: "label AND error"
-      - query: "data AND quality"
-      - query: "data AND deduplication"
-      - query: "data AND leakage"
-    threshold: 0.7
-  - name: "Data Annotation"
-    instructions: |
-      This tag represents arxiv articles that discuss data annotation. 
-    tag: "data-annotation"
-    queries:
-      - query: "data AND annotation"
-      - query: "data AND labelling"
-      - query: "human in the loop"
-      - query: "annotator disagreement"
-      - query: "LLM AND annotation"
-    threshold: 0.7
-  - name: "ML and Video Games"
-    instructions: |
-      This tag represents arxiv articles that discuss data annotation. 
-    tag: "video-games"
-    queries:
-      - query: "data AND video AND game"
-      - query: "data AND labelling"
-      - query: "human in the loop"
-      - query: "annotator disagreement"
-      - query: "LLM AND annotation"
+    label: "data-quality"
     threshold: 0.7

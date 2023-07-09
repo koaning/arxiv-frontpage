@@ -14,7 +14,9 @@ from lazylines import LazyLines, read_jsonl
 from embetter.utils import cached
 import warnings
 from tqdm import TqdmExperimentalWarning
-from ._pipeline import dedup_stream, add_rownum, attach_docs
+
+from .pipeline import dedup_stream, add_rownum, attach_docs
+from .datastream import DataStream
 
 warnings.filterwarnings("ignore", category=TqdmExperimentalWarning)
 
@@ -23,7 +25,7 @@ msg = Printer()
 TRAINED_FOLDER_FOLDER = "training"
 TEMPLATE_PATH = "templates/home.html"
 CONFIG_FILE = "config.yml"
-
+DATA_LEVELS = ["sentence", "abstract"]
 
 
 class Frontpage:
@@ -32,7 +34,8 @@ class Frontpage:
     def __init__(self):
         self.config = srsly.read_yaml(CONFIG_FILE)
         self.sections = self.config["sections"]
-        self.tags = [s["tag"] for s in self.config["sections"]]
+        self.labels = [s["label"] for s in self.config["sections"]]
+        self.datastream = DataStream()
 
     @cached_property
     def encoder(self):
@@ -53,15 +56,6 @@ class Frontpage:
 
     def _dataset_name(self, label:str, view:str) -> str:
         return f"{view}-{label}"
-    
-    def _index_path(self, kind:str, view:str) -> Path:
-        """kind is lunr vs. simsity, view is sentence vs. abstract"""
-        path = Path("indices") / kind / view
-        if kind == "simsity":
-            return path
-        path = Path(f"{path}.json")
-        path.parent.mkdir(parents=True, exist_ok=True)
-        return path
     
     @property
     def _annotation_views(self):
@@ -156,29 +150,6 @@ class Frontpage:
             ctrl_data = arxiv_abstract(dataset_name, results['label'], results['tactic'], results['setting'])
         controller = Controller.from_components(name, ctrl_data)
         server(controller, controller.config)   
-
-    def show_annot_stats(self):
-        """Show the annotation statistics."""
-        for kind in ["sentence", "abstract"]:
-            data = {}
-            for tag in self.tags:
-                sentence_tag = f"{tag}-{kind}"
-                if sentence_tag in self.db.datasets:
-                    examples = self.db.get_dataset_examples(sentence_tag)
-                    data[sentence_tag] = [
-                        sentence_tag,
-                        sum(1 for ex in examples if ex['answer'] == 'accept'),
-                        sum(1 for ex in examples if ex['answer'] == 'ignore'),
-                        sum(1 for ex in examples if ex['answer'] == 'reject')
-                    ]
-            msg.table(data.values(), 
-                    header=["label", "accept", "ignore", "reject"], 
-                    divider=True, 
-                    aligns="r,r,r,r".split(","))
-
-    def gridsearch(self):
-        """Show the annotation statistics."""
-        pass
 
     @cached_property
     def db(self):

@@ -2,6 +2,9 @@ from radicli import Radicli
 from . import Frontpage
 from ._download import main as download_data
 
+from .datastream import DataStream
+from .modelling import SentenceModel
+
 cli = Radicli()
 fp = Frontpage()
 
@@ -15,7 +18,7 @@ def download():
 @cli.command("index")
 def preprocess():
     """Preprocess downloaded data for annotation."""
-    fp.index()
+    DataStream().create_indices(model=SentenceModel())
 
 
 @cli.command("annotate")
@@ -33,7 +36,7 @@ def train():
 @cli.command("stats")
 def stats():
     """Show annotation stats"""
-    fp.show_annot_stats()
+    DataStream().show_annot_stats()
 
 
 @cli.command("build")
