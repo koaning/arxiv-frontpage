@@ -48,7 +48,9 @@ class SentenceModel:
             dump(clf, Path(path) / f"{name}.h5")
 
     @classmethod
-    def from_disk(cls, path, encoder):
+    def from_disk(cls, path: Path, encoder):
+        if not Path(path).exists():
+            raise RuntimeError("You need to train a model beforehand.")
         models = {}
         for f in Path(path).glob("*.h5"):
             models[f.stem] = load(f, trusted=True)

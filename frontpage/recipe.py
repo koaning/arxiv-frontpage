@@ -8,7 +8,7 @@ import prodigy
 from lazylines import LazyLines
 from wasabi import Printer
 from . import Frontpage
-from ._pipeline import add_rownum
+from ._pipeline import add_rownum, attach_docs
 from prodigy import set_hashes
 from prodigy.components.preprocess import add_tokens
 
@@ -46,23 +46,48 @@ def get_stream_lunr(view:str, setting:str):
 
 
 def get_stream_second_opinion(label: str):
-    stream = fp.fetch_tag_candidate_stream(tag=label)
-    stream = (ex for ex in stream if len(ex['doc'].spans) == 1)
-    return (ex for ex in fp.to_sentence_examples(stream, tag=label))
+    from ._model import SentenceModel
+    stream = fp.content_stream(view="abstract")
+    stream = ({'abstract': ex['text'], **ex} for ex in stream)
+    model = SentenceModel.from_disk("training", encoder=fp.encoder)
+    stream = attach_docs(stream, fp.nlp, model=model)
+
+    def attach_spans(stream):
+        for ex in stream:
+            spans = []
+            for spansvals in ex['doc'].spans.values():
+                for span in spansvals:
+                    spans.append(
+                        {
+                            "token_start": span.start,
+                            "token_end": span.end - 1,
+                            "start": span.start_char,
+                            "end": span.end_char,
+                            "text": span.text,
+                            "label": label,
+                        }
+                    )
+            ex["spans"] = spans
+            del ex["doc"]
+            if len(spans) >= 1:
+                print(ex)
+                yield ex
+    
+    return add_tokens(fp.nlp, attach_spans(stream))
 
 
-def get_stream_active_learn(label: str, setting:str):
+def get_stream_active_learn(view:str, label: str, setting:str):
     from ._model import SentenceModel
     from prodigy.components.sorters import prefer_uncertain
 
-    stream = fp.tag_content_stream(tag=label)
-    stream = fp.to_sentence_examples(stream, tag=label)
+    stream = fp.content_stream(view=view)
     model = SentenceModel.from_disk("training", encoder=fp.encoder)
     
     def make_scored_stream(stream, model):
         for ex in stream: 
             ex = set_hashes(ex)
             score = model(ex['text'])[label]
+            ex['meta']['score'] = score
             yield score, ex 
         
     scored_stream = make_scored_stream(stream, model)
@@ -90,7 +115,7 @@ def arxiv_sentence(dataset, label, tactic, setting):
         stream = get_stream_random(label)
     elif tactic == "active-learning":
         msg.info("Setting up active learning")
-        stream = get_stream_active_learn(label, setting)
+        stream = get_stream_active_learn("sentence", label, setting)
     elif tactic == "second-opinion":
         msg.info("Setting up second opinion")
         stream = get_stream_second_opinion(label)
@@ -123,7 +148,7 @@ def arxiv_abstract(dataset, label, tactic, setting):
         stream = get_stream_random(label)
     elif tactic == "active-learning":
         msg.info("Setting up active learning")
-        stream = get_stream_active_learn(label, setting)
+        stream = get_stream_active_learn("abstract", label, setting)
     elif tactic == "second-opinion":
         msg.info("Setting up second opinion")
         stream = get_stream_second_opinion(label)

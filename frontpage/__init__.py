@@ -6,7 +6,6 @@ import itertools as it
 from pathlib import Path
 from functools import cached_property
 
-from spacy.tokens import Span
 import srsly
 import questionary
 from lunr import lunr
@@ -15,7 +14,7 @@ from lazylines import LazyLines, read_jsonl
 from embetter.utils import cached
 import warnings
 from tqdm import TqdmExperimentalWarning
-from ._pipeline import dedup_stream, add_rownum
+from ._pipeline import dedup_stream, add_rownum, attach_docs
 
 warnings.filterwarnings("ignore", category=TqdmExperimentalWarning)
 
@@ -74,7 +73,8 @@ class Frontpage:
         # Make lazy generator for all the items
         stream = it.chain(*list(srsly.read_jsonl(file) for file in glob))
         # Generate two streams lazily
-        abstract_stream = ({"text": ex["abstract"], "meta": {"url": ex["url"]}} for ex in stream)
+        abstract_stream = ({"text": ex["abstract"], "meta": {"url": ex["url"], "title": ex["title"], "created": ex["created"][:10]}} 
+                           for ex in stream)
         sentences_stream = ({"text": sent, "meta": {"url": ex["url"]}} 
                             for ex in stream for sent in ex['sentences'])
         return dedup_stream(abstract_stream) if view == "abstract" else dedup_stream(sentences_stream)
@@ -89,7 +89,6 @@ class Frontpage:
             create_index(list(stream), self.encoder, path=self._index_path(kind="simsity", view=view), pbar=True)
 
             msg.info(f"Preparing lunr index for {view}")
-            
             stream = (LazyLines(self.content_stream(view=view)).pipe(add_rownum))
             index = lunr(ref='idx', fields=('text',), documents=list(stream))
             serialized = index.serialize()
@@ -100,18 +99,17 @@ class Frontpage:
     def annotate(self):
         """
         Methods for abstract level.
-            - filter by patterns
-            - active learn by abstract
             - second opinion
             - simsity
             - search-engine
+            - random
 
         Methods for sentence level.
             - filter by patterns
             - active learn by sentence
-            - second opinion
             - simsity
             - search-engine
+            - random
         """
         results = {}
         results["label"] = questionary.select(
@@ -124,9 +122,14 @@ class Frontpage:
             choices=self._annotation_views,
         ).ask()
 
+        if results["view"] == "abstract":
+            choices = ["second-opinion", "search-engine", "simsity", "random"]
+        else:
+            choices = ["simsity", "search-engine", "active-learning", "random"]
+
         results["tactic"] = questionary.select(
             "Which tactic do you want to apply?",
-            choices=["patterns", "simsity", "active-learning", "second-opinion", "search-engine"],
+            choices=choices,
         ).ask()
 
         results['setting'] = ''
@@ -156,20 +159,22 @@ class Frontpage:
 
     def show_annot_stats(self):
         """Show the annotation statistics."""
-        data = {}
-        for tag in self.tags:
-            if tag in self.db.datasets:
-                examples = self.db.get_dataset_examples(tag)
-                data[tag] = [
-                    tag,
-                    sum(1 for ex in examples if ex['answer'] == 'accept'),
-                    sum(1 for ex in examples if ex['answer'] == 'ignore'),
-                    sum(1 for ex in examples if ex['answer'] == 'reject')
-                ]
-        msg.table(data.values(), 
-                  header=["label", "accept", "ignore", "reject"], 
-                  divider=True, 
-                  aligns="r,r,r,r".split(","))
+        for kind in ["sentence", "abstract"]:
+            data = {}
+            for tag in self.tags:
+                sentence_tag = f"{tag}-{kind}"
+                if sentence_tag in self.db.datasets:
+                    examples = self.db.get_dataset_examples(sentence_tag)
+                    data[sentence_tag] = [
+                        sentence_tag,
+                        sum(1 for ex in examples if ex['answer'] == 'accept'),
+                        sum(1 for ex in examples if ex['answer'] == 'ignore'),
+                        sum(1 for ex in examples if ex['answer'] == 'reject')
+                    ]
+            msg.table(data.values(), 
+                    header=["label", "accept", "ignore", "reject"], 
+                    divider=True, 
+                    aligns="r,r,r,r".split(","))
 
     def gridsearch(self):
         """Show the annotation statistics."""
@@ -186,6 +191,7 @@ class Frontpage:
         train_data = {}
         found_tags = []
         for tag in self.tags:
+            tag = f"{tag}-sentence"
             if tag in self.db.datasets:
                 if len(self.db.get_dataset_examples(tag)) == 0:
                     msg.warn(f"Skipping training for {tag}. No training examples.")
@@ -214,24 +220,13 @@ class Frontpage:
     def fetch_tag_candidate_stream(self, tag:str):
         from frontpage._model import SentenceModel
 
+        # TODO: 
+        # so yeah, this can be made way faster. we're looping over the same 
+        # thing again and again here, which is wasteful. we should also introcuce
+        # a max lookup to the
+
         model = SentenceModel.from_disk(TRAINED_FOLDER_FOLDER, encoder=self.encoder)
-        stream = self.tag_content_stream(tag=tag)
-
-        def attach_docs(lines, nlp):
-            tuples = ((eg['abstract'], eg) for eg in lines)
-            for doc, eg in nlp.pipe(tuples, as_tuples=True):
-                eg['doc'] = sentence_classifier(doc)
-                yield eg
-
-        def sentence_classifier(doc):
-            doc.spans["sc"] = []
-            for sent in doc.sents:
-                preds = model(sent.text)
-                for k, p in preds.items():
-                    if p >= 0.6:
-                        doc.spans["sc"].append(Span(doc, sent.start, sent.end, k))
-                        doc.cats[k] = max(doc.cats.get(k, 0.0), p)
-            return doc
+        stream = self.content_stream(view="abstract")
 
         def render_html(doc):
             text = doc.text
@@ -240,17 +235,21 @@ class Frontpage:
             return f"<p>{text}</p>"
 
         return (LazyLines(stream)
-            .pipe(attach_docs, nlp=self.nlp)
+            .mutate(abstract=lambda d: d['text'])
+            .pipe(attach_docs, nlp=self.nlp, model=model)
             .mutate(cats = lambda d: d['doc'].cats)
             .keep(lambda d: d['cats'].get(tag, 0.0) > 0.6)
             .mutate(html=lambda d: render_html(d['doc']),
                     n_sents=lambda d: len(d['doc'].spans["sc"]),
-                    link=lambda d: d['meta']['link']))
+                    link=lambda d: d['meta']['url']))
 
     def build(self):
         config = srsly.read_yaml(CONFIG_FILE)
         for section in tqdm(config['sections'], desc="Looping over tags."):
+            print(section['name'])
             section["content"] = self.fetch_tag_candidate_stream(tag=section['tag']).head(20).collect()
+        import pprint
+        pprint.pprint(section["content"])
         
         template = jinja2.Template(Path(TEMPLATE_PATH).read_text())
         Path("site.html").write_text(template.render(sections=config['sections'], today=dt.date.today()))
