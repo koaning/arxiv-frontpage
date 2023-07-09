@@ -4,6 +4,8 @@ from ._download import main as download_data
 
 from .datastream import DataStream
 from .modelling import SentenceModel
+from .recipe import annotate_prodigy
+
 
 cli = Radicli()
 fp = Frontpage()
@@ -24,7 +26,7 @@ def preprocess():
 @cli.command("annotate")
 def annotate():
     """Annotate new examples."""
-    fp.annotate()
+    annotate_prodigy()
 
 
 @cli.command("train")

@@ -2,7 +2,7 @@ import srsly
 from pathlib import Path 
 from typing import Literal 
 
-from ._types import Config
+from .types import Config
 
 # Paths and folders
 INDICES_FOLDER = Path("indices")

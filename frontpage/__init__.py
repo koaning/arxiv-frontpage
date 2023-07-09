@@ -105,38 +105,7 @@ class Frontpage:
             - search-engine
             - random
         """
-        results = {}
-        results["label"] = questionary.select(
-            "Which label do you want to annotate?",
-            choices=self.tags,
-        ).ask()
-
-        results["view"] = questionary.select(
-            "What view of the data do you want to take?",
-            choices=self._annotation_views,
-        ).ask()
-
-        if results["view"] == "abstract":
-            choices = ["second-opinion", "search-engine", "simsity", "random"]
-        else:
-            choices = ["simsity", "search-engine", "active-learning", "random"]
-
-        results["tactic"] = questionary.select(
-            "Which tactic do you want to apply?",
-            choices=choices,
-        ).ask()
-
-        results['setting'] = ''
-        if results["tactic"] in ["simsity", "search-engine"]:
-            results["setting"] = questionary.text(
-                "What query would you like to use?", ""
-            ).ask()
-
-        if results["tactic"] == "active-learning":
-            results["setting"] = questionary.select(
-                "What should the active learning method prefer?",
-                choices=["positive class", "uncertainty", "negative class"],
-            ).ask()
+        
 
         from .recipe import arxiv_sentence, arxiv_abstract
         from prodigy.app import server 

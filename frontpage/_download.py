@@ -5,7 +5,7 @@ import arxiv
 from arxiv import Result
 import spacy
 from spacy.language import Language
-from ._types import ArxivArticle
+from .types import ArxivArticle
 
 
 def total_seconds(res: Result) -> float:
