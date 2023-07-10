@@ -1,13 +1,11 @@
 import datetime as dt 
-
-import tqdm
 import srsly
+import tqdm
 import arxiv
-from pathlib import Path
 from arxiv import Result
 import spacy
 from spacy.language import Language
-from frontpage._types import ArxivArticle
+from .types import ArxivArticle
 
 
 def total_seconds(res: Result) -> float:
@@ -47,7 +45,8 @@ def main():
                 if total_seconds(r) < 2.5 and r.primary_category.startswith("cs")]
 
     filename = str(dt.datetime.now()).replace(" ", "-")[:13] + "h.jsonl"
-    srsly.write_jsonl(Path("downloads") / filename, [dict(a) for a in articles])
+    srsly.write_jsonl(filename, articles)
+
 
 if __name__ == "__main__":
     main()
