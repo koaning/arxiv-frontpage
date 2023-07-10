@@ -1,3 +1,4 @@
+from retry import retry 
 import datetime as dt 
 import srsly
 import tqdm
@@ -37,7 +38,7 @@ def parse(res: Result, nlp: Language) -> ArxivArticle:
         url=res.entry_id
     )
 
-
+@retry(tries=5, delay=1, backoff=2)
 def main():
     nlp = spacy.load("en_core_web_sm", disable=["ner", "lemmatizer", "tagger"])
 

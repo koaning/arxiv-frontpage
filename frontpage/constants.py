@@ -6,9 +6,9 @@ from .types import Config
 
 # Paths and folders
 INDICES_FOLDER = Path("indices")
-TEMPLATE_PATH = "templates/home.html"
+TRAINED_FOLDER_FOLDER = Path("training")
+TEMPLATE_PATH = Path("templates/home.html")
 CONFIG_FILE = "config.yml"
-TRAINED_FOLDER_FOLDER = "training"
 
 # Possible values
 DATA_LEVELS = ["sentence", "abstract"]

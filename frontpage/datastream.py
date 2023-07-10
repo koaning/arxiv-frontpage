@@ -71,7 +71,7 @@ class DataStream:
             yield example
 
     def get_active_learn_stream(self, label, preference):
-        stream = self.content_stream(view="sentence")
+        stream = self.get_download_stream(level="sentence")
         model = SentenceModel.from_disk()
     
         def make_scored_stream(stream, model):
@@ -83,7 +83,7 @@ class DataStream:
             
         scored_stream = make_scored_stream(stream, model)
         if preference == "uncertainty":
-            return (ex for s, ex in scored_stream if s < 0.6 and s > 0.5)
+            return (ex for s, ex in scored_stream if s < 0.6 and s > 0.4)
         if preference == "positive class":
             return (ex for s, ex in scored_stream if s > 0.6)
         if preference == "negative class":
