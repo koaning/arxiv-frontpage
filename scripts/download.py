@@ -5,7 +5,16 @@ import arxiv
 from arxiv import Result
 import spacy
 from spacy.language import Language
-from .types import ArxivArticle
+from typing import List
+from pydantic import BaseModel 
+
+
+class ArxivArticle(BaseModel):
+    created: str
+    title: str
+    abstract: str
+    sentences: List[str]
+    url: str
 
 
 def total_seconds(res: Result) -> float:
