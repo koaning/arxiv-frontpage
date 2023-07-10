@@ -8,15 +8,18 @@ def dedup_stream(stream):
     for ex in uniq.values():
         yield ex
 
+
 def add_rownum(stream):
     for i, ex in enumerate(stream):
         yield {"text": ex["text"], "idx": i}
 
+
 def attach_docs(lines, nlp, model):
-    tuples = ((eg['abstract'], eg) for eg in lines)
+    tuples = ((eg['text'], eg) for eg in lines)
     for doc, eg in nlp.pipe(tuples, as_tuples=True):
         eg['doc'] = sentence_classifier(doc, model)
         yield eg
+
 
 def sentence_classifier(doc, model):
     doc.spans["sc"] = []

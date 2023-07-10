@@ -14,7 +14,7 @@ from prodigy import set_hashes
 from prodigy.components.preprocess import add_tokens
 
 from frontpage.pipeline import dedup_stream, add_rownum, attach_spans, attach_docs
-from frontpage.constants import DATA_LEVELS, INDICES_FOLDER, LABELS
+from frontpage.constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG
 from frontpage.modelling import SentenceModel
 
 msg = Printer()
@@ -41,13 +41,17 @@ class DataStream:
         possible = [self.get_dataset_name(lab, lev) for lab,lev in product]
         return [n for n in possible if n in self.db.datasets]
     
-    def get_download_stream(self, level:str="sentence"):
-        """Stream of downloaded data, ready for annotation"""
+    def get_raw_download_stream(self):
         # Fetch all downloaded files, make sure most recent ones come first
         glob = reversed(list(Path("downloads").glob("**/*.jsonl")))
         
         # Make lazy generator for all the items
-        stream = it.chain(*list(srsly.read_jsonl(file) for file in glob))
+        return it.chain(*list(srsly.read_jsonl(file) for file in glob))
+    
+    def get_download_stream(self, level:str="sentence"):
+        """Stream of downloaded data, ready for annotation"""
+        # Start out with the raw stream
+        stream = self.get_raw_download_stream()
         
         # Generate two streams lazily
         abstract_stream = ({"text": ex["abstract"], "meta": {"url": ex["url"], "title": ex["title"], "created": ex["created"][:10]}} 
@@ -188,3 +192,31 @@ class DataStream:
                     header=["label", "accept", "ignore", "reject"], 
                     divider=True, 
                     aligns="r,r,r,r".split(","))
+    
+    def get_site_stream(self):
+        model = SentenceModel.from_disk()
+
+        def upper_limit(stream):
+            tracker = {l: 0 for l in LABELS}
+            limit = 10
+            for i, ex in enumerate(stream):
+                print(i, tracker)
+                for name, proba in ex['doc'].cats.items():
+                    if proba > 0.5 and name in tracker and tracker[name] < limit:
+                        tracker[name] += 1
+                        if name == "new-dataset":
+                            print(ex)
+                        yield ex
+                if all(v == limit for v in tracker.values()):
+                    break
+        
+        stream = (
+            LazyLines(self.get_download_stream(level="abstract"))
+                .show(1)
+                .head(2000)
+                .progress()
+                .pipe(attach_docs, nlp=model.nlp, model=model)
+                .pipe(upper_limit)
+                .collect()
+        )
+        print(stream[0])

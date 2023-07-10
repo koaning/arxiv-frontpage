@@ -43,13 +43,13 @@ def stats():
 @cli.command("build")
 def build():
     """Build a new site"""
-    fp.build()
+    DataStream().get_site_stream()
 
 
 @cli.command("benchmark")
 def generate():
     """Benchmark the models"""
-    fp.evaluate()
+    pass
 
 
 if __name__ == "__main__":
