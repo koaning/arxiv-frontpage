@@ -8,25 +8,26 @@ from skops.io import dump, load
 from embetter.utils import cached
 from sklearn.linear_model import LogisticRegression
 
-from .constants import TRAINED_FOLDER_FOLDER
+from .constants import TRAINED_FOLDER_FOLDER, LABELS
 
 msg = Printer()
 
 
 class SentenceModel:
-    def __init__(self, labels) -> None:
+    def __init__(self, labels=LABELS) -> None:
         self.labels = labels 
         self._models = {k: LogisticRegression(class_weight="balanced") for k in self.labels}
 
-    def update(self, examples: List[dict]):
+    def train(self, examples):
         X = self.encoder.transform([ex["text"] for ex in examples])
         for task, model in self._models.items():
-            xs = np.array([X[i] for i, ex in enumerate(examples) if task in ex])
+            xs = np.array([X[i] for i, ex in enumerate(examples) if task in ex['cats']])
             ys = np.array(
-                [ex[task] for ex in examples if task in ex], dtype=int
+                [ex['cats'][task] for ex in examples if task in ex['cats']], dtype=int
             )
             model.fit(xs, ys)
             msg.good(f"Trained the {task} task, using {len(xs)} examples.")
+        return self
 
     def __call__(self, text:str):
         result = {}
@@ -51,6 +52,7 @@ class SentenceModel:
     def to_disk(self, path: Path=TRAINED_FOLDER_FOLDER):
         for name, clf in self._models.items():
             dump(clf, Path(path) / f"{name}.h5")
+        msg.good(f"Model saved in folder: {path}")
 
     @classmethod
     def from_disk(cls, path: Path=TRAINED_FOLDER_FOLDER):

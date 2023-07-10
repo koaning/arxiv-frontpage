@@ -1,3 +1,4 @@
+from typing import Dict, List
 import random
 import json
 import itertools as it
@@ -30,8 +31,18 @@ class DataStream:
         db = connect()
         return db
     
+    def get_dataset_name(self, label:str, level:str):
+        """Source of truth as far as dataset name goes."""
+        return f"{label}-{level}"
+    
+    def retreive_dataset_names(self):
+        """Retreive the dataset names that actually have annotated data."""
+        product = it.product(LABELS, DATA_LEVELS)
+        possible = [self.get_dataset_name(lab, lev) for lab,lev in product]
+        return [n for n in possible if n in self.db.datasets]
     
     def get_download_stream(self, level:str="sentence"):
+        """Stream of downloaded data, ready for annotation"""
         # Fetch all downloaded files, make sure most recent ones come first
         glob = reversed(list(Path("downloads").glob("**/*.jsonl")))
         
@@ -45,9 +56,41 @@ class DataStream:
                             for ex in stream for sent in ex['sentences'])
         stream = abstract_stream if level == "abstract" else sentences_stream
         return dedup_stream(stream)
+    
+    def _sentence_data_to_train_format(self, stream):
+        """Data ready for training from a sentence-level dataset."""
+        for ex in stream:
+            # This bit of logic ensures we ignore the `ignore` answer
+            outcome = None
+            if ex["answer"] == "accept":
+                outcome = 1
+            if ex["answer"] == "reject":
+                outcome = 0
+            if outcome is not None:
+                yield {
+                    "text": ex["text"],
+                    ex["label"]: outcome
+                }
+    
+    def _accumulate_train_stream(self, stream) -> List[Dict]:
+        """
+        This function ensures that we have each `text` appear only
+        once and that the categories are nested in the `cats` key.
+        """
+        return (LazyLines(stream)
+                .nest_by("text")
+                .mutate(cats = lambda d: {k: v for ex in d['subset'] for k, v in ex.items()})
+                .drop("subset")
+                .collect())
 
-    def get_train_stream(task:str):
-        pass
+    def get_train_stream(self) -> List[Dict]:
+        stream = []
+        for dataset in self.retreive_dataset_names():
+            if "sentence" in dataset:
+                datapoints = self.db.get_dataset_examples(dataset)
+                stream.extend(self._sentence_data_to_train_format(datapoints))
+            # TODO: also handle the abstract level examples
+        return self._accumulate_train_stream(stream)
 
     def get_lunr_stream(self, query: str, level: str):
         idx_path = self._index_path(kind="lunr", level=level)

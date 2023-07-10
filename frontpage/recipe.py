@@ -124,7 +124,7 @@ def annotate_prodigy():
     
     results = run_questions()
 
-    dataset_name = f"{results['label']}-{results['level']}"
+    dataset_name = datastream.get_dataset_name(results['label'], results['level'])
     name = "textcat.arxiv.sentence" if results['level'] == 'sentence' else "textcat.arxiv.abstract"
     if results['level'] == 'sentence':
         ctrl_data = arxiv_sentence(dataset_name, results['label'], results['tactic'], results['setting'])

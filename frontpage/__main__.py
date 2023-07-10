@@ -1,14 +1,12 @@
 from radicli import Radicli
-from . import Frontpage
-from ._download import main as download_data
 
+from .download import main as download_data
 from .datastream import DataStream
 from .modelling import SentenceModel
 from .recipe import annotate_prodigy
 
 
 cli = Radicli()
-fp = Frontpage()
 
 
 @cli.command("download")
@@ -32,7 +30,8 @@ def annotate():
 @cli.command("train")
 def train():
     """Trains a new model on the data."""
-    fp.train()
+    examples = DataStream().get_train_stream()
+    SentenceModel().train(examples=examples).to_disk()
 
 
 @cli.command("stats")

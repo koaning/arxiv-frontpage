@@ -1,3 +1,9 @@
+"""
+This script is pretty much the same thing as `python -m frontpage download`. 
+It's just that this script adds a retry mechanic and has less dependencies
+so that it's more lightweight to run from Github Actions.
+"""
+
 from retry import retry 
 import datetime as dt 
 import srsly
