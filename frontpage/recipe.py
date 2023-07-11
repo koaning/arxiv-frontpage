@@ -3,8 +3,6 @@ import questionary
 
 import prodigy
 from wasabi import Printer
-from prodigy import set_hashes
-from prodigy.components.preprocess import add_tokens
 
 from .datastream import DataStream
 from .constants import LABELS, DATA_LEVELS
@@ -57,6 +55,7 @@ def run_questions():
 )
 def arxiv_sentence(dataset, label, tactic, setting):
     """Very general recipe to annotate sentences, using different ordering techniques."""
+    from prodigy import set_hashes
     if tactic == "simsity":
         msg.info("Setting up simsity stream")
         stream = datastream.get_ann_stream(query=setting, level="sentence")
@@ -76,6 +75,9 @@ def arxiv_sentence(dataset, label, tactic, setting):
         "dataset": dataset,
         "stream": (set_hashes({**ex, "label": label}) for ex in stream),
         "view_id": "classification",
+        "config":{
+            "exclude_by": "input"
+        }
     }
 
 
@@ -87,6 +89,8 @@ def arxiv_sentence(dataset, label, tactic, setting):
 )
 def arxiv_abstract(dataset, label, tactic, setting):
     """Very general recipe to annotate sentences, using different ordering techniques."""
+    from prodigy.components.preprocess import add_tokens
+
     if tactic == "simsity":
         msg.info("Setting up simsity stream")
         stream = datastream.get_ann_stream(query=setting, level="abstract")
@@ -113,7 +117,8 @@ def arxiv_abstract(dataset, label, tactic, setting):
             "labels": [label],
             "blocks": [
                 {"view_id": "ner_manual"},
-            ]
+            ],
+            "exclude_by": "input"
         }
     }
 

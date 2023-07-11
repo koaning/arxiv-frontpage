@@ -77,7 +77,7 @@ class DataStream:
         sentences_stream = ({"text": sent, "meta": {"url": ex["url"]}} 
                             for ex in stream for sent in ex['sentences'])
         stream = abstract_stream if level == "abstract" else sentences_stream
-        return dedup_stream(stream)
+        return stream
     
     def _sentence_data_to_train_format(self, stream):
         """Data ready for training from a sentence-level dataset."""
