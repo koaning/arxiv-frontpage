@@ -2,14 +2,14 @@ import datetime as dt
 from pathlib import Path 
 
 from jinja2 import Template
-from radicli import Radicli
+from radicli import Radicli, Arg
 
 from .download import main as download_data
 from .datastream import DataStream
 from .modelling import SentenceModel
 from .recipe import annotate_prodigy
 from .utils import console
-from .constants import TEMPLATE_PATH
+from .constants import TEMPLATE_PATH, TRAINED_FOLDER
 
 cli = Radicli()
 
@@ -21,9 +21,14 @@ def download():
 
 
 @cli.command("index")
-def preprocess():
+def index():
     """Preprocess downloaded data for annotation."""
     DataStream().create_indices(model=SentenceModel())
+
+@cli.command("preprocess")
+def preprocess():
+    """Dedup and process data for faster processing."""
+    DataStream().save_clean_download_stream()
 
 
 @cli.command("annotate")
@@ -45,16 +50,40 @@ def stats():
     DataStream().show_annot_stats()
 
 
-@cli.command("build")
-def build():
+@cli.command(
+    "build", 
+    retrain=Arg("--retrain", "-rt", help="Retrain model?"),
+    prep=Arg("--preprocess", "-pr", help="Preprocess again?")
+)
+def build(retrain: bool = False, prep:bool = False):
     """Build a new site"""
-    # train()
+    if prep:
+        preprocess()
+    if retrain:
+        train()
+    console.log("Starting site build process")
     sections = DataStream().get_site_content()
-    console.log("Building site.")
-    import srsly
-    srsly.write_json("sections.json", sections)
     template = Template(Path(TEMPLATE_PATH).read_text())
-    Path("site.html").write_text(template.render(sections=sections, today=dt.date.today()))
+    rendered = template.render(sections=sections, today=dt.date.today())
+    Path("site.html").write_text(rendered)
+    console.log("Site built.")
+
+
+@cli.command("artifact",
+    action=Arg(help="Can be upload/download"),
+)
+def artifact(action:str):
+    """Upload/download from wandb"""
+    import wandb
+    run = wandb.init() # Initialize a W&B Run
+    if action == "upload":
+        artifact = wandb.Artifact('sentence-model', type='model')
+        artifact.add_dir(TRAINED_FOLDER)
+        run.log_artifact(artifact)
+    if action == "download":
+        artifact = run.use_artifact('sentence-model:latest')
+        artifact.download(TRAINED_FOLDER)
+        
 
 
 @cli.command("benchmark")

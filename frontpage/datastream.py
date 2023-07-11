@@ -1,4 +1,3 @@
-import datetime as dt 
 from typing import Dict, List
 import random
 import json
@@ -7,7 +6,6 @@ from pathlib import Path
 from functools import cached_property
 
 import srsly
-import jinja2
 from wasabi import Printer
 from lazylines import LazyLines
 from lunr import lunr
@@ -15,10 +13,10 @@ from lunr.index import Index
 from prodigy import set_hashes
 from prodigy.components.preprocess import add_tokens
 
-from frontpage.pipeline import dedup_stream, add_rownum, attach_spans, attach_docs
-from frontpage.constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, TEMPLATE_PATH
-from frontpage.modelling import SentenceModel
-from frontpage.utils import console
+from .pipeline import dedup_stream, add_rownum, attach_spans, attach_docs
+from .constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, CLEAN_DOWNLOADS_FOLDER, DOWNLOADS_FOLDER
+from .modelling import SentenceModel
+from .utils import console
 
 msg = Printer()
 
@@ -46,7 +44,25 @@ class DataStream:
     
     def get_raw_download_stream(self):
         # Fetch all downloaded files, make sure most recent ones come first
-        glob = reversed(list(Path("downloads").glob("**/*.jsonl")))
+        glob = reversed(list(DOWNLOADS_FOLDER.glob("**/*.jsonl")))
+        
+        # Make lazy generator for all the items
+        stream = it.chain(*list(srsly.read_jsonl(file) for file in glob))
+        return stream
+    
+    def save_clean_download_stream(self):
+        stream = dedup_stream(self.get_raw_download_stream(), key="abstract")
+        nested = LazyLines(stream).mutate(created=lambda d: d['created'][:10]).nest_by("created")
+        for group in nested:
+            CLEAN_DOWNLOADS_FOLDER.mkdir(parents=True, exist_ok=True)
+            filepath = CLEAN_DOWNLOADS_FOLDER / f"{group['created']}.jsonl"
+            g = ({**ex, "created": group['created']} for ex in group['subset'])
+            srsly.write_jsonl(filepath, g)
+        console.log(f"Cleaned files written in [bold]{CLEAN_DOWNLOADS_FOLDER}[/bold] folder.")
+    
+    def get_clean_download_stream(self):
+        # Fetch all downloaded files, make sure most recent ones come first
+        glob = reversed(list(CLEAN_DOWNLOADS_FOLDER.glob("**/*.jsonl")))
         
         # Make lazy generator for all the items
         stream = it.chain(*list(srsly.read_jsonl(file) for file in glob))
@@ -55,7 +71,7 @@ class DataStream:
     def get_download_stream(self, level:str="sentence"):
         """Stream of downloaded data, ready for annotation"""
         # Start out with the raw stream
-        stream = self.get_raw_download_stream()
+        stream = self.get_clean_download_stream()
         
         # Generate two streams lazily
         abstract_stream = ({"text": ex["abstract"], "meta": {"url": ex["url"], "title": ex["title"], "created": ex["created"][:10]}} 
@@ -226,7 +242,7 @@ class DataStream:
 
         console.log("Filtering recent content.")
         return (
-            LazyLines(self.get_raw_download_stream())
+            LazyLines(self.get_clean_download_stream())
                 .head(1000)
                 .pipe(add_predictions, model=model)
                 .pipe(upper_limit)
@@ -234,7 +250,7 @@ class DataStream:
         )
     
     def get_site_content(self):
-        site_stream = dedup_stream(self.get_site_stream(), key="abstract")
+        site_stream = self.get_site_stream()
         sections = {dict(section)['label']: {**dict(section), "content": []} for section in CONFIG.sections}
 
         def render_html(item, section):

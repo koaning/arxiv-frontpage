@@ -8,7 +8,7 @@ from skops.io import dump, load
 from embetter.utils import cached
 from sklearn.linear_model import LogisticRegression
 
-from .constants import TRAINED_FOLDER_FOLDER, LABELS
+from .constants import TRAINED_FOLDER, LABELS
 from .utils import console 
 
 msg = Printer()
@@ -62,13 +62,13 @@ class SentenceModel:
         import spacy
         return spacy.load("en_core_web_sm", disable=["ner", "lemmatizer", "tagger"])
 
-    def to_disk(self, path: Path=TRAINED_FOLDER_FOLDER):
+    def to_disk(self, path: Path=TRAINED_FOLDER):
         for name, clf in self._models.items():
             dump(clf, Path(path) / f"{name}.h5")
-        console.log(f"Model saved in folder: {path}")
+        console.log(f"Model saved in folder: [bold]{path}[/bold].")
 
     @classmethod
-    def from_disk(cls, path: Path=TRAINED_FOLDER_FOLDER):
+    def from_disk(cls, path: Path=TRAINED_FOLDER):
         if not Path(path).exists():
             raise RuntimeError("You need to train a model beforehand.")
         models = {}
@@ -77,5 +77,5 @@ class SentenceModel:
 
         model = SentenceModel(labels=models.keys())
         model._models = models
-        console.log(f"Model loaded from: {path}")
+        console.log(f"Model loaded from: [bold]{path}[/bold].")
         return model

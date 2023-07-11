@@ -11,7 +11,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body>
-  <div class="relative mx-auto h-full max-w-2xl text-md">
+  <div class="relative mx-auto h-full max-w-3xl text-md">
     <table class="table-auto">
       <tbody>
         <tr>
@@ -20,7 +20,7 @@
             <h1 class="text-6xl pt-4 font-bold"><span class="underline">Your</span> FrontPage</h1>
             <br>
             <p>Generated on {{today}}.</p>
-            <p class="text-sm text-gray-500 pt-2">This frontpage is made by scraping arxiv and by runnig a spaCy model that detects if the abstract describes a paper about a new specific topic. Right now we try to find interesting articles about new dataset or about prompt engineering. Many datasets will be about NLP, but typically this also has some computer vision, humanities and physics datasets in the mix too.</p>
+            <p class="text-sm text-gray-500 pt-2">This frontpage is made by scraping arxiv and by runnig a sentence-model that detects if the abstract describes a paper about a topic of interest. <br> One cool feature: the entire MLOps of this is handled via Github Actions. </p>
             <br>
           </td>
         </tr>
@@ -29,18 +29,18 @@
           <td></td>
           <td>
             <h2 class="text-4xl pt-4 font-bold">{{section['name']}}</h2>
-            <span class='px-2 mx-1 bg-yellow-200 text-xs'>tag:{{section['tag']}}</span>
+            <span class='px-2 mx-1 bg-yellow-200 text-xs'>tag:{{section['label']}}</span>
           </td>
         </tr>
         {%- for content in section['content'] -%}
         <tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>{{content['meta']['created']}}</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>{{content['created']}}</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                {{content['meta']['title']}}
+                {{content['title']}}
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2">

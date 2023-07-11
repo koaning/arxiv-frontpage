@@ -6,7 +6,10 @@ from .types import Config
 
 # Paths and folders
 INDICES_FOLDER = Path("indices")
-TRAINED_FOLDER_FOLDER = Path("training")
+CLEAN_DOWNLOADS_FOLDER = Path("cleaned")
+DOWNLOADS_FOLDER = Path("downloads")
+ANNOT_FOLDER = Path("annot")
+TRAINED_FOLDER = Path("training")
 TEMPLATE_PATH = Path("templates/home.html")
 CONFIG_FILE = "config.yml"
 

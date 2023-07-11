@@ -9,6 +9,7 @@ def dedup_stream(stream, key="text"):
         uniq[hash(ex[key])] = ex
     for ex in uniq.values():
         yield ex
+    console.log("Deduplication finished")
 
 
 def add_rownum(stream):
