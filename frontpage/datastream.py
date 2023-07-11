@@ -10,8 +10,6 @@ from wasabi import Printer
 from lazylines import LazyLines
 from lunr import lunr
 from lunr.index import Index
-from prodigy import set_hashes
-from prodigy.components.preprocess import add_tokens
 
 from .pipeline import dedup_stream, add_rownum, attach_spans, attach_docs
 from .constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, CLEAN_DOWNLOADS_FOLDER, DOWNLOADS_FOLDER
@@ -139,6 +137,7 @@ class DataStream:
             yield example
 
     def get_active_learn_stream(self, label, preference):
+        from prodigy import set_hashes
         stream = self.get_download_stream(level="sentence")
         model = SentenceModel.from_disk()
     
@@ -158,6 +157,8 @@ class DataStream:
             return (ex for s, ex in scored_stream if s < 0.4)
 
     def get_second_opinion_stream(self, model: SentenceModel, label, min_sents=1, max_sents=1):
+        from prodigy.components.preprocess import add_tokens
+        
         stream = self.content_stream(view="abstract")
         stream = ({'abstract': ex['text'], **ex} for ex in stream)
         model = SentenceModel.from_disk("training", encoder=SentenceModel().encoder)
