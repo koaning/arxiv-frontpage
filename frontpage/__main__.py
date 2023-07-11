@@ -1,3 +1,4 @@
+import os
 import datetime as dt 
 from pathlib import Path 
 
@@ -76,7 +77,7 @@ def build(retrain: bool = False, prep:bool = False):
 def artifact(action:str):
     """Upload/download from wandb"""
     import wandb
-    run = wandb.init()
+    run = wandb.init(os.getenv("WANDB_API_KEY"))
     if action == "upload":
         artifact = wandb.Artifact('sentence-model', type='model')
         artifact.add_dir(TRAINED_FOLDER)

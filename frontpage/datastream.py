@@ -269,6 +269,11 @@ class DataStream:
                 item['html'] = render_html(item, section)
                 sections[section]['content'].append(item)
 
+        for section in sections.keys():
+            console.print(sections.keys())
+            console.print(sections['section'].keys())
+            uniq_content = list(set(sections[section]['content']))
+            sections[section]['content'] = uniq_content
         console.log("Sections generated.")
         return list(sections.values())
         
