@@ -251,7 +251,7 @@ class DataStream:
         )
     
     def get_site_content(self):
-        site_stream = self.get_site_stream()
+        site_stream = dedup_stream(self.get_site_stream(), key="abstract")
         sections = {dict(section)['label']: {**dict(section), "content": []} for section in CONFIG.sections}
 
         def render_html(item, section):

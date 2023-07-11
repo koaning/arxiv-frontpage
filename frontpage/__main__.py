@@ -7,7 +7,6 @@ from radicli import Radicli, Arg
 from .download import main as download_data
 from .datastream import DataStream
 from .modelling import SentenceModel
-from .recipe import annotate_prodigy
 from .utils import console
 from .constants import TEMPLATE_PATH, TRAINED_FOLDER, SITE_PATH
 
@@ -34,6 +33,8 @@ def preprocess():
 @cli.command("annotate")
 def annotate():
     """Annotate new examples."""
+    from .recipe import annotate_prodigy
+    
     annotate_prodigy()
 
 
