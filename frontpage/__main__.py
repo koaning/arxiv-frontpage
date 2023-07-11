@@ -9,7 +9,7 @@ from .datastream import DataStream
 from .modelling import SentenceModel
 from .recipe import annotate_prodigy
 from .utils import console
-from .constants import TEMPLATE_PATH, TRAINED_FOLDER
+from .constants import TEMPLATE_PATH, TRAINED_FOLDER, SITE_PATH
 
 cli = Radicli()
 
@@ -65,7 +65,7 @@ def build(retrain: bool = False, prep:bool = False):
     sections = DataStream().get_site_content()
     template = Template(Path(TEMPLATE_PATH).read_text())
     rendered = template.render(sections=sections, today=dt.date.today())
-    Path("site.html").write_text(rendered)
+    SITE_PATH.write_text(rendered)
     console.log("Site built.")
 
 
@@ -75,15 +75,15 @@ def build(retrain: bool = False, prep:bool = False):
 def artifact(action:str):
     """Upload/download from wandb"""
     import wandb
-    run = wandb.init() # Initialize a W&B Run
+    run = wandb.init()
     if action == "upload":
         artifact = wandb.Artifact('sentence-model', type='model')
         artifact.add_dir(TRAINED_FOLDER)
         run.log_artifact(artifact)
     if action == "download":
+        TRAINED_FOLDER.mkdir(exist_ok=True, parents=True)
         artifact = run.use_artifact('sentence-model:latest')
         artifact.download(TRAINED_FOLDER)
-        
 
 
 @cli.command("benchmark")
