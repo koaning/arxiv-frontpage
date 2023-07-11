@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 from pathlib import Path
 from functools import cached_property
 
@@ -9,6 +9,7 @@ from embetter.utils import cached
 from sklearn.linear_model import LogisticRegression
 
 from .constants import TRAINED_FOLDER_FOLDER, LABELS
+from .utils import console 
 
 msg = Printer()
 
@@ -26,23 +27,35 @@ class SentenceModel:
                 [ex['cats'][task] for ex in examples if task in ex['cats']], dtype=int
             )
             model.fit(xs, ys)
-            msg.good(f"Trained the {task} task, using {len(xs)} examples.")
+            console.log(f"Trained the [bold]{task}[/bold] task, using {len(xs)} examples.")
         return self
 
-    def __call__(self, text:str):
+    def __call__(self, text:str) -> Dict:
         result = {}
         X = self.encoder.transform([text])
         for label in self.labels:
             proba = self._models[label].predict_proba(X)[0, 1]
             result[label] = float(proba)
         return result
-                
+    
+    def predict(self, texts: List[str]) -> List[Dict]:
+        X = self.encoder.transform(texts)
+        result = [{} for _ in texts]
+        for label in self.labels:
+            probas = self._models[label].predict_proba(X)[:, 1]
+            for i, proba in enumerate(probas):
+                result[i][label] = float(proba)
+        return result
+
     @cached_property
     def encoder(self):
         from embetter.text import SentenceEncoder
         encoder = SentenceEncoder()
         encoder = cached(f"cache/{str(type(encoder))}", encoder)
         return encoder
+    
+    def vectorizer(self):
+        return 
 
     @cached_property
     def nlp(self):
@@ -52,7 +65,7 @@ class SentenceModel:
     def to_disk(self, path: Path=TRAINED_FOLDER_FOLDER):
         for name, clf in self._models.items():
             dump(clf, Path(path) / f"{name}.h5")
-        msg.good(f"Model saved in folder: {path}")
+        console.log(f"Model saved in folder: {path}")
 
     @classmethod
     def from_disk(cls, path: Path=TRAINED_FOLDER_FOLDER):
@@ -64,4 +77,5 @@ class SentenceModel:
 
         model = SentenceModel(labels=models.keys())
         model._models = models
+        console.log(f"Model loaded from: {path}")
         return model

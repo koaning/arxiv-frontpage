@@ -1,10 +1,15 @@
+import datetime as dt 
+from pathlib import Path 
+
+from jinja2 import Template
 from radicli import Radicli
 
 from .download import main as download_data
 from .datastream import DataStream
 from .modelling import SentenceModel
 from .recipe import annotate_prodigy
-
+from .utils import console
+from .constants import TEMPLATE_PATH
 
 cli = Radicli()
 
@@ -43,7 +48,13 @@ def stats():
 @cli.command("build")
 def build():
     """Build a new site"""
-    DataStream().get_site_stream()
+    # train()
+    sections = DataStream().get_site_content()
+    console.log("Building site.")
+    import srsly
+    srsly.write_json("sections.json", sections)
+    template = Template(Path(TEMPLATE_PATH).read_text())
+    Path("site.html").write_text(template.render(sections=sections, today=dt.date.today()))
 
 
 @cli.command("benchmark")

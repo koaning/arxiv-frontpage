@@ -1,10 +1,12 @@
 from spacy.tokens import Span
+from .utils import console
 
 
-def dedup_stream(stream):
+def dedup_stream(stream, key="text"):
+    console.log("Deduplicating stream")
     uniq = {}
     for ex in stream:
-        uniq[hash(ex["text"])] = ex
+        uniq[hash(ex[key])] = ex
     for ex in uniq.values():
         yield ex
 

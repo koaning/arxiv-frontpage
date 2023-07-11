@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.pipeline import make_pipeline
-from sklearn.feature_extraction.text import CountVectorizer, HashingVectorizer
+from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn.metrics import classification_report
 from embetter.text import SentenceEncoder, spaCyEncoder
 # from embetter.external import CohereEncoder, OpenAIEncoder
@@ -41,10 +41,10 @@ def benchmark_tag(annot_data, tag, resample=10):
         pipe = make_pipeline(encoders[enc], models[mod])
         tic = time.time()
         pipe.fit(X_train, y_train)
-        train_time = time.time() - tic
+        time.time() - tic
         tic = time.time()
         pred_train = pipe.predict(X_train)
-        infer_time = time.time() - tic
+        time.time() - tic
         pred_valid = pipe.predict(X_valid)
         accuracy_train = np.mean(pred_train == y_train)
         accuracy_valid = np.mean(pred_valid == y_valid)

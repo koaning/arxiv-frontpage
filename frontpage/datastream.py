@@ -1,3 +1,4 @@
+import datetime as dt 
 from typing import Dict, List
 import random
 import json
@@ -6,6 +7,7 @@ from pathlib import Path
 from functools import cached_property
 
 import srsly
+import jinja2
 from wasabi import Printer
 from lazylines import LazyLines
 from lunr import lunr
@@ -14,8 +16,9 @@ from prodigy import set_hashes
 from prodigy.components.preprocess import add_tokens
 
 from frontpage.pipeline import dedup_stream, add_rownum, attach_spans, attach_docs
-from frontpage.constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG
+from frontpage.constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, TEMPLATE_PATH
 from frontpage.modelling import SentenceModel
+from frontpage.utils import console
 
 msg = Printer()
 
@@ -46,7 +49,8 @@ class DataStream:
         glob = reversed(list(Path("downloads").glob("**/*.jsonl")))
         
         # Make lazy generator for all the items
-        return it.chain(*list(srsly.read_jsonl(file) for file in glob))
+        stream = it.chain(*list(srsly.read_jsonl(file) for file in glob))
+        return stream
     
     def get_download_stream(self, level:str="sentence"):
         """Stream of downloaded data, ready for annotation"""
@@ -88,6 +92,7 @@ class DataStream:
                 .collect())
 
     def get_train_stream(self) -> List[Dict]:
+        console.log("Generating training stream")
         stream = []
         for dataset in self.retreive_dataset_names():
             if "sentence" in dataset:
@@ -197,26 +202,56 @@ class DataStream:
         model = SentenceModel.from_disk()
 
         def upper_limit(stream):
-            tracker = {l: 0 for l in LABELS}
-            limit = 10
-            for i, ex in enumerate(stream):
-                print(i, tracker)
-                for name, proba in ex['doc'].cats.items():
-                    if proba > 0.5 and name in tracker and tracker[name] < limit:
-                        tracker[name] += 1
-                        if name == "new-dataset":
-                            print(ex)
-                        yield ex
+            tracker = {lab: 0 for lab in LABELS}
+            limit = 35
+            for ex in stream:
+                for preds in ex['preds']:
+                    for name, proba in preds.items():
+                        if name in tracker and proba > THRESHOLDS[name] and tracker[name] < limit:
+                            tracker[name] += 1
+                            if "sections" not in ex:
+                                ex['sections'] = []
+                            ex['sections'].append(name)
+                            ex['sections'] = list(set(ex['sections']))
+                            yield ex
                 if all(v == limit for v in tracker.values()):
                     break
-        
-        stream = (
-            LazyLines(self.get_download_stream(level="abstract"))
-                .show(1)
-                .head(2000)
-                .progress()
-                .pipe(attach_docs, nlp=model.nlp, model=model)
+
+        def add_predictions(stream, model: SentenceModel):
+            for ex in stream:
+                preds = model.predict(ex['sentences'])
+                ex['preds'] = preds
+                ex['created'] = ex['created'][:10]
+                yield ex
+
+        console.log("Filtering recent content.")
+        return (
+            LazyLines(self.get_raw_download_stream())
+                .head(1000)
+                .pipe(add_predictions, model=model)
                 .pipe(upper_limit)
                 .collect()
         )
-        print(stream[0])
+    
+    def get_site_content(self):
+        site_stream = dedup_stream(self.get_site_stream(), key="abstract")
+        sections = {dict(section)['label']: {**dict(section), "content": []} for section in CONFIG.sections}
+
+        def render_html(item, section):
+            text = ""
+            for sent, pred in zip(item['sentences'], item['preds']):
+                proba = pred[section]
+                addition = sent
+                if proba > THRESHOLDS[section]:
+                    addition = f"<span class='px-1 mx-1 bg-yellow-200'>{addition}</span>"
+                text += addition
+            return f"<p>{text}</p>"
+
+        for item in site_stream:
+            for section in item['sections']:
+                item['html'] = render_html(item, section)
+                sections[section]['content'].append(item)
+
+        console.log("Sections generated.")
+        return list(sections.values())
+        
