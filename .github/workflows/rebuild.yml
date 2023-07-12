@@ -29,7 +29,9 @@ jobs:
     - name: Fetch model artifact
       run: python -m frontpage artifact download
     - name: Build new site
-      run: python -m frontpage build
+      run: |-
+        python -m frontpage preprocess
+        python -m frontpage build
     - name: Commit and push if it changed
       run: |-
         git config user.name "Automated"
