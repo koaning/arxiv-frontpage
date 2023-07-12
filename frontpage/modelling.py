@@ -63,6 +63,8 @@ class SentenceModel:
         return spacy.load("en_core_web_sm", disable=["ner", "lemmatizer", "tagger"])
 
     def to_disk(self, path: Path=TRAINED_FOLDER):
+        if not Path(path).exists():
+            Path(path).mkdir(exist_ok=True, parents=True)
         for name, clf in self._models.items():
             dump(clf, Path(path) / f"{name}.h5")
         console.log(f"Model saved in folder: [bold]{path}[/bold].")
