@@ -40,7 +40,7 @@ def annotate():
     annotate_prodigy()
 
 @cli.command("postprocess")
-def preprocess():
+def postprocess():
     """Prepares data for training."""
     DataStream().save_train_stream()
 
