@@ -59,10 +59,10 @@ class DataStream:
     
     def get_clean_download_stream(self):
         # Fetch all downloaded files, make sure most recent ones come first
-        glob = reversed(list(CLEAN_DOWNLOADS_FOLDER.glob("**/*.jsonl")))
-        
+        glob = [str(p) for p in CLEAN_DOWNLOADS_FOLDER.glob("**/*.jsonl")]
+        arranged_glob = list(reversed(sorted(glob)))
         # Make lazy generator for all the items
-        stream = it.chain(*list(srsly.read_jsonl(file) for file in glob))
+        stream = it.chain(*list(srsly.read_jsonl(file) for file in arranged_glob))
         return stream
     
     def get_download_stream(self, level:str="sentence"):
@@ -219,7 +219,7 @@ class DataStream:
 
         def upper_limit(stream):
             tracker = {lab: 0 for lab in LABELS}
-            limit = 35
+            limit = 20
             for ex in stream:
                 for preds in ex['preds']:
                     for name, proba in preds.items():
@@ -269,9 +269,8 @@ class DataStream:
                 sections[section]['content'].append(item)
 
         for section in sections.keys():
-            console.print(sections[section]['content'])
             uniq_content = dedup_stream(sections[section]['content'], key="abstract")
-            sections[section]['content'] = uniq_content
+            sections[section]['content'] = reversed(sorted(uniq_content, key=lambda d: d['created']))
         console.log("Sections generated.")
         return list(sections.values())
         
