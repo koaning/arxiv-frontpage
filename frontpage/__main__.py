@@ -78,9 +78,7 @@ def build(retrain: bool = False, prep:bool = False):
 def artifact(action:str):
     """Upload/download from wandb"""
     import wandb
-    from dotenv import load_dotenv
-    load_dotenv()
-    run = wandb.init(os.getenv("WANDB_API_KEY"))
+    run = wandb.init()
     if action == "upload":
         artifact = wandb.Artifact('sentence-model', type='model')
         artifact.add_dir(TRAINED_FOLDER)
