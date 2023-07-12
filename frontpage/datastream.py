@@ -11,7 +11,7 @@ from lazylines import LazyLines
 from lunr import lunr
 from lunr.index import Index
 
-from .constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, CLEAN_DOWNLOADS_FOLDER, DOWNLOADS_FOLDER
+from .constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, CLEAN_DOWNLOADS_FOLDER, DOWNLOADS_FOLDER, ANNOT_PATH
 from .modelling import SentenceModel
 from .utils import console, dedup_stream, add_rownum, attach_docs, attach_spans
 
@@ -104,15 +104,21 @@ class DataStream:
                 .drop("subset")
                 .collect())
 
-    def get_train_stream(self) -> List[Dict]:
-        console.log("Generating training stream")
+    def save_train_stream(self):
+        console.log("Generating annotation stream")
         stream = []
         for dataset in self.retreive_dataset_names():
             if "sentence" in dataset:
                 datapoints = self.db.get_dataset_examples(dataset)
                 stream.extend(self._sentence_data_to_train_format(datapoints))
             # TODO: also handle the abstract level examples
-        return self._accumulate_train_stream(stream)
+        if not ANNOT_PATH.parent.exists():
+            ANNOT_PATH.parent.mkdir(parents=True, exist_ok=True)
+        srsly.write_jsonl(ANNOT_PATH, self._accumulate_train_stream(stream))
+        console.log(f"Annotations saved at [bold]{ANNOT_PATH}[/bold]")
+    
+    def get_train_stream(self) -> List[Dict]:
+        return list(srsly.read_jsonl(ANNOT_PATH))
 
     def get_lunr_stream(self, query: str, level: str):
         idx_path = self._index_path(kind="lunr", level=level)

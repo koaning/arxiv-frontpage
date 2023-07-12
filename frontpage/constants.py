@@ -8,7 +8,7 @@ from .types import Config
 INDICES_FOLDER = Path("indices")
 CLEAN_DOWNLOADS_FOLDER = Path("cleaned")
 DOWNLOADS_FOLDER = Path("downloads")
-ANNOT_FOLDER = Path("annot")
+ANNOT_PATH = Path("annot") / "annotations.jsonl"
 TRAINED_FOLDER = Path("training")
 TEMPLATE_PATH = Path("templates/home.html")
 CONFIG_FILE = "config.yml"
