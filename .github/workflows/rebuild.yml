@@ -15,7 +15,7 @@ jobs:
     - name: Check out this repo
       uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v4
       with:
         python-version: 3.9
         cache: 'pip'
@@ -29,9 +29,7 @@ jobs:
     - name: Fetch model artifact
       run: python -m frontpage artifact download
     - name: Build new site
-      run: |-
-        python -m frontpage preprocess
-        python -m frontpage build --train
+      run: python -m frontpage build --retrain --preprocess
     - name: Commit and push if it changed
       run: |-
         git config user.name "Automated"
