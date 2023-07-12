@@ -25,6 +25,8 @@ jobs:
         python -m pip install -e .
     - name: Fetch model artifact
       run: python -m frontpage artifact download
+    - name: Check key
+      run: echo $WANDB_API_KEY
     - name: Build new site
       run: python -m frontpage build
     - name: Commit and push if it changed
