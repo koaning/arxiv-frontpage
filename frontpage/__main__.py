@@ -25,6 +25,7 @@ def index():
     """Preprocess downloaded data for annotation."""
     DataStream().create_indices(model=SentenceModel())
 
+
 @cli.command("preprocess")
 def preprocess():
     """Dedup and process data for faster processing."""

@@ -11,10 +11,9 @@ from lazylines import LazyLines
 from lunr import lunr
 from lunr.index import Index
 
-from .pipeline import dedup_stream, add_rownum, attach_spans, attach_docs
 from .constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, CLEAN_DOWNLOADS_FOLDER, DOWNLOADS_FOLDER
 from .modelling import SentenceModel
-from .utils import console
+from .utils import console, dedup_stream, add_rownum, attach_docs, attach_spans
 
 msg = Printer()
 
@@ -270,9 +269,8 @@ class DataStream:
                 sections[section]['content'].append(item)
 
         for section in sections.keys():
-            console.print(sections.keys())
-            console.print(sections['section'].keys())
-            uniq_content = list(set(sections[section]['content']))
+            console.print(sections[section]['content'])
+            uniq_content = dedup_stream(sections[section]['content'], key="abstract")
             sections[section]['content'] = uniq_content
         console.log("Sections generated.")
         return list(sections.values())
