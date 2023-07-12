@@ -26,8 +26,6 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r requirements-build.txt
         python -m pip install -e .
-    - name: Fetch model artifact
-      run: python -m frontpage artifact download
     - name: Build new site
       run: python -m frontpage build --retrain --preprocess
     - name: Commit and push if it changed
