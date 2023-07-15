@@ -6,6 +6,7 @@ from wasabi import Printer
 
 from .datastream import DataStream
 from .constants import LABELS, DATA_LEVELS
+from .modelling import SentenceModel
 datastream = DataStream()
 
 msg = Printer()
@@ -90,6 +91,7 @@ def arxiv_sentence(dataset, label, tactic, setting):
 def arxiv_abstract(dataset, label, tactic, setting):
     """Very general recipe to annotate sentences, using different ordering techniques."""
     from prodigy.components.preprocess import add_tokens
+    from prodigy import set_hashes
 
     if tactic == "simsity":
         msg.info("Setting up simsity stream")
@@ -99,10 +101,10 @@ def arxiv_abstract(dataset, label, tactic, setting):
         stream = datastream.get_random_stream(level="abstract")
     elif tactic == "search-engine":
         msg.info("Setting up lunr query")
-        stream = datastream.get_lunr_stream(query=setting, level="sentence")
+        stream = datastream.get_lunr_stream(query=setting, level="abstract")
     elif tactic == "second-opinion":
         msg.info("Setting up second opinion")
-        stream = datastream.get_second_opinion_stream(label=label, min_sents=1, max_sents=2)
+        stream = datastream.get_second_opinion_stream(model=SentenceModel(), label=label, min_sents=1, max_sents=2)
     else:
         raise ValueError("This should never happen.")
     

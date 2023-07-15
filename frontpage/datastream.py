@@ -11,9 +11,9 @@ from lazylines import LazyLines
 from lunr import lunr
 from lunr.index import Index
 
-from .constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, CLEAN_DOWNLOADS_FOLDER, DOWNLOADS_FOLDER, ANNOT_PATH
+from .constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, CLEAN_DOWNLOADS_FOLDER, DOWNLOADS_FOLDER, ANNOT_PATH, TRAINED_FOLDER
 from .modelling import SentenceModel
-from .utils import console, dedup_stream, add_rownum, attach_docs, attach_spans
+from .utils import console, dedup_stream, add_rownum, attach_docs, attach_spans, add_predictions, abstract_annot_to_sent
 
 msg = Printer()
 
@@ -28,6 +28,11 @@ class DataStream:
         
         db = connect()
         return db
+
+    @cached_property
+    def nlp(self):
+        import spacy
+        return spacy.load("en_core_web_sm", disable=["ner", "lemmatizer", "tagger"])
     
     def get_dataset_name(self, label:str, level:str):
         """Source of truth as far as dataset name goes."""
@@ -71,7 +76,7 @@ class DataStream:
         stream = self.get_clean_download_stream()
         
         # Generate two streams lazily
-        abstract_stream = ({"text": ex["abstract"], "meta": {"url": ex["url"], "title": ex["title"], "created": ex["created"][:10]}} 
+        abstract_stream = ({"text": ex["abstract"], "sentences": ex["sentences"], "created": ex["created"][:10], "meta": {"created": ex["created"][:10], "url": ex["url"], "title": ex["title"]}} 
                            for ex in stream)
         sentences_stream = ({"text": sent, "meta": {"url": ex["url"]}} 
                             for ex in stream for sent in ex['sentences'])
@@ -108,10 +113,17 @@ class DataStream:
         console.log("Generating annotation stream")
         stream = []
         for dataset in self.retreive_dataset_names():
+            datapoints = self.db.get_dataset_examples(dataset)
             if "sentence" in dataset:
-                datapoints = self.db.get_dataset_examples(dataset)
-                stream.extend(self._sentence_data_to_train_format(datapoints))
-            # TODO: also handle the abstract level examples
+                new = list(self._sentence_data_to_train_format(datapoints))
+                console.log(f"Adding {len(new)} examples from {dataset}")
+                stream.extend(new)
+            if "abstract" in dataset:
+                label_name = dataset.replace("-abstract", "")
+                new = list(abstract_annot_to_sent(datapoints, self.nlp, label_name))
+                console.log(f"Adding {len(new)} examples from {dataset}")
+                stream.extend(new)
+                
         if not ANNOT_PATH.parent.exists():
             ANNOT_PATH.parent.mkdir(parents=True, exist_ok=True)
         srsly.write_jsonl(ANNOT_PATH, self._accumulate_train_stream(stream))
@@ -161,13 +173,15 @@ class DataStream:
         if preference == "negative class":
             return (ex for s, ex in scored_stream if s < 0.4)
 
-    def get_second_opinion_stream(self, model: SentenceModel, label, min_sents=1, max_sents=1):
+    def get_second_opinion_stream(self, model: SentenceModel, label, min_sents=1, max_sents=5):
         from prodigy.components.preprocess import add_tokens
         
-        stream = self.content_stream(view="abstract")
+        stream = self.get_download_stream(level="abstract")
         stream = ({'abstract': ex['text'], **ex} for ex in stream)
-        model = SentenceModel.from_disk("training", encoder=SentenceModel().encoder)
-        stream = attach_docs(stream, model.nlp, model=model)
+        model = SentenceModel.from_disk(TRAINED_FOLDER)
+        stream = add_predictions(stream, model=model)        
+        stream = (ex for ex in stream if max([p[label] for p in ex["preds"]]) > 0.6)
+        stream = attach_docs(stream, model.nlp, model=model, label=label)
         stream = attach_spans(stream, label, min_spans=min_sents, max_spans=max_sents)
         return add_tokens(model.nlp, stream)
 
@@ -238,13 +252,6 @@ class DataStream:
                             yield ex
                 if all(v == limit for v in tracker.values()):
                     break
-
-        def add_predictions(stream, model: SentenceModel):
-            for ex in stream:
-                preds = model.predict(ex['sentences'])
-                ex['preds'] = preds
-                ex['created'] = ex['created'][:10]
-                yield ex
 
         console.log("Filtering recent content.")
         return (

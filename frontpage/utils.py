@@ -3,6 +3,7 @@ import itertools as it
 
 from spacy.tokens import Span
 
+
 console = Console()
 
 
@@ -28,21 +29,22 @@ def add_rownum(stream):
         yield {"text": ex["text"], "idx": i}
 
 
-def attach_docs(lines, nlp, model):
+def attach_docs(lines, nlp, model, label):
     tuples = ((eg['text'], eg) for eg in lines)
     for doc, eg in nlp.pipe(tuples, as_tuples=True):
-        eg['doc'] = sentence_classifier(doc, model)
+        eg['doc'] = sentence_classifier(doc, model, label)
         yield eg
 
 
-def sentence_classifier(doc, model):
+def sentence_classifier(doc, model, label):
     doc.spans["sc"] = []
     for sent in doc.sents:
         preds = model(sent.text)
         for k, p in preds.items():
             if p >= 0.6:
-                doc.spans["sc"].append(Span(doc, sent.start, sent.end, k))
-                doc.cats[k] = max(doc.cats.get(k, 0.0), p)
+                if k == label:
+                    doc.spans["sc"].append(Span(doc, sent.start, sent.end, k))
+                    doc.cats[k] = max(doc.cats.get(k, 0.0), p)
     return doc
 
 
@@ -64,5 +66,33 @@ def attach_spans(stream, label, min_spans=1, max_spans=1):
         ex["spans"] = spans
         del ex["doc"]
         if len(spans) >= min_spans:
-            if len(spans) >= max_spans:
+            if len(spans) <= max_spans:
                 yield ex
+
+
+def add_predictions(stream, model):
+    for ex in stream:
+        preds = model.predict(ex['sentences'])
+        ex['preds'] = preds
+        ex['created'] = ex['created'][:10]
+        yield ex
+
+
+def _abstract_single_annot_to_sent(example, nlp, label):
+    """Takens an annotation from abstract level and turns it into a training example"""
+    text = example['text']
+    if example['answer'] == "accept" and "spans" in example:
+        for span in example['spans']:
+            yield {"text": text[span['start']: span['end']], label: 1}
+        for span in example['spans']:
+            text = text.replace(text[span['start']: span['end']], "")
+        for sent in nlp(text).sents:
+            if len(sent.text) > 5:
+                yield {"text": sent.text, label: 0}
+
+
+def abstract_annot_to_sent(examples, nlp, label):
+    """Takens an annotation from abstract level and turns it into a training example"""
+    for ex in examples:
+        for annot in _abstract_single_annot_to_sent(ex, nlp, label):
+            yield annot

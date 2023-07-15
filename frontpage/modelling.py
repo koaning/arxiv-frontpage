@@ -65,6 +65,11 @@ class SentenceModel:
     def to_disk(self, path: Path=TRAINED_FOLDER):
         if not Path(path).exists():
             Path(path).mkdir(exist_ok=True, parents=True)
+        # Delete old files
+        if Path(path).exists():
+            for p in Path(path).glob("*.h5"):
+                p.unlink()
+        # Write new files
         for name, clf in self._models.items():
             dump(clf, Path(path) / f"{name}.h5")
         console.log(f"Model saved in folder: [bold]{path}[/bold].")
