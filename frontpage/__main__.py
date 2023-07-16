@@ -5,9 +5,6 @@ from pathlib import Path
 from jinja2 import Template
 from radicli import Radicli, Arg
 
-from .download import main as download_data
-from .datastream import DataStream
-from .modelling import SentenceModel
 from .utils import console
 from .constants import TEMPLATE_PATH, TRAINED_FOLDER, SITE_PATH
 
@@ -17,38 +14,84 @@ cli = Radicli()
 @cli.command("download")
 def download():
     """Download new data."""
+    from .download import main as download_data
     download_data()
 
 
-@cli.command("index")
-def index():
-    """Preprocess downloaded data for annotation."""
-    DataStream().create_indices(model=SentenceModel())
+@cli.command("index", 
+             kind=Arg(help="Can be lunr/simsity"), 
+             level=Arg(help="Can be sentence/abstract")
+)
+def index_cli(kind:str, level:str):
+    """Creates index for annotation."""
+    from .datastream import DataStream
+
+    DataStream().create_index(level=level, kind=kind)
 
 
 @cli.command("preprocess")
-def preprocess():
+def preprocess_cli():
     """Dedup and process data for faster processing."""
+    from .datastream import DataStream
     DataStream().save_clean_download_stream()
-    DataStream().save_train_stream()
 
 
 @cli.command("annotate")
 def annotate():
     """Annotate new examples."""
-    from .recipe import annotate_prodigy
+    def run_questions():
+        import questionary
+        from .constants import LABELS, DATA_LEVELS
+        results = {}
+        results["label"] = questionary.select(
+            "Which label do you want to annotate?",
+            choices=LABELS,
+        ).ask()
+
+        results["level"] = questionary.select(
+            "What view of the data do you want to take?",
+            choices=DATA_LEVELS,
+        ).ask()
+
+        if results["level"] == "abstract":
+            choices = ["second-opinion", "search-engine", "simsity", "random"]
+        else:
+            choices = ["simsity", "search-engine", "active-learning", "random"]
+
+        results["tactic"] = questionary.select(
+            "Which tactic do you want to apply?",
+            choices=choices,
+        ).ask()
+
+        results['setting'] = ''
+        if results["tactic"] in ["simsity", "search-engine"]:
+            results["setting"] = questionary.text(
+                "What query would you like to use?", ""
+            ).ask()
+
+        if results["tactic"] == "active-learning":
+            results["setting"] = questionary.select(
+                "What should the active learning method prefer?",
+                choices=["positive class", "uncertainty", "negative class"],
+            ).ask()
+        return results 
     
-    annotate_prodigy()
+    results = run_questions()
+    from .recipe import annotate_prodigy
+    annotate_prodigy(results)
 
 @cli.command("postprocess")
 def postprocess():
     """Prepares data for training."""
+    from .datastream import DataStream
     DataStream().save_train_stream()
 
 
 @cli.command("train")
 def train():
     """Trains a new model on the data."""
+    from .datastream import DataStream
+    from .modelling import SentenceModel
     examples = DataStream().get_train_stream()
     SentenceModel().train(examples=examples).to_disk()
 
@@ -56,6 +99,7 @@ def train():
 @cli.command("stats")
 def stats():
     """Show annotation stats"""
+    from .datastream import DataStream
     DataStream().show_annot_stats()
 
 
@@ -66,8 +110,9 @@ def stats():
 )
 def build(retrain: bool = False, prep:bool = False):
     """Build a new site"""
+    from .datastream import DataStream
     if prep:
-        preprocess()
+        preprocess_cli()
     if retrain:
         train()
     console.log("Starting site build process")

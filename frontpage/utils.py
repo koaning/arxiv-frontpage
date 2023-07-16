@@ -29,18 +29,17 @@ def add_rownum(stream):
         yield {"text": ex["text"], "idx": i}
 
 
-def attach_docs(lines, nlp, model, label):
+def attach_docs(lines, nlp, label):
     tuples = ((eg['text'], eg) for eg in lines)
     for doc, eg in nlp.pipe(tuples, as_tuples=True):
-        eg['doc'] = sentence_classifier(doc, model, label)
+        eg['doc'] = sentence_classifier(doc, eg['preds'], label)
         yield eg
 
 
-def sentence_classifier(doc, model, label):
+def sentence_classifier(doc, preds, label):
     doc.spans["sc"] = []
-    for sent in doc.sents:
-        preds = model(sent.text)
-        for k, p in preds.items():
+    for sent, pred in zip(doc.sents, preds):
+        for k, p in pred.items():
             if p >= 0.6:
                 if k == label:
                     doc.spans["sc"].append(Span(doc, sent.start, sent.end, k))

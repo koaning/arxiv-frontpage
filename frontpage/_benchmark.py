@@ -74,6 +74,8 @@ def run_benchmark(label, model, encoder):
         stats = calc_stats(valid_pred, y_valid)
         yield {**res, "i": i, "n_infer": len(y_valid), "infer_time": toc - tic, **stats}
 
+
+
 if __name__ == "__main__":
     settings = grid(
         label=["new-dataset"], 

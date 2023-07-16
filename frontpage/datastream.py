@@ -11,7 +11,7 @@ from lazylines import LazyLines
 from lunr import lunr
 from lunr.index import Index
 
-from .constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, CLEAN_DOWNLOADS_FOLDER, DOWNLOADS_FOLDER, ANNOT_PATH, TRAINED_FOLDER
+from .constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, CLEAN_DOWNLOADS_FOLDER, DOWNLOADS_FOLDER, ANNOT_PATH, ACTIVE_LEARN_PATH, SECOND_OPINION_PATH
 from .modelling import SentenceModel
 from .utils import console, dedup_stream, add_rownum, attach_docs, attach_spans, add_predictions, abstract_annot_to_sent
 
@@ -152,20 +152,39 @@ class DataStream:
             example = {"text": txt}
             example["meta"] = {"distance": float(score)}
             yield example
+    
+    def build_active_learn_stream(self, n=5000):
+        console.log("Preparing active learning stream.")
+        model = SentenceModel.from_disk()
+        stream = self.get_download_stream(level="sentence")
+        
+        def add_preds(stream):
+            for ex in stream:
+                ex['cats'] = model(ex['text'])
+                yield ex
+
+        out = LazyLines(stream).head(n).progress().pipe(add_preds).collect()
+        
+        srsly.write_jsonl(ACTIVE_LEARN_PATH, out)
+        console.log(f"Active learning stream saved in {ACTIVE_LEARN_PATH}.")
+
 
     def get_active_learn_stream(self, label, preference):
         from prodigy import set_hashes
-        stream = self.get_download_stream(level="sentence")
-        model = SentenceModel.from_disk()
+
+        if not ACTIVE_LEARN_PATH.exists():
+            self.build_active_learn_stream()
+            
+        stream = srsly.read_jsonl(ACTIVE_LEARN_PATH)
     
-        def make_scored_stream(stream, model):
+        def make_scored_stream(stream):
             for ex in stream: 
                 ex = set_hashes(ex)
-                score = model(ex['text'])[label]
+                score = ex['cats'][label]
                 ex['meta']['score'] = score
                 yield score, ex 
             
-        scored_stream = make_scored_stream(stream, model)
+        scored_stream = make_scored_stream(stream)
         if preference == "uncertainty":
             return (ex for s, ex in scored_stream if s < 0.6 and s > 0.4)
         if preference == "positive class":
@@ -173,17 +192,30 @@ class DataStream:
         if preference == "negative class":
             return (ex for s, ex in scored_stream if s < 0.4)
 
-    def get_second_opinion_stream(self, model: SentenceModel, label, min_sents=1, max_sents=5):
-        from prodigy.components.preprocess import add_tokens
-        
+    def build_second_opinion_stream(self, n=2000):
+        console.log("Preparing second opinion stream.")
+        model = SentenceModel.from_disk()
+
         stream = self.get_download_stream(level="abstract")
         stream = ({'abstract': ex['text'], **ex} for ex in stream)
-        model = SentenceModel.from_disk(TRAINED_FOLDER)
-        stream = add_predictions(stream, model=model)        
+
+        out = LazyLines(stream).head(n).progress().pipe(add_predictions, model=model).collect()
+        
+        srsly.write_jsonl(SECOND_OPINION_PATH, out)
+        console.log(f"Predictions saved in {SECOND_OPINION_PATH}.")
+
+    def get_second_opinion_stream(self, label, min_sents=1, max_sents=5):
+        from prodigy.components.preprocess import add_tokens
+        
+        if not SECOND_OPINION_PATH.exists():
+            self.build_second_opinion_stream()
+        
+        stream = srsly.read_jsonl(SECOND_OPINION_PATH)
+        console.log("Local disk state loaded")
         stream = (ex for ex in stream if max([p[label] for p in ex["preds"]]) > 0.6)
-        stream = attach_docs(stream, model.nlp, model=model, label=label)
+        stream = attach_docs(stream, self.nlp, label=label)
         stream = attach_spans(stream, label, min_spans=min_sents, max_spans=max_sents)
-        return add_tokens(model.nlp, stream)
+        return add_tokens(self.nlp, stream)
 
     def get_random_stream(self, level:str):
         return (ex for ex in self.get_download_stream(level=level) if random.random() < 0.05)
@@ -196,24 +228,35 @@ class DataStream:
         path = Path(f"{path}.json")
         path.parent.mkdir(parents=True, exist_ok=True)
         return path
-
-    def create_indices(self, model: SentenceModel):
-        """Index annotation examples for quick annotation."""
+    
+    def create_lunr_index(self, level:str):
+        console.log(f"Preparing lunr index for {level}")
+        stream = LazyLines(self.get_download_stream(level=level)).pipe(add_rownum).collect()
+        index = lunr(ref='idx', fields=('text',), documents=stream)
+        serialized = index.serialize()
+        with open(self._index_path(kind="lunr", level=level), 'w') as fd:
+            json.dump(serialized, fd)
+        console.log(f"Lunr index for {level} created")
+    
+    def create_simsity_index(self, level:str):
         from simsity import create_index
+        model = SentenceModel()
+        console.log(f"Preparing simsity index for {level}")
+        stream = LazyLines(self.get_download_stream(level=level)).map(lambda d: d['text']).collect()
+        path = self._index_path(kind="simsity", level=level)
+        create_index(stream, model.encoder, path=path, batch_size=200, pbar=True)
 
+    def create_index(self, level: str, kind: str):
+        if kind == "lunr":
+            self.create_lunr_index(level=level)
+        if kind == "simsity":
+            self.create_simsity_index(level=level)
+
+    def create_indices(self):
+        """Index annotation examples for quick annotation."""
         for level in DATA_LEVELS:
-            stream = LazyLines(self.get_download_stream(level=level)).map(lambda d: d['text']).collect()
-            msg.info(f"Creating indices for {len(stream)} items.")
-            msg.info(f"Preparing simsity index for {level}")
-            path = self._index_path(kind="simsity", level=level)
-            create_index(stream, model.encoder, path=path, batch_size=200, pbar=True)
-
-            msg.info(f"Preparing lunr index for {level}")
-            stream = LazyLines(self.get_download_stream(level=level)).pipe(add_rownum).collect()
-            index = lunr(ref='idx', fields=('text',), documents=stream)
-            serialized = index.serialize()
-            with open(self._index_path(kind="lunr", level=level), 'w') as fd:
-                json.dump(serialized, fd)
+            self.create_simsity_index(level=level)
+            self.create_lunr_index(level=level)
 
     def show_annot_stats(self):
         """Show the annotation statistics."""
