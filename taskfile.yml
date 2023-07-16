@@ -1,0 +1,52 @@
+version: '3'
+
+tasks:
+  index:
+    deps: [lunr-sentence, lunr-abstract]
+    sources:
+      - cleaned/*.jsonl
+    cmds:
+      - python -m frontpage index simsity sentence
+      - python -m frontpage index simsity abstract
+
+  lunr-sentence:
+    cmds:
+      - python -m frontpage index lunr sentence
+    sources:
+      - cleaned/*.jsonl
+    generates:
+      - indices/lunr/sentence.json
+  
+  lunr-abstract:
+    cmds:
+      - python -m frontpage index lunr abstract
+    sources:
+      - cleaned/*.jsonl
+    generates:
+      - indices/lunr/abstract.json
+  
+  clean:
+    cmds:
+      - python -c "from frontpage.datastream import DataStream; DataStream().save_clean_download_stream()"
+    sources:
+      - downloads/*.jsonl
+
+  build-learned-streams:
+    cmds:
+      - python -c "from frontpage.datastream import DataStream; DataStream().build_active_learn_stream()"
+      - python -c "from frontpage.datastream import DataStream; DataStream().build_second_opinion_stream()"
+    sources:
+      - cleaned/*.jsonl
+  
+  train:
+    cmds:
+      - python -m frontpage train
+    sources:
+      - annot/annotations.jsonl
+
+  prepare:
+    cmds:
+      - task: clean
+      - task: index
+      - task: train
+      - task: build-learned-streams
