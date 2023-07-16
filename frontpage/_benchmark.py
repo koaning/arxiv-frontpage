@@ -51,7 +51,7 @@ models = {
 }
 
 def calc_stats(pred_valid, y_valid):
-    return classification_report(pred_valid, y_valid, output_dict=True)['1']
+    return {**classification_report(pred_valid, y_valid, output_dict=True)['1'],  "accuracy": float(np.mean(pred_valid == y_valid))}
 
 def run_benchmark(label, model, encoder):
     res = {"label": label, "model": model, "encoder": encoder}
@@ -72,31 +72,31 @@ def run_benchmark(label, model, encoder):
         toc = time.time()
         
         stats = calc_stats(valid_pred, y_valid)
-        yield {**res, "i": i, "n_infer": len(y_valid), "infer_time": toc - tic, **stats, "accuracy": float(np.mean(valid_pred == y_valid))}
+        yield {**res, "i": i, "n_infer": len(y_valid), "infer_time": toc - tic, **stats}
 
+if __name__ == "__main__":
+    settings = grid(
+        label=["new-dataset"], 
+        encoder=["hash_sm", "hash_lg", "spacy", "sbert", "cohere", "openai"], 
+        model=["logistic", "svm"]
+    )
 
-settings = grid(
-    label=["new-dataset"], 
-    encoder=["hash_sm", "hash_lg", "spacy", "sbert", "cohere", "openai"], 
-    model=["logistic", "svm"]
-)
+    stats = (ex for setting in settings for ex in run_benchmark(**setting))
 
-stats = (ex for setting in settings for ex in run_benchmark(**setting))
+    Path("benchmark.jsonl").unlink()
+    srsly.write_jsonl("benchmark.jsonl", stats)
 
-Path("benchmark.jsonl").unlink()
-srsly.write_jsonl("benchmark.jsonl", stats)
+    pl.Config.set_tbl_rows(100)
 
-pl.Config.set_tbl_rows(100)
-
-print(
-    pl.read_ndjson("benchmark.jsonl")
-    .groupby("label","model","encoder")
-    .agg(
-        pl.mean("recall"), 
-        pl.mean("precision"), 
-        pl.mean("f1-score"),
-        pl.mean("accuracy"),
-        pl.mean("infer_time")
-    ).sort("f1-score")
-)
+    print(
+        pl.read_ndjson("benchmark.jsonl")
+        .groupby("label","model","encoder")
+        .agg(
+            pl.mean("recall"), 
+            pl.mean("precision"), 
+            pl.mean("f1-score"),
+            pl.mean("accuracy"),
+            pl.mean("infer_time")
+        ).sort("f1-score")
+    )
 

@@ -239,7 +239,7 @@ class DataStream:
 
         def upper_limit(stream):
             tracker = {lab: 0 for lab in LABELS}
-            limit = 20
+            limit = 30
             for ex in stream:
                 for preds in ex['preds']:
                     for name, proba in preds.items():

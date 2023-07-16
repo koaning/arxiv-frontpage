@@ -30,6 +30,7 @@ def index():
 def preprocess():
     """Dedup and process data for faster processing."""
     DataStream().save_clean_download_stream()
+    DataStream().save_train_stream()
 
 
 @cli.command("annotate")
@@ -48,7 +49,6 @@ def postprocess():
 @cli.command("train")
 def train():
     """Trains a new model on the data."""
-    DataStream().save_train_stream()
     examples = DataStream().get_train_stream()
     SentenceModel().train(examples=examples).to_disk()
 
