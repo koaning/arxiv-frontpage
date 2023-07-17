@@ -37,6 +37,23 @@ tasks:
       - python -c "from frontpage.datastream import DataStream; DataStream().build_second_opinion_stream()"
     sources:
       - cleaned/*.jsonl
+      - annot/annotations.jsonl
+      - training
+  
+  stats-out:
+    cmds: 
+      - python -m prodigy stats -NF > /tmp/stats.jsonl
+    generates:
+      - tmp/stats.jsonl
+
+  
+  prepare-annotations:
+    cmds:
+      - python -m frontpage annotprep
+    sources:
+      - /tmp/stats.jsonl
+    generates:
+      - annot/annotations.jsonl
   
   train:
     cmds:
@@ -48,5 +65,7 @@ tasks:
     cmds:
       - task: clean
       - task: index
+      - task: stats-out
+      - task: prepare-annotations
       - task: train
       - task: build-learned-streams

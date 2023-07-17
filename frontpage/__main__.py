@@ -80,8 +80,8 @@ def annotate():
     from .recipe import annotate_prodigy
     annotate_prodigy(results)
 
-@cli.command("postprocess")
-def postprocess():
+@cli.command("annotprep")
+def annotprep():
     """Prepares data for training."""
     from .datastream import DataStream
     DataStream().save_train_stream()
