@@ -9,6 +9,7 @@ import datetime as dt
 from pathlib import Path
 from typing import List
 
+# import termcharts
 import srsly
 import tqdm
 import arxiv
@@ -17,7 +18,9 @@ from retry import retry
 import spacy
 from spacy.language import Language
 from pydantic import BaseModel 
+from rich.console import Console 
 
+console = Console()
 
 class ArxivArticle(BaseModel):
     created: str
@@ -27,7 +30,7 @@ class ArxivArticle(BaseModel):
     url: str
 
 
-def total_seconds(res: Result) -> float:
+def age_in_days(res: Result) -> float:
     """Get total seconds from now from Arxiv result"""
     now = dt.datetime.now(dt.timezone.utc)
     return (now - res.published).total_seconds() / 3600 / 24
@@ -50,7 +53,7 @@ def parse(res: Result, nlp: Language) -> ArxivArticle:
 @retry(tries=5, delay=1, backoff=2)
 def main():
     nlp = spacy.load("en_core_web_sm", disable=["ner", "lemmatizer", "tagger"])
-
+    console.log(f"Starting arxiv search.")
     items = arxiv.Search(
         query="and",
         max_results=500,
@@ -59,12 +62,21 @@ def main():
 
     results = list(items.results())
 
+    console.log(f"Found {len(results)} results.")
+
     articles = [dict(parse(r, nlp=nlp)) 
                 for r in tqdm.tqdm(results) 
-                if total_seconds(r) < 2.5 and r.primary_category.startswith("cs")]
+                if age_in_days(r) < 2.5 and r.primary_category.startswith("cs")]
 
-    filename = str(dt.datetime.now()).replace(" ", "-")[:13] + "h.jsonl"
-    srsly.write_jsonl(Path("downloads") / filename, articles)
+    dist = [age_in_days(r) for r in results]
+    console.log(f"Minimum article age: {min(dist)}")
+    console.log(f"Maximum article age: {max(dist)}")
+    if min(dist) > 2.5:
+        console.log("No new articles, everything is too old. Skip writing file.")
+    else:
+        filename = str(dt.datetime.now()).replace(" ", "-")[:13] + "h.jsonl"
+        srsly.write_jsonl(Path("downloads") / filename, articles)
+        console.log(f"Wrote {len(articles)} articles into {filename}.")
 
 
 if __name__ == "__main__":
