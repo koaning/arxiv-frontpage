@@ -69,3 +69,9 @@ tasks:
       - task: prepare-annotations
       - task: train
       - task: build-learned-streams
+
+  build:
+    cmds:
+    - task: prepare
+    - python -m frontpage build
+    - python -m http.server
