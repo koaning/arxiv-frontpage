@@ -142,11 +142,19 @@ def artifact(action:str):
         artifact.download(TRAINED_FOLDER)
 
 
-@cli.command("benchmark")
-def generate():
-    """Benchmark the models"""
-    pass
-
+@cli.command("search")
+def search():
+    """Annotate new examples."""
+    import questionary
+    from simsity import load_index
+    from .modelling import SentenceModel
+    enc = SentenceModel().encoder
+    index = load_index("indices/simsity/sentence", encoder=enc)
+    while True:
+        query = questionary.text("Query:").ask()
+        texts, dists = index.query([query], n=5)
+        for t in texts:
+            print(t)
 
 if __name__ == "__main__":
     cli.run()
