@@ -331,4 +331,3 @@ class DataStream:
             sections[section]['content'] = reversed(sorted(uniq_content, key=lambda d: d['created']))
         console.log("Sections generated.")
         return list(sections.values())
-        
