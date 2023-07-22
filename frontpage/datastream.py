@@ -241,8 +241,8 @@ class DataStream:
     def create_simsity_index(self, level:str):
         from simsity import create_index
         model = SentenceModel()
-        console.log(f"Preparing simsity index for {level}")
         stream = LazyLines(self.get_download_stream(level=level)).map(lambda d: d['text']).collect()
+        console.log(f"Preparing simsity index for {level} with {len(stream)} examples.")
         path = self._index_path(kind="simsity", level=level)
         create_index(stream, model.encoder, path=path, batch_size=200, pbar=True)
 
