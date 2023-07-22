@@ -11,7 +11,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn.metrics import classification_report
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold, train_test_split
 from embetter.text import SentenceEncoder, spaCyEncoder
 from embetter.external import CohereEncoder, OpenAIEncoder
 from embetter.utils import cached
@@ -71,8 +71,8 @@ def calc_stats(pred_valid, y_valid):
     return {**classification_report(pred_valid, y_valid, output_dict=True)['1'],  "accuracy": float(np.mean(pred_valid == y_valid))}
 
 
-def run_benchmark(label, model, encoder, tuner):
-    res = {"label": label, "model": model, "encoder": encoder, "tuner": tuner}
+def run_benchmark_k_fold(label, model, encoder, tuner):
+    res = {"label": label, "model": model, "encoder": encoder, "tuner": tuner, "method": "k_fold"}
     pipe = make_pipeline(encoders[encoder], tuners[tuner](), models[model])
     examples = datastream.get_train_stream()
     X = [ex['text'] for ex in examples if label in ex['cats']]
@@ -94,6 +94,28 @@ def run_benchmark(label, model, encoder, tuner):
             yield res
 
 
+def run_benchmark_train_size(label, model, encoder, tuner):
+    res = {"label": label, "model": model, "encoder": encoder, "tuner": tuner, "method": "train_size"}
+    pipe = make_pipeline(encoders[encoder], tuners[tuner](), models[model])
+    examples = datastream.get_train_stream()
+    X = [ex['text'] for ex in examples if label in ex['cats']]
+    y = [ex['cats'][label] for ex in examples if label in ex['cats']]
+    X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2)
+    for p in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]:
+        idx = int(len(X_train) * p)
+        X_train_use = [str(x) for x in np.array(X)[:idx]]
+        y_train_use = np.array(y)[:idx]
+        pipe.fit(X_train_use, y_train_use)
+
+        probas = pipe.predict_proba(X_valid)
+        for thres in [0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9]:
+            valid_pred = (probas[:, 1] > thres).astype(int)
+            
+            stats = calc_stats(valid_pred, y_valid)
+            res = {**res, **stats, "data_size": len(y), "p": p, "threshold": float(thres)}
+            yield res
+
+
 
 if __name__ == "__main__":
     settings = grid(
@@ -103,10 +125,15 @@ if __name__ == "__main__":
         tuner=["contrast", "forward", "none"]
     )
 
-    stats = (ex for setting in settings for ex in run_benchmark(**setting))
+    # stats = (ex for setting in settings for ex in run_benchmark_k_fold(**setting))
 
-    Path("benchmark.jsonl").unlink()
-    srsly.write_jsonl("benchmark.jsonl", stats)
+    # Path("benchmark_kfold.jsonl").unlink()
+    # srsly.write_jsonl("benchmark_kfold.jsonl", stats)
+
+    stats = (ex for setting in settings for ex in run_benchmark_train_size(**setting))
+
+    Path("benchmark_train_size.jsonl").unlink()
+    srsly.write_jsonl("benchmark_train_size.jsonl", stats)
 
     pl.Config.set_tbl_rows(100)
     pl.Config.set_tbl_width_chars(1000)
