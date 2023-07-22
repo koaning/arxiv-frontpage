@@ -84,14 +84,10 @@ def run_benchmark_k_fold(label, model, encoder, tuner):
         y_train = np.array(y)[train_idx]
         y_valid = np.array(y)[valid_idx]
         pipe.fit(X_train, y_train)
-
-        probas = pipe.predict_proba(X_valid)
-        for thres in [0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9]:
-            valid_pred = (probas[:, 1] > thres).astype(int)
-            
-            stats = calc_stats(valid_pred, y_valid)
-            res = {**res, **stats, "data_size": len(y), "i": i, "threshold": float(thres)}
-            yield res
+        valid_pred = pipe.predict(X_valid)
+        stats = calc_stats(valid_pred, y_valid)
+        res = {**res, **stats, "data_size": len(y), "i": i}
+        yield res
 
 
 def run_benchmark_train_size(label, model, encoder, tuner):
@@ -103,18 +99,13 @@ def run_benchmark_train_size(label, model, encoder, tuner):
     X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2)
     for p in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]:
         idx = int(len(X_train) * p)
-        X_train_use = [str(x) for x in np.array(X)[:idx]]
-        y_train_use = np.array(y)[:idx]
+        X_train_use = [str(x) for x in np.array(X_train)[:idx]]
+        y_train_use = np.array(y_train)[:idx]
         pipe.fit(X_train_use, y_train_use)
-
-        probas = pipe.predict_proba(X_valid)
-        for thres in [0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9]:
-            valid_pred = (probas[:, 1] > thres).astype(int)
-            
-            stats = calc_stats(valid_pred, y_valid)
-            res = {**res, **stats, "data_size": len(y), "p": p, "threshold": float(thres)}
-            yield res
-
+        valid_pred = pipe.predict(X_valid)
+        stats = calc_stats(valid_pred, y_valid)
+        res = {**res, **stats, "data_size": len(y), "p": p}
+        yield res
 
 
 if __name__ == "__main__":
@@ -125,28 +116,29 @@ if __name__ == "__main__":
         tuner=["contrast", "forward", "none"]
     )
 
-    # stats = (ex for setting in settings for ex in run_benchmark_k_fold(**setting))
+    stats = (ex for setting in settings for ex in run_benchmark_k_fold(**setting))
 
-    # Path("benchmark_kfold.jsonl").unlink()
-    # srsly.write_jsonl("benchmark_kfold.jsonl", stats)
+    if Path("benchmark_kfold.jsonl").exists():
+        Path("benchmark_kfold.jsonl").unlink()
+    srsly.write_jsonl("benchmark_kfold.jsonl", stats)
 
     stats = (ex for setting in settings for ex in run_benchmark_train_size(**setting))
 
-    Path("benchmark_train_size.jsonl").unlink()
+    if Path("benchmark_train_size.jsonl").exists():
+        Path("benchmark_train_size.jsonl").unlink()
     srsly.write_jsonl("benchmark_train_size.jsonl", stats)
 
     pl.Config.set_tbl_rows(100)
     pl.Config.set_tbl_width_chars(1000)
 
-    print(
-        pl.read_ndjson("benchmark.jsonl")
-        .groupby("label","model","encoder","tuner")
-        .agg(
-            pl.mean("recall"), 
-            pl.mean("precision"), 
-            pl.mean("f1-score"),
-            pl.mean("accuracy"),
-            pl.mean("infer_time")
-        ).sort("f1-score")
-    )
+    # print(
+    #     pl.read_ndjson("benchmark.jsonl")
+    #     .groupby("label","model","encoder","tuner")
+    #     .agg(
+    #         pl.mean("recall"), 
+    #         pl.mean("precision"), 
+    #         pl.mean("f1-score"),
+    #         pl.mean("accuracy"),
+    #     ).sort("f1-score")
+    # )
 
