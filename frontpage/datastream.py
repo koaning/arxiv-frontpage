@@ -145,7 +145,7 @@ class DataStream:
 
     def get_ann_stream(self, query: str, level: str):
         from simsity import load_index
-        model = SentenceModel().from_disk()
+        model = SentenceModel()
         idx = load_index(self._index_path(kind="simsity", level=level), encoder=model.encoder)
         texts, scores = idx.query([query], n=150)
         for txt, score in zip(texts, scores):
