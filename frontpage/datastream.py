@@ -11,7 +11,7 @@ from lazylines import LazyLines
 from lunr import lunr
 from lunr.index import Index
 
-from .constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, CLEAN_DOWNLOADS_FOLDER, DOWNLOADS_FOLDER, ANNOT_PATH, ACTIVE_LEARN_PATH, SECOND_OPINION_PATH
+from .constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, CLEAN_DOWNLOADS_FOLDER, DOWNLOADS_FOLDER, ANNOT_PATH, ACTIVE_LEARN_PATH, SECOND_OPINION_PATH, ANNOT_FOLDER
 from .modelling import SentenceModel
 from .utils import console, dedup_stream, add_rownum, attach_docs, attach_spans, add_predictions, abstract_annot_to_sent
 
@@ -127,7 +127,7 @@ class DataStream:
         if not ANNOT_PATH.parent.exists():
             ANNOT_PATH.parent.mkdir(parents=True, exist_ok=True)
         srsly.write_jsonl(ANNOT_PATH, self._accumulate_train_stream(stream))
-        console.log(f"Annotations saved at [bold]{ANNOT_PATH}[/bold]")
+        console.log(f"Full annotations file saved at [bold]{ANNOT_PATH}[/bold]")
     
     def get_train_stream(self) -> List[Dict]:
         return list(srsly.read_jsonl(ANNOT_PATH))

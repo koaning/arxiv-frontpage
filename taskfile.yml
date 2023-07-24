@@ -21,7 +21,7 @@ tasks:
     cmds:
       - python -m frontpage index lunr abstract
     sources:
-      - cleaned/*.jsonl
+      - data/cleaned/*.jsonl
     generates:
       - indices/lunr/abstract.json
   
@@ -36,8 +36,8 @@ tasks:
       - python -c "from frontpage.datastream import DataStream; DataStream().build_active_learn_stream()"
       - python -c "from frontpage.datastream import DataStream; DataStream().build_second_opinion_stream()"
     sources:
-      - cleaned/*.jsonl
-      - annot/annotations.jsonl
+      - data/cleaned/*.jsonl
+      - data/annot/annotations.jsonl
       - training
   
   stats-out:
