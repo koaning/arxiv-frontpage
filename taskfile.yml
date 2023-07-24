@@ -4,7 +4,7 @@ tasks:
   index:
     deps: [lunr-sentence, lunr-abstract]
     sources:
-      - cleaned/*.jsonl
+      - data/cleaned/*.jsonl
     cmds:
       - python -m frontpage index simsity sentence
       - python -m frontpage index simsity abstract
@@ -13,7 +13,7 @@ tasks:
     cmds:
       - python -m frontpage index lunr sentence
     sources:
-      - cleaned/*.jsonl
+      - data/cleaned/*.jsonl
     generates:
       - indices/lunr/sentence.json
   
@@ -29,7 +29,7 @@ tasks:
     cmds:
       - python -c "from frontpage.datastream import DataStream; DataStream().save_clean_download_stream()"
     sources:
-      - downloads/*.jsonl
+      - data/downloads/*.jsonl
 
   build-learned-streams:
     cmds:
@@ -53,13 +53,13 @@ tasks:
     sources:
       - /tmp/stats.jsonl
     generates:
-      - annot/annotations.jsonl
+      - data/annot/annotations.jsonl
   
   train:
     cmds:
       - python -m frontpage train
     sources:
-      - annot/annotations.jsonl
+      - data/annot/annotations.jsonl
 
   prepare:
     cmds:

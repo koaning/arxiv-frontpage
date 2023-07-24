@@ -75,7 +75,7 @@ def main():
         console.log("No new articles, everything is too old. Skip writing file.")
     else:
         filename = str(dt.datetime.now()).replace(" ", "-")[:13] + "h.jsonl"
-        srsly.write_jsonl(Path("downloads") / filename, articles)
+        srsly.write_jsonl(Path("data") / "downloads" / filename, articles)
         console.log(f"Wrote {len(articles)} articles into {filename}.")
 
 

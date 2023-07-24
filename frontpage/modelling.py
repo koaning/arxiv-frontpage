@@ -8,7 +8,7 @@ from skops.io import dump, load
 from embetter.utils import cached
 from sklearn.linear_model import LogisticRegression
 
-from .constants import TRAINED_FOLDER, LABELS
+from .constants import TRAINED_FOLDER, LABELS, EMBETTER_CACHE
 from .utils import console 
 
 msg = Printer()
@@ -51,12 +51,9 @@ class SentenceModel:
     def encoder(self):
         from embetter.text import SentenceEncoder
         encoder = SentenceEncoder()
-        encoder = cached(f"cache/{str(type(encoder))}", encoder)
+        encoder = cached(EMBETTER_CACHE / str(type(encoder)), encoder)
         return encoder
     
-    def vectorizer(self):
-        return 
-
     @cached_property
     def nlp(self):
         import spacy
