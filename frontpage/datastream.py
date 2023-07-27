@@ -14,6 +14,10 @@ from lunr.index import Index
 from .constants import DATA_LEVELS, INDICES_FOLDER, LABELS, CONFIG, THRESHOLDS, CLEAN_DOWNLOADS_FOLDER, DOWNLOADS_FOLDER, ANNOT_PATH, ACTIVE_LEARN_PATH, SECOND_OPINION_PATH, ANNOT_FOLDER
 from .modelling import SentenceModel
 from .utils import console, dedup_stream, add_rownum, attach_docs, attach_spans, add_predictions, abstract_annot_to_sent
+import warnings
+from tqdm import TqdmExperimentalWarning
+
+warnings.filterwarnings("ignore", category=TqdmExperimentalWarning)
 
 msg = Printer()
 
@@ -316,6 +320,7 @@ class DataStream:
                 addition = sent
                 if proba > THRESHOLDS[section]:
                     proba_val = round(proba, 3)
+                    print(proba_val, section)
                     proba_span = f"<span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>{proba_val}</span>"
                     addition = f"<span class='px-1 mx-1 bg-yellow-200'>{addition} {proba_span}</span>"
                 text += addition
@@ -323,8 +328,9 @@ class DataStream:
 
         for item in site_stream:
             for section in item['sections']:
-                item['html'] = render_html(item, section)
-                sections[section]['content'].append(item)
+                editable = item.copy()
+                editable['html'] = render_html(editable, section)
+                sections[section]['content'].append(editable)
 
         for section in sections.keys():
             uniq_content = dedup_stream(sections[section]['content'], key="abstract")

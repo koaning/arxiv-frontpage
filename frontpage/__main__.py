@@ -96,6 +96,15 @@ def train():
     SentenceModel().train(examples=examples).to_disk()
 
 
+@cli.command("pretrain")
+def pretrain():
+    """Trains a new featurizer, set-fit style."""
+    from .datastream import DataStream
+    from .modelling import SentenceModel
+    examples = DataStream().get_train_stream()
+    SentenceModel().pretrain(examples=examples)
+
+
 @cli.command("stats")
 def stats():
     """Show annotation stats"""

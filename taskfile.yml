@@ -60,6 +60,11 @@ tasks:
       - python -m frontpage train
     sources:
       - data/annot/annotations.jsonl
+      - training/custom-sbert-emb
+  
+  pretrain:
+    cmds:
+      - python -m frontpage pretrain
 
   prepare:
     cmds:
@@ -72,6 +77,6 @@ tasks:
 
   build:
     cmds:
-    - task: prepare
+    - task: train
     - python -m frontpage build
     - python -m http.server
