@@ -56,7 +56,7 @@ def main():
     console.log(f"Starting arxiv search.")
     items = arxiv.Search(
         query="and",
-        max_results=500,
+        max_results=200,
         sort_by=arxiv.SortCriterion.SubmittedDate,
     )
 
@@ -71,7 +71,7 @@ def main():
     dist = [age_in_days(r) for r in results]
     console.log(f"Minimum article age: {min(dist)}")
     console.log(f"Maximum article age: {max(dist)}")
-    if min(dist) > 2.5:
+    if min(dist) > 1.0:
         console.log("No new articles, everything is too old. Skip writing file.")
     else:
         filename = str(dt.datetime.now()).replace(" ", "-")[:13] + "h.jsonl"
