@@ -65,6 +65,7 @@ tasks:
   pretrain:
     cmds:
       - python -m frontpage pretrain
+      - python -m frontpage artifact upload
 
   prepare:
     cmds:
@@ -77,8 +78,7 @@ tasks:
 
   build:
     cmds:
-    - task: stats-out
-    - task: prepare-annotations
+    - python -m frontpage artifact download 
     - task: train
     - python -m frontpage build
     - python -m http.server

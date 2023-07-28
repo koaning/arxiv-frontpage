@@ -139,16 +139,22 @@ def artifact(action:str):
     """Upload/download from wandb"""
     import wandb
     from dotenv import load_dotenv
+    from frontpage.constants import PRETRAINED_FOLDER
     load_dotenv()
     run = wandb.init(os.getenv("WANDB_API_KEY"))
     if action == "upload":
-        artifact = wandb.Artifact('sentence-model', type='model')
-        artifact.add_dir(TRAINED_FOLDER)
+        artifact = wandb.Artifact(name='custom-sbert-emb', type="model")
+        artifact.add_dir(local_path=PRETRAINED_FOLDER)
+        run = wandb.init(project="arxiv-frontpage", job_type="upload")
         run.log_artifact(artifact)
     if action == "download":
-        TRAINED_FOLDER.mkdir(exist_ok=True, parents=True)
-        artifact = run.use_artifact('sentence-model:latest')
-        artifact.download(TRAINED_FOLDER)
+        if not PRETRAINED_FOLDER.exists():
+            run = wandb.init(project="arxiv-frontpage", job_type="download")
+            artifact = run.use_artifact('custom-sbert-emb:latest')
+            console.log(f"Could not find {PRETRAINED_FOLDER}. So will download from wandb.")
+            artifact.download(PRETRAINED_FOLDER)
+        else:
+            console.log(f"{PRETRAINED_FOLDER} already exists. Skip wandb download.")
 
 
 @cli.command("search")
