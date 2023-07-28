@@ -320,7 +320,6 @@ class DataStream:
                 addition = sent
                 if proba > THRESHOLDS[section]:
                     proba_val = round(proba, 3)
-                    print(proba_val, section)
                     proba_span = f"<span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>{proba_val}</span>"
                     addition = f"<span class='px-1 mx-1 bg-yellow-200'>{addition} {proba_span}</span>"
                 text += addition
