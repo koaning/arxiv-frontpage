@@ -3,6 +3,7 @@ version: '3'
 tasks:
   index:
     deps: [lunr-sentence, lunr-abstract]
+    desc: Creates the simsity/lunr indices.
     sources:
       - data/cleaned/*.jsonl
     cmds:
@@ -10,6 +11,7 @@ tasks:
       - python -m frontpage index simsity abstract
 
   lunr-sentence:
+    desc: Creates the sentence-level lunr index.
     cmds:
       - python -m frontpage index lunr sentence
     sources:
@@ -18,6 +20,7 @@ tasks:
       - indices/lunr/sentence.json
   
   lunr-abstract:
+    desc: Creates the abstract-level lunr index.
     cmds:
       - python -m frontpage index lunr abstract
     sources:
@@ -26,12 +29,14 @@ tasks:
       - indices/lunr/abstract.json
   
   clean:
+    desc: Cleans the downloaded data.
     cmds:
       - python -c "from frontpage.datastream import DataStream; DataStream().save_clean_download_stream()"
     sources:
       - data/downloads/*.jsonl
 
   build-learned-streams:
+    desc: Generates files on disk that can be used for the active-learn-y annotation recipes.
     cmds:
       - python -c "from frontpage.datastream import DataStream; DataStream().build_active_learn_stream()"
       - python -c "from frontpage.datastream import DataStream; DataStream().build_second_opinion_stream()"
@@ -41,6 +46,7 @@ tasks:
       - training
   
   stats-out:
+    desc: Runs `prodigy stats`, which could indicate that there are new annotations.
     cmds: 
       - python -m prodigy stats -NF > /tmp/stats.jsonl
     generates:
@@ -48,6 +54,7 @@ tasks:
 
   
   prepare-annotations:
+    desc: Export the annotations from Prodigy so ML can be trained on it.
     cmds:
       - python -m frontpage annotprep
     sources:
@@ -56,6 +63,7 @@ tasks:
       - data/annot/annotations.jsonl
   
   train:
+    desc: Trains new classification heads on top of pretrained SBERT layer.
     cmds:
       - python -m frontpage train
     sources:
@@ -63,11 +71,13 @@ tasks:
       - training/custom-sbert-emb
   
   pretrain:
+    desc: Trains new SBERT representations. Can be expensive. Will also upload to wandb.
     cmds:
       - python -m frontpage pretrain
       - python -m frontpage artifact upload
 
   prepare:
+    desc: Runs all the steps required to update the streams for annotation.
     cmds:
       - task: clean
       - task: index
@@ -77,6 +87,7 @@ tasks:
       - task: build-learned-streams
 
   build:
+    desc: Runs the build command to constuct a new frontpage. Always retrains logistic regression heads just in case.
     cmds:
     - python -m frontpage artifact download 
     - task: train
