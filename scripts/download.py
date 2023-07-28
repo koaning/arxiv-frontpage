@@ -71,12 +71,19 @@ def main():
     dist = [age_in_days(r) for r in results]
     console.log(f"Minimum article age: {min(dist)}")
     console.log(f"Maximum article age: {max(dist)}")
-    if min(dist) > 1.0:
-        console.log("No new articles, everything is too old. Skip writing file.")
-    else:
+    articles_dict = {ex['title']: ex for ex in articles}
+    most_recent = list(sorted(Path("data/downloads/").glob("*.jsonl")))[-1]
+    old_articles_dict = {ex['title']: ex for ex in srsly.read_jsonl(most_recent)}
+
+    new_articles = [ex for title, ex in articles_dict.items() if title not in old_articles_dict.keys()]
+    old_articles = [ex for title, ex in articles_dict.items() if title in old_articles_dict.keys()]
+    if old_articles:
+        console.log(f"Found {len(old_articles)} old articles in current batch. Skipping.")
+    if new_articles:
+        console.log(f"Found {len(new_articles)} new articles in current batch to write.")
         filename = str(dt.datetime.now()).replace(" ", "-")[:13] + "h.jsonl"
-        srsly.write_jsonl(Path("data") / "downloads" / filename, articles)
-        console.log(f"Wrote {len(articles)} articles into {filename}.")
+        srsly.write_jsonl(Path("data") / "downloads" / filename, new_articles)
+        console.log(f"Wrote {len(new_articles)} articles into {filename}.")
 
 
 if __name__ == "__main__":
