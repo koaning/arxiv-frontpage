@@ -36,7 +36,7 @@ tasks:
       - data/downloads/*.jsonl
 
   build-learned-streams:
-    desc: Generates files on disk that can be used for the active-learn-y annotation recipes.
+    desc: Generates files for the active-learn-y annotation recipes.
     cmds:
       - python -c "from frontpage.datastream import DataStream; DataStream().build_active_learn_stream()"
       - python -c "from frontpage.datastream import DataStream; DataStream().build_second_opinion_stream()"
@@ -87,7 +87,7 @@ tasks:
       - task: build-learned-streams
 
   build:
-    desc: Runs the build command to constuct a new frontpage. Always retrains logistic regression heads just in case.
+    desc: Constuct a new frontpage. Always retrains heads just in case.
     cmds:
     - python -m frontpage artifact download 
     - task: train
