@@ -23,7 +23,7 @@ jobs:
         python -m spacy download en_core_web_sm
         python -m pip install -e .
     - name: Fetch latest data
-      run: python scripts/download.py
+      run: python -m frontpage download
     - name: Commit and push if it changed
       run: |-
         git config user.name "Automated"
