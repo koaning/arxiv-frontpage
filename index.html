@@ -19,7 +19,7 @@
           <td>
             <h1 class="text-6xl pt-4 font-bold"><span class="underline">Your</span> FrontPage</h1>
             <br>
-            <p>Generated on 2023-08-10.</p>
+            <p>Generated on 2023-08-11.</p>
             <p class="text-sm text-gray-500 pt-2">This frontpage is made by scraping arxiv and by runnig a sentence-model that detects if the abstract describes a paper about a topic of interest. <br> One cool feature: the entire MLOps of this is handled via Github Actions. </p>
             <br>
           </td>
@@ -29,6 +29,50 @@
             <h2 class="text-4xl pt-4 font-bold">New Datasets</h2>
           </td>
         </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-10</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                EXPRESSO: A Benchmark and Analysis of Discrete Expressive Speech Resynthesis
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Recent work has shown that it is possible to resynthesize high-quality speech based, not on text, but on low bitrate discrete units that have been learned in a self-supervised fashion and can therefore capture expressive aspects of speech that are hard to transcribe (prosody, voice styles, non-verbal vocalization).The adoption of these methods is still limited by the fact that most speech synthesis datasets are read, severely limiting spontaneity and expressivity.<span class='px-1 mx-1 bg-yellow-200'>Here, we introduce Expresso, a high-quality expressive speech dataset for textless speech synthesis that includes both read speech and improvised dialogues rendered in 26 spontaneous expressive styles. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.794</span></span>We illustrate the challenges and potentials of this dataset with an expressive resynthesis benchmark where the task is to encode the input in low-bitrate units and resynthesize it in a target voice while preserving content and style.We evaluate resynthesis quality with automatic metrics for different self-supervised discrete encoders, and explore tradeoffs between quality, bitrate and invariance to speaker and style.All the dataset, evaluation metrics and baseline models are open source</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.05725v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-10</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                FrozenRecon: Pose-free 3D Scene Reconstruction with Frozen Depth Models
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>3D scene reconstruction is a long-standing vision task.Existing approaches can be categorized into geometry-based and learning-based methods.The former leverages multi-view geometry but can face catastrophic failures due to the reliance on accurate pixel correspondence across views.The latter was proffered to mitigate these issues by learning 2D or 3D representation directly.However, without a large-scale video or 3D training data, it can hardly generalize to diverse real-world scenarios due to the presence of tens of millions or even billions of optimization parameters in the deep network.Recently, robust monocular depth estimation models trained with large-scale datasets have been proven to possess weak 3D geometry prior, but they are insufficient for reconstruction due to the unknown camera parameters, the affine-invariant property, and inter-frame inconsistency.Here, we propose a novel test-time optimization approach that can transfer the robustness of affine-invariant depth models such as LeReS to challenging diverse scenes while ensuring inter-frame consistency, with only dozens of parameters to optimize per video frame.Specifically, our approach involves freezing the pre-trained affine-invariant depth model's depth predictions, rectifying them by optimizing the unknown scale-shift values with a geometric consistency alignment module, and employing the resulting scale-consistent depth maps to robustly obtain camera poses and achieve dense scene reconstruction, even in low-texture regions.<span class='px-1 mx-1 bg-yellow-200'>Experiments show that our method achieves state-of-the-art cross-dataset reconstruction on five zero-shot testing datasets. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.806</span></span></p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.05733v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
           <td class="inline-block">
             <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-09</p>
           </td>
@@ -321,28 +365,6 @@
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Zhongjing: Enhancing the Chinese Medical Capabilities of Large Language Model through Expert Feedback and Real-world Multi-turn Dialogue
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Recent advances in Large Language Models (LLMs) have achieved remarkable breakthroughs in understanding and responding to user intents.However, their performance lag behind general use cases in some expertise domains, such as Chinese medicine.Existing efforts to incorporate Chinese medicine into LLMs rely on Supervised Fine-Tuning (SFT) with single-turn and distilled dialogue data.These models lack the ability for doctor-like proactive inquiry and multi-turn comprehension and cannot always align responses with safety and professionalism experts.In this work, we introduce Zhongjing, the first Chinese medical LLaMA-based LLM that implements an entire training pipeline from pre-training to reinforcement learning with human feedback (RLHF).<span class='px-1 mx-1 bg-yellow-200'>Additionally, we introduce a Chinese multi-turn medical dialogue dataset of 70,000 authentic doctor-patient dialogues, CMtMedQA, which significantly enhances the model's capability for complex dialogue and proactive inquiry initiation. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.709</span></span>We define a refined annotation rule and evaluation criteria given the biomedical domain's unique characteristics.Results show that our model outperforms baselines in various capacities and matches the performance of ChatGPT in a few abilities, despite having 50x training data with previous best model and 100x parameters with ChatGPT.RLHF further improves the model's instruction-following ability and safety.We also release our code, datasets and model for further research.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.03549v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-07</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
                 WIKITIDE: A Wikipedia-Based Timestamped Definition Pairs Dataset
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
@@ -513,21 +535,26 @@
           </div>
         </td>
       </tr><tr>
+          <td></td>
+          <td>
+            <h2 class="text-4xl pt-4 font-bold">Prompt Engineering</h2>
+          </td>
+        </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-03</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-10</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                The All-Seeing Project: Towards Panoptic Visual Recognition and Understanding of the Open World
+                AD-CLIP: Adapting Domains in Prompt Space Using CLIP
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>We present the All-Seeing (AS) project: a large-scale data and model for recognizing and understanding everything in the open world.<span class='px-1 mx-1 bg-yellow-200'>Using a scalable data engine that incorporates human feedback and efficient models in the loop, we create a new dataset (AS-1B) with over 1 billion regions annotated with semantic tags, question-answering pairs, and detailed captions. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.866</span></span>It covers a wide range of 3.5 million common and rare concepts in the real world, and has 132.2 billion tokens that describe the concepts and their attributes.Leveraging this new dataset, we develop the All-Seeing model (ASM), a unified framework for panoptic visual recognition and understanding.The model is trained with open-ended language prompts and locations, which allows it to generalize to various vision and language tasks with remarkable zero-shot performance, including region-text retrieval, region recognition, captioning, and question-answering.We hope that this project can serve as a foundation for vision-language artificial general intelligence research.Models and the dataset shall be released at https://github.com/OpenGVLab/All-Seeing, and demo can be seen at https://huggingface.co/spaces/OpenGVLab/all-seeing.</p>
+                  <p>Although deep learning models have shown impressive performance on supervised learning tasks, they often struggle to generalize well when the training (source) and test (target) domains differ.Unsupervised domain adaptation (DA) has emerged as a popular solution to this problem.However, current DA techniques rely on visual backbones, which may lack semantic richness.Despite the potential of large-scale vision-language foundation models like CLIP, their effectiveness for DA has yet to be fully explored.To address this gap, we introduce AD-CLIP, a domain-agnostic prompt learning strategy for CLIP that aims to solve the DA problem in the prompt space.We leverage the frozen vision backbone of CLIP to extract both image style (domain) and content information, which we apply to learn prompt tokens.<span class='px-1 mx-1 bg-yellow-200'>Our prompts are designed to be domain-invariant and class-generalizable, by conditioning prompt learning on image style and content features simultaneously. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.604</span></span>We use standard supervised contrastive learning in the source domain, while proposing an entropy minimization strategy to align domains in the embedding space given the target domain data.We also consider a scenario where only target domain samples are available during testing, without any source domain data, and propose a cross-domain style mapping network to hallucinate domain-agnostic tokens.Our extensive experiments on three benchmark DA datasets demonstrate the effectiveness of AD-CLIP compared to existing literature.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.01907v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.05659v1' target="_blank">
                   link
                 </a>
               </p>
@@ -535,11 +562,6 @@
           </div>
         </td>
       </tr><tr>
-          <td></td>
-          <td>
-            <h2 class="text-4xl pt-4 font-bold">Prompt Engineering</h2>
-          </td>
-        </tr><tr>
           <td class="inline-block">
             <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-09</p>
           </td>
@@ -577,28 +599,6 @@
                 </p>
               <p class="pb-2 pt-2 text-center">
                 <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.03726v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-07-20</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Embroid: Unsupervised Prediction Smoothing Can Improve Few-Shot Classification
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Recent work has shown that language models' (LMs) prompt-based learning capabilities make them well suited for automating data labeling in domains where manual annotation is expensive.<span class='px-1 mx-1 bg-yellow-200'>The challenge is that while writing an initial prompt is cheap, improving a prompt is costly -- practitioners often require significant labeled data in order to evaluate the impact of prompt modifications. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.621</span></span>Our work asks whether it is possible to improve prompt-based learning without additional labeled data.<span class='px-1 mx-1 bg-yellow-200'>We approach this problem by attempting to modify the predictions of a prompt, rather than the prompt itself. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.709</span></span>Our intuition is that accurate predictions should also be consistent: samples which are similar under some feature representation should receive the same prompt prediction.We propose Embroid, a method which computes multiple representations of a dataset under different embedding functions, and uses the consistency between the LM predictions for neighboring samples to identify mispredictions.Embroid then uses these neighborhoods to create additional predictions for each sample, and combines these predictions with a simple latent variable graphical model in order to generate a final corrected prediction.In addition to providing a theoretical analysis of Embroid, we conduct a rigorous empirical evaluation across six different LMs and up to 95 different tasks.We find that (1) Embroid substantially improves performance over original prompts (e.g., by an average of 7.3 points on GPT-JT), (2) also realizes improvements for more sophisticated prompting strategies (e.g., chain-of-thought), and (3) can be specialized to domains like law through the embedding functions.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2307.11031v1' target="_blank">
                   link
                 </a>
               </p>
@@ -902,21 +902,26 @@
           </div>
         </td>
       </tr><tr>
+          <td></td>
+          <td>
+            <h2 class="text-4xl pt-4 font-bold">ML security</h2>
+          </td>
+        </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-07-20</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-10</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Empirical Evaluation of a Live Environment for Extract Method Refactoring
+                Using Machine Learning To Identify Software Weaknesses From Software Requirement Specifications
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>Complex software can be hard to read, adapt, and maintain.Refactoring it can create cleaner and self-explanatory code.<span class='px-1 mx-1 bg-yellow-200'>Refactoring tools try to guide developers towards better code, with more quality. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.696</span></span><span class='px-1 mx-1 bg-yellow-200'>However, most of them take too long to provide feedback, support, and guidance on how developers should improve their software. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.688</span></span>To reduce this problem, we explored the concept of Live Refactoring, focusing on visually suggesting and applying refactorings, in real-time.With this in mind, we developed a Live Refactoring Environment that visually identifies, recommends, and applies Extract Method refactorings.To validate it, we conducted an empirical experiment.Early results showed that our approach improved several code quality metrics.Besides, we also concluded that our results were significantly different and better than the ones from refactoring the code manually without further help.</p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>Secure software engineering is crucial but can be time-consuming; therefore, methods that could expedite the identification of software weaknesses without reducing the process efficacy would benefit the software engineering industry and thus benefit modern life. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.607</span></span>This research focuses on finding an efficient machine learning algorithm to identify software weaknesses from requirement specifications.The research uses the CWE repository and PROMISE exp dataset for training.Keywords extracted using latent semantic analysis help map the CWE categories to PROMISE_exp.Naive Bayes, support vector machine (SVM), decision trees, neural network, and convolutional neural network (CNN) algorithms were tested, with SVM and neural network producing reliable results.The research is unique contribution lies in the mapping technique and algorithm selection.It serves as a valuable reference for the secure software engineering community seeking to expedite the development lifecycle without compromising efficacy.Future work involves testing more algorithms, optimizing existing ones, and improving the training sets accuracy.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2307.11010v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.05558v1' target="_blank">
                   link
                 </a>
               </p>
@@ -924,11 +929,94 @@
           </div>
         </td>
       </tr><tr>
-          <td></td>
-          <td>
-            <h2 class="text-4xl pt-4 font-bold">ML security</h2>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-10</p>
           </td>
-        </tr><tr>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Analysis of the LockBit 3.0 and its infiltration into Advanced's infrastructure crippling NHS services
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>The LockBit 3.0 ransomware variant is arguably the most threatening of malware in recent times.With no regard for a victim's industry, the ransomware has undergone several evolutions to arrive at an adaptable and evasive variant which has been a menace to governments and organisations, recently infiltrating Advanced Computer Software group.Previous LockBit studies mostly concentrated on measuring the impact of the ransomware attack, prevention, encryption detection, decryption, or data recovery, thereby providing little or no benefit to the less tech savvy populace as a detailed breakdown of the mode of attack is rarely examined.<span class='px-1 mx-1 bg-yellow-200'>This article analyses the LockBit 3.0 attack techniques with a contextual illustration of the attack on Advanced Computer Software group. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.603</span></span>With the NHS being a major client of the organisation, and its services alongside 15 other clients being crippled for hours during the attack, attention is drawn to how dreadful such disruption may be in critical organisations.We observed that the upgrade of Lockbit based on releasing newer versions is in a bid to continuously ensure the malware's efficiency - a virtue that keeps it at the zenith - by staying ahead of improved defenses.<span class='px-1 mx-1 bg-yellow-200'>Our study highlights social engineering as a vibrant portal to Lockbit's maliciousness and indicates an investment in detection systems may profit more than in prevention systems. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.609</span></span>Therefore, further research should consider improving detection systems against Lockbit 3.0.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.05565v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-10</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Symmetry Defense Against XGBoost Adversarial Perturbation Attacks
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p><span class='px-1 mx-1 bg-yellow-200'>We examine whether symmetry can be used to defend tree-based ensemble classifiers such as gradient-boosting decision trees (GBDTs) against adversarial perturbation attacks. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.661</span></span>The idea is based on a recent symmetry defense for convolutional neural network classifiers (CNNs) that utilizes CNNs' lack of invariance with respect to symmetries.CNNs lack invariance because they can classify a symmetric sample, such as a horizontally flipped image, differently from the original sample.CNNs' lack of invariance also means that CNNs can classify symmetric adversarial samples differently from the incorrect classification of adversarial samples.Using CNNs' lack of invariance, the recent CNN symmetry defense has shown that the classification of symmetric adversarial samples reverts to the correct sample classification.In order to apply the same symmetry defense to GBDTs, we examine GBDT invariance and are the first to show that GBDTs also lack invariance with respect to symmetries.<span class='px-1 mx-1 bg-yellow-200'>We apply and evaluate the GBDT symmetry defense for nine datasets against six perturbation attacks with a threat model that ranges from zero-knowledge to perfect-knowledge adversaries. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.679</span></span><span class='px-1 mx-1 bg-yellow-200'>Using the feature inversion symmetry against zero-knowledge adversaries, we achieve up to 100% accuracy on adversarial samples even when default and robust classifiers have 0% accuracy. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.674</span></span>Using the feature inversion and horizontal flip symmetries against perfect-knowledge adversaries, we achieve up to over 95% accuracy on adversarial samples for the GBDT classifier of the F-MNIST dataset even when default and robust classifiers have 0% accuracy.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.05575v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-10</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                You Only Prompt Once: On the Capabilities of Prompt Learning on Large Language Models to Tackle Toxic Content
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>The spread of toxic content online is an important problem that has adverse effects on user experience online and in our society at large.<span class='px-1 mx-1 bg-yellow-200'>Motivated by the importance and impact of the problem, research focuses on developing solutions to detect toxic content, usually leveraging machine learning (ML) models trained on human-annotated datasets. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.68</span></span>While these efforts are important, these models usually do not generalize well and they can not cope with new trends (e.g., the emergence of new toxic terms).Currently, we are witnessing a shift in the approach to tackling societal issues online, particularly leveraging large language models (LLMs) like GPT-3 or T5 that are trained on vast corpora and have strong generalizability.In this work, we investigate how we can use LLMs and prompt learning to tackle the problem of toxic content, particularly focusing on three tasks; 1) Toxicity Classification, 2) Toxic Span Detection, and 3) Detoxification.We perform an extensive evaluation over five model architectures and eight datasets demonstrating that LLMs with prompt learning can achieve similar or even better performance compared to models trained on these specific tasks.We find that prompt learning achieves around 10\% improvement in the toxicity classification task compared to the baselines, while for the toxic span detection task we find better performance to the best baseline (0.643 vs. 0.640 in terms of $F_1$-score).Finally, for the detoxification task, we find that prompt learning can successfully reduce the average toxicity score (from 0.775 to 0.213) while preserving semantic meaning.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.05596v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-10</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Hard No-Box Adversarial Attack on Skeleton-Based Human Action Recognition with Skeleton-Motion-Informed Gradient
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p><span class='px-1 mx-1 bg-yellow-200'>Recently, methods for skeleton-based human activity recognition have been shown to be vulnerable to adversarial attacks. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.632</span></span><span class='px-1 mx-1 bg-yellow-200'>However, these attack methods require either the full knowledge of the victim (i.e. white-box attacks), access to training data (i.e. transfer-based attacks) or frequent model queries (i.e. black-box attacks). <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.771</span></span>All their requirements are highly restrictive, raising the question of how detrimental the vulnerability is.<span class='px-1 mx-1 bg-yellow-200'>In this paper, we show that the vulnerability indeed exists. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.679</span></span><span class='px-1 mx-1 bg-yellow-200'>To this end, we consider a new attack task: the attacker has no access to the victim model or the training data or labels, where we coin the term hard no-box attack. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.703</span></span>Specifically, we first learn a motion manifold where we define an adversarial loss to compute a new gradient for the attack, named skeleton-motion-informed (SMI) gradient.<span class='px-1 mx-1 bg-yellow-200'>Our gradient contains information of the motion dynamics, which is different from existing gradient-based attack methods that compute the loss gradient assuming each dimension in the data is independent. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.613</span></span><span class='px-1 mx-1 bg-yellow-200'>The SMI gradient can augment many gradient-based attack methods, leading to a new family of no-box attack methods. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.741</span></span>Extensive evaluation and comparison show that our method imposes a real threat to existing classifiers.They also show that the SMI gradient improves the transferability and imperceptibility of adversarial samples in both no-box and transfer-based black-box settings.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.05681v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
           <td class="inline-block">
             <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-09</p>
           </td>
@@ -1067,138 +1155,6 @@
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                FLIRT: Feedback Loop In-context Red Teaming
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Warning: this paper contains content that may be inappropriate or offensive.   As generative models become available for public use in various applications, testing and analyzing vulnerabilities of these models has become a priority.Here we propose an automatic red teaming framework that evaluates a given model and exposes its vulnerabilities against unsafe and inappropriate content generation.Our framework uses in-context learning in a feedback loop to red team models and trigger them into unsafe content generation.<span class='px-1 mx-1 bg-yellow-200'>We propose different in-context attack strategies to automatically learn effective and diverse adversarial prompts for text-to-image models. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.708</span></span><span class='px-1 mx-1 bg-yellow-200'>Our experiments demonstrate that compared to baseline approaches, our proposed strategy is significantly more effective in exposing vulnerabilities in Stable Diffusion (SD) model, even when the latter is enhanced with safety features. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.691</span></span>Furthermore, we demonstrate that the proposed framework is effective for red teaming text-to-text models, resulting in significantly higher toxic response generation rate compared to previously reported numbers.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.04265v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-08</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                The Vulnerable Nature of Decentralized Governance in DeFi
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Decentralized Finance (DeFi) platforms are often governed by Decentralized Autonomous Organizations (DAOs) which are implemented via governance protocols.Governance tokens are distributed to users of the platform, granting them voting rights in the platform's governance protocol.<span class='px-1 mx-1 bg-yellow-200'>Many DeFi platforms have already been subject to attacks resulting in the loss of millions of dollars in user funds.    <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.623</span></span>In this paper we show that governance tokens are often not used as intended and may be harmful to the security of DeFi platforms.We show that (1) users often do not use governance tokens to vote, (2) that voting rates are negatively correlated to gas prices, (3) voting is very centralized.   We explore vulnerabilities in the design of DeFi platform's governance protocols and analyze different governance attacks, focusing on the transferable nature of voting rights via governance tokens.Following the movement and holdings of governance tokens, we show they are often used to perform a single action and then sold off.We present evidence of DeFi platforms using other platforms' governance protocols to promote their own agenda at the expense of the host platform.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.04267v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-08</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                The Model Inversion Eavesdropping Attack in Semantic Communication Systems
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>In recent years, semantic communication has been a popular research topic for its superiority in communication efficiency.<span class='px-1 mx-1 bg-yellow-200'>As semantic communication relies on deep learning to extract meaning from raw messages, it is vulnerable to attacks targeting deep learning models. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.732</span></span><span class='px-1 mx-1 bg-yellow-200'>In this paper, we introduce the model inversion eavesdropping attack (MIEA) to reveal the risk of privacy leaks in the semantic communication system. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.704</span></span>In MIEA, the attacker first eavesdrops the signal being transmitted by the semantic communication system and then performs model inversion attack to reconstruct the raw message, where both the white-box and black-box settings are considered.Evaluation results show that MIEA can successfully reconstruct the raw message with good quality under different channel conditions.We then propose a defense method based on random permutation and substitution to defend against MIEA in order to achieve secure semantic communication.Our experimental results demonstrate the effectiveness of the proposed defense method in preventing MIEA.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.04304v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-08</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Accurate, Explainable, and Private Models: Providing Recourse While Minimizing Training Data Leakage
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Machine learning models are increasingly utilized across impactful domains to predict individual outcomes.As such, many models provide algorithmic recourse to individuals who receive negative outcomes.However, recourse can be leveraged by adversaries to disclose private information.<span class='px-1 mx-1 bg-yellow-200'>This work presents the first attempt at mitigating such attacks. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.708</span></span>We present two novel methods to generate differentially private recourse: Differentially Private Model (DPM) and Laplace Recourse (LR).<span class='px-1 mx-1 bg-yellow-200'>Using logistic regression classifiers and real world and synthetic datasets, we find that DPM and LR perform well in reducing what an adversary can infer, especially at low FPR. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.604</span></span><span class='px-1 mx-1 bg-yellow-200'>When training dataset size is large enough, we find particular success in preventing privacy leakage while maintaining model and recourse accuracy with our novel LR method. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.713</span></span></p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.04341v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-08</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Pelta: Shielding Transformers to Mitigate Evasion Attacks in Federated Learning
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>The main premise of federated learning is that machine learning model updates are computed locally, in particular to preserve user data privacy, as those never leave the perimeter of their device.This mechanism supposes the general model, once aggregated, to be broadcast to collaborating and non malicious nodes.<span class='px-1 mx-1 bg-yellow-200'>However, without proper defenses, compromised clients can easily probe the model inside their local memory in search of adversarial examples. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.836</span></span><span class='px-1 mx-1 bg-yellow-200'>For instance, considering image-based applications, adversarial examples consist of imperceptibly perturbed images (to the human eye) misclassified by the local model, which can be later presented to a victim node's counterpart model to replicate the attack. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.74</span></span>To mitigate such malicious probing, we introduce Pelta, a novel shielding mechanism leveraging trusted hardware.<span class='px-1 mx-1 bg-yellow-200'>By harnessing the capabilities of Trusted Execution Environments (TEEs), Pelta masks part of the back-propagation chain rule, otherwise typically exploited by attackers for the design of malicious samples. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.602</span></span>We evaluate Pelta on a state of the art ensemble model and demonstrate its effectiveness against the Self Attention Gradient adversarial Attack.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.04373v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-08</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Person Re-Identification without Identification via Event Anonymization
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Wide-scale use of visual surveillance in public spaces puts individual privacy at stake while increasing resource consumption (energy, bandwidth, and computation).Neuromorphic vision sensors (event-cameras) have been recently considered a valid solution to the privacy issue because they do not capture detailed RGB visual information of the subjects in the scene.However, recent deep learning architectures have been able to reconstruct images from event cameras with high fidelity, reintroducing a potential threat to privacy for event-based vision applications.In this paper, we aim to anonymize event-streams to protect the identity of human subjects against such image reconstruction attacks.To achieve this, we propose an end-to-end network architecture jointly optimized for the twofold objective of preserving privacy and performing a downstream task such as person ReId.<span class='px-1 mx-1 bg-yellow-200'>Our network learns to scramble events, enforcing the degradation of images recovered from the privacy attacker. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.617</span></span>In this work, we also bring to the community the first ever event-based person ReId dataset gathered to evaluate the performance of our approach.We validate our approach with extensive experiments and report results on the synthetic event data simulated from the publicly available SoftBio dataset and our proposed Event-ReId dataset.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.04402v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-08</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
                 XGBD: Explanation-Guided Graph Backdoor Detection
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
@@ -1208,28 +1164,6 @@
                 </p>
               <p class="pb-2 pt-2 text-center">
                 <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.04406v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-07</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Implementing Immune Repertoire Models Using Weighted Finite State Machines
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>The adaptive immune system's T and B cells can be viewed as large populations of simple, diverse classifiers.Artificial immune systems (AIS) $\unicode{x2013}$ algorithmic models of T or B cell repertoires $\unicode{x2013}$ are used in both computational biology and natural computing to investigate how the immune system adapts to its changing environments.However, researchers have struggled to build such systems at scale.For string-based AISs, finite state machines (FSMs) can store cell repertoires in compressed representations that are orders of magnitude smaller than explicitly stored receptor sets.This strategy allows AISs with billions of receptors to be generated in a matter of seconds.However, to date, these FSM-based AISs have been unable to deal with multiplicity in input data.Here, we show how weighted FSMs can be used to represent cell repertoires and model immunological processes like negative and positive selection, while also taking into account the multiplicity of input data.<span class='px-1 mx-1 bg-yellow-200'>We use our method to build simple immune-inspired classifier systems that solve various toy problems in anomaly detection, showing how weights can be crucial for both performance and robustness to parameters. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.731</span></span>Our approach can potentially be extended to increase the scale of other population-based machine learning algorithms such as learning classifier systems.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.03637v1' target="_blank">
                   link
                 </a>
               </p>
