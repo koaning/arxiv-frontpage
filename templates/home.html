@@ -11,16 +11,16 @@
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body>
-  <div class="relative mx-auto h-full max-w-3xl text-md">
+  <div class="relative mx-auto h-full max-w-2xl text-md">
     <table class="table-auto">
       <tbody>
         <tr>
           <td></td>
           <td>
-            <h1 class="text-6xl pt-4 font-bold"><span class="underline">Your</span> FrontPage</h1>
+            <h1 class="text-4xl pt-4 font-bold"><span class="underline">Vincent's</span> Arxiv FrontPage</h1>
             <br>
-            <p>Generated on {{today}}.</p>
-            <p class="text-sm text-gray-500 pt-2">This frontpage is made by scraping arxiv and by runnig a sentence-model that detects if the abstract describes a paper about a topic of interest. <br> One cool feature: the entire MLOps of this is handled via Github Actions. </p>
+            <p>Generated on {{today}}.</p><br/>
+            <p class="text-sm text-gray-500 pt-2">This frontpage is made by scraping arxiv and by runnig a sentence-model that detects if the abstract describes a paper about a topic of interest. One cool feature: it all pretty much runs via Github Actions. </p>
             <br>
           </td>
         </tr>
@@ -28,7 +28,7 @@
         <tr>
           <td></td>
           <td>
-            <h2 class="text-4xl pt-4 font-bold">{{section['name']}}</h2>
+            <h2 class="text-2xl tracking-tight pt-4 font-bold">{{section['name']}}</h2>
           </td>
         </tr>
         {%- for content in section['content'] -%}
@@ -44,7 +44,7 @@
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2">
                   {%- for key in content['cats'] -%}
-                  <span class='text-black px-2 mx-1 bg-blue-200 text-xs'>cls:{{key}}: 0.{{(content['cats'][key] * 1000) | int | round}}</span>
+                  <span class='text-black px-2 mx-1 bg-blue-200 text-sm'>cls:{{key}}: 0.{{(content['cats'][key] * 1000) | int | round}}</span>
                   {%- endfor -%}
                 </div>
                 <p class="pt-2">
