@@ -19,7 +19,7 @@
           <td>
             <h1 class="text-4xl pt-4 font-bold"><span class="underline">Vincent's</span> Arxiv FrontPage</h1>
             <br>
-            <p>Generated on 2023-08-22.</p><br/>
+            <p>Generated on 2023-08-23.</p><br/>
             <p class="text-sm text-gray-500 pt-2">This frontpage is made by scraping arxiv and by runnig a sentence-model that detects if the abstract describes a paper about a topic of interest. One cool feature: it all pretty much runs via Github Actions. </p>
             <br>
           </td>
@@ -29,6 +29,72 @@
             <h2 class="text-2xl tracking-tight pt-4 font-bold">New Datasets</h2>
           </td>
         </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-22</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                ScanNet++: A High-Fidelity Dataset of 3D Indoor Scenes
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p><span class='px-1 mx-1 bg-yellow-200'>We present ScanNet++, a large-scale dataset that couples together capture of high-quality and commodity-level geometry and color of indoor scenes. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.82</span></span>Each scene is captured with a high-end laser scanner at sub-millimeter resolution, along with registered 33-megapixel images from a DSLR camera, and RGB-D streams from an iPhone.Scene reconstructions are further annotated with an open vocabulary of semantics, with label-ambiguous scenarios explicitly annotated for comprehensive semantic understanding.ScanNet++ enables a new real-world benchmark for novel view synthesis, both from high-quality RGB capture, and importantly also from commodity-level images, in addition to a new benchmark for 3D semantic scene understanding that comprehensively encapsulates diverse and ambiguous semantic labeling scenarios.Currently, ScanNet++ contains 460 scenes, 280,000 captured DSLR images, and over 3.7M iPhone RGBD frames.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.11417v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-22</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Pre-training with Aspect-Content Text Mutual Prediction for Multi-Aspect Dense Retrieval
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Grounded on pre-trained language models (PLMs), dense retrieval has been studied extensively on plain text.In contrast, there has been little research on retrieving data with multiple aspects using dense models.In the scenarios such as product search, the aspect information plays an essential role in relevance matching, e.g., category: Electronics, Computers, and Pet Supplies.A common way of leveraging aspect information for multi-aspect retrieval is to introduce an auxiliary classification objective, i.e., using item contents to predict the annotated value IDs of item aspects.However, by learning the value embeddings from scratch, this approach may not capture the various semantic similarities between the values sufficiently.To address this limitation, we leverage the aspect information as text strings rather than class IDs during pre-training so that their semantic similarities can be naturally captured in the PLMs.To facilitate effective retrieval with the aspect strings, we propose mutual prediction objectives between the text of the item aspect and content.In this way, our model makes more sufficient use of aspect information than conducting undifferentiated masked language modeling (MLM) on the concatenated text of aspects and content.Extensive experiments on two real-world datasets (product and mini-program search) show that our approach can outperform competitive baselines both treating aspect values as classes and conducting the same MLM for aspect and content strings.<span class='px-1 mx-1 bg-yellow-200'>Code and related dataset will be available at the URL \footnote{https://github.com/sunxiaojie99/ATTEMPT}. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.885</span></span></p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.11474v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-22</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Four years of multi-modal odometry and mapping on the rail vehicles
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Precise, seamless, and efficient train localization as well as long-term railway environment monitoring is the essential property towards reliability, availability, maintainability, and safety (RAMS) engineering for railroad systems.Simultaneous localization and mapping (SLAM) is right at the core of solving the two problems concurrently.In this end, we propose a high-performance and versatile multi-modal framework in this paper, targeted for the odometry and mapping task for various rail vehicles.Our system is built atop an inertial-centric state estimator that tightly couples light detection and ranging (LiDAR), visual, optionally satellite navigation and map-based localization information with the convenience and extendibility of loosely coupled methods.The inertial sensors IMU and wheel encoder are treated as the primary sensor, which achieves the observations from subsystems to constrain the accelerometer and gyroscope biases.Compared to point-only LiDAR-inertial methods, our approach leverages more geometry information by introducing both track plane and electric power pillars into state estimation.The Visual-inertial subsystem also utilizes the environmental structure information by employing both lines and points.Besides, the method is capable of handling sensor failures by automatic reconfiguration bypassing failure modules.Our proposed method has been extensively tested in the long-during railway environments over four years, including general-speed, high-speed and metro, both passenger and freight traffic are investigated.Further, we aim to share, in an open way, the experience, problems, and successes of our group with the robotics community so that those that work in such environments can avoid these errors.<span class='px-1 mx-1 bg-yellow-200'>In this view, we open source some of the datasets to benefit the research community. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.745</span></span></p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.11501v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
           <td class="inline-block">
             <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-21</p>
           </td>
@@ -255,28 +321,6 @@
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Real-time Automatic M-mode Echocardiography Measurement with Panel Attention from Local-to-Global Pixels
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Motion mode (M-mode) recording is an essential part of echocardiography to measure cardiac dimension and function.However, the current diagnosis cannot build an automatic scheme, as there are three fundamental obstructs: Firstly, there is no open dataset available to build the automation for ensuring constant results and bridging M-mode echocardiography with real-time instance segmentation (RIS); Secondly, the examination is involving the time-consuming manual labelling upon M-mode echocardiograms; Thirdly, as objects in echocardiograms occupy a significant portion of pixels, the limited receptive field in existing backbones (e.g., ResNet) composed from multiple convolution layers are inefficient to cover the period of a valve movement.Existing non-local attentions (NL) compromise being unable real-time with a high computation overhead or losing information from a simplified version of the non-local block.Therefore, we proposed RAMEM, a real-time automatic M-mode echocardiography measurement scheme, contributes three aspects to answer the problems: 1) provide MEIS, a dataset of M-mode echocardiograms for instance segmentation, to enable consistent results and support the development of an automatic scheme; 2) propose panel attention, local-to-global efficient attention by pixel-unshuffling, embedding with updated UPANets V2 in a RIS scheme toward big object detection with global receptive field; 3) develop and implement AMEM, an efficient algorithm of automatic M-mode echocardiography measurement enabling fast and accurate automatic labelling among diagnosis.The experimental results show that RAMEM surpasses existing RIS backbones (with non-local attention) in PASCAL 2012 SBD and human performances in real-time MEIS tested.<span class='px-1 mx-1 bg-yellow-200'>The code of MEIS and dataset are available at https://github.com/hanktseng131415go/RAME. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.71</span></span></p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.07717v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-15</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
                 Whale Detection Enhancement through Synthetic Satellite Images
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
@@ -462,28 +506,6 @@
                 </p>
               <p class="pb-2 pt-2 text-center">
                 <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.07899v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-08-14</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Platypus: Quick, Cheap, and Powerful Refinement of LLMs
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>We present $\textbf{Platypus}$, a family of fine-tuned and merged Large Language Models (LLMs) that achieves the strongest performance and currently stands at first place in HuggingFace's Open LLM Leaderboard as of the release date of this work.<span class='px-1 mx-1 bg-yellow-200'>In this work we describe (1) our curated dataset $\textbf{Open-Platypus}$, that is a subset of other open datasets and which $\textit{we release to the public}$ (2) our process of fine-tuning and merging LoRA modules in order to conserve the strong prior of pretrained LLMs, while bringing specific domain knowledge to the surface (3) our efforts in checking for test data leaks and contamination in the training data, which can inform future research. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.717</span></span>Specifically, the Platypus family achieves strong performance in quantitative LLM metrics across model sizes, topping the global Open LLM leaderboard while using just a fraction of the fine-tuning data and overall compute that are required for other state-of-the-art fine-tuned LLMs.In particular, a 13B Platypus model can be trained on $\textit{a single}$ A100 GPU using 25k questions in 5 hours.<span class='px-1 mx-1 bg-yellow-200'>This is a testament of the quality of our Open-Platypus dataset, and opens opportunities for more improvements in the field. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.727</span></span>Project page: https://platypus-llm.github.io</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2308.07317v1' target="_blank">
                   link
                 </a>
               </p>
@@ -758,28 +780,6 @@
                 </p>
               <p class="pb-2 pt-2 text-center">
                 <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2307.16696v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-07-27</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Multilingual Code Co-Evolution Using Large Language Models
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Many software projects implement APIs and algorithms in multiple programming languages.<span class='px-1 mx-1 bg-yellow-200'>Maintaining such projects is tiresome, as developers have to ensure that any change (e.g., a bug fix or a new feature) is being propagated, timely and without errors, to implementations in other programming languages. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.699</span></span>In the world of ever-changing software, using rule-based translation tools (i.e., transpilers) or machine learning models for translating code from one language to another provides limited value.Translating each time the entire codebase from one language to another is not the way developers work.In this paper, we target a novel task: translating code changes from one programming language to another using large language models (LLMs).We design and implement the first LLM, dubbed Codeditor, to tackle this task.Codeditor explicitly models code changes as edit sequences and learns to correlate changes across programming languages.To evaluate Codeditor, we collect a corpus of 6,613 aligned code changes from 8 pairs of open-source software projects implementing similar functionalities in two programming languages (Java and C#).Results show that Codeditor outperforms the state-of-the-art approaches by a large margin on all commonly used automatic metrics.Our work also reveals that Codeditor is complementary to the existing generation-based models, and their combination ensures even greater performance.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2307.14991v1' target="_blank">
                   link
                 </a>
               </p>
