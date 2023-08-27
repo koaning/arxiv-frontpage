@@ -12,4 +12,5 @@ The project assumes that you're using [Prodigy](https://prodi.gy) to annotate yo
 - There is a [taskfile](https://taskfile.dev/) that contains some common commands. 
 - There is a `.github` folder that contains all the cronjobs.
 - There is a `frontpage` Python module that contains all the logic to prepare data for annotation, to train sentence-models and to build the new site. 
-
+- There are two `benchmark*.ipynb` files that contain some scripts that I've used to run benchmarks. Some attemps done with LLMs via `spacy-llm` while others were done with [pretrained embeddings](https://github.com/koaning/embetter).
+- This project assumes a `.env` file, which you can use if you intend to use weights and biases to store custom sentence transformers or use external embedding providers.

@@ -17,6 +17,7 @@ TRAINED_FOLDER = Path("training")
 TEMPLATE_PATH = Path("templates/home.html")
 CONFIG_FILE = "config.yml"
 PRETRAINED_FOLDER = TRAINED_FOLDER / "custom-sbert-emb"
+
 # Cache paths
 EMBETTER_CACHE = Path("cache") / "embetter"
 
