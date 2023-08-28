@@ -1,5 +1,11 @@
 # Arxiv Frontpage 
 
+Today's frontpage can be viewed here:
+
+https://koaning.github.io/arxiv-frontpage/
+
+## What's this? 
+
 This project is an attempt at making my own frontpage of Arxiv. Every day this project does [git-scraping](https://simonwillison.net/2020/Oct/9/git-scraping/) on new Arxiv articles via [this Python API](https://pypi.org/project/arxiv/). Then, another cronjob runs a script that attemps to make recommendations based on annotations that reside in this repo. This is then comitted as a new `index.html` page which is hosted by Github pages.
 
 This project is very much a personal one and may certainly see a bunch of changes in the future. But I figured it would be nice to host it publicly so that it may inspire other folks to make their own feed as well. 
