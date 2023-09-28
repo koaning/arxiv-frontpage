@@ -19,7 +19,7 @@
           <td>
             <h1 class="text-4xl pt-4 font-bold"><span class="underline">Vincent's</span> Arxiv FrontPage</h1>
             <br>
-            <p>Generated on 2023-09-27.</p><br/>
+            <p>Generated on 2023-09-28.</p><br/>
             <p class="text-sm text-gray-500 pt-2">This frontpage is made by scraping arxiv and by runnig a sentence-model that detects if the abstract describes a paper about a topic of interest. One cool feature: it all pretty much runs via Github Actions. </p>
             <br>
           </td>
@@ -29,6 +29,94 @@
             <h2 class="text-2xl tracking-tight pt-4 font-bold">New Datasets</h2>
           </td>
         </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-09-27</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                NLPBench: Evaluating Large Language Models on Solving NLP Problems
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Recent developments in large language models (LLMs) have shown promise in enhancing the capabilities of natural language processing (NLP).Despite these successes, there remains a dearth of research dedicated to the NLP problem-solving abilities of LLMs.<span class='px-1 mx-1 bg-yellow-200'>To fill the gap in this area, we present a unique benchmarking dataset, NLPBench, comprising 378 college-level NLP questions spanning various NLP topics sourced from Yale University's prior final exams. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.745</span></span>NLPBench includes questions with context, in which multiple sub-questions share the same public information, and diverse question types, including multiple choice, short answer, and math.Our evaluation, centered on LLMs such as GPT-3.5/4, PaLM-2, and LLAMA-2, incorporates advanced prompting strategies like the chain-of-thought (CoT) and tree-of-thought (ToT).Our study reveals that the effectiveness of the advanced prompting strategies can be inconsistent, occasionally damaging LLM performance, especially in smaller models like the LLAMA-2 (13b).Furthermore, our manual assessment illuminated specific shortcomings in LLMs' scientific problem-solving skills, with weaknesses in logical decomposition and reasoning notably affecting results.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2309.15630v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-09-27</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                HyPoradise: An Open Baseline for Generative Speech Recognition with Large Language Models
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Advancements in deep neural networks have allowed automatic speech recognition (ASR) systems to attain human parity on several publicly available clean speech datasets.However, even state-of-the-art ASR systems experience performance degradation when confronted with adverse conditions, as a well-trained acoustic model is sensitive to variations in the speech domain, e.g., background noise.Intuitively, humans address this issue by relying on their linguistic knowledge: the meaning of ambiguous spoken terms is usually inferred from contextual cues thereby reducing the dependency on the auditory system.Inspired by this observation, we introduce the first open-source benchmark to utilize external large language models (LLMs) for ASR error correction, where N-best decoding hypotheses provide informative elements for true transcription prediction.This approach is a paradigm shift from the traditional language model rescoring strategy that can only select one candidate hypothesis as the output transcription.<span class='px-1 mx-1 bg-yellow-200'>The proposed benchmark contains a novel dataset, HyPoradise (HP), encompassing more than 334,000 pairs of N-best hypotheses and corresponding accurate transcriptions across prevalent speech domains. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.774</span></span>Given this dataset, we examine three types of error correction techniques based on LLMs with varying amounts of labeled hypotheses-transcription pairs, which gains a significant word error rate (WER) reduction.Experimental evidence demonstrates the proposed technique achieves a breakthrough by surpassing the upper bound of traditional re-ranking based methods.More surprisingly, LLM with reasonable prompt and its generative capability can even correct those tokens that are missing in N-best list.We make our results publicly accessible for reproducible pipelines with released pre-trained models, thus providing a new evaluation paradigm for ASR error correction with LLMs.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2309.15701v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-09-27</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Experience and Evidence are the eyes of an excellent summarizer! Towards Knowledge Infused Multi-modal Clinical Conversation Summarization
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>With the advancement of telemedicine, both researchers and medical practitioners are working hand-in-hand to develop various techniques to automate various medical operations, such as diagnosis report generation.In this paper, we first present a multi-modal clinical conversation summary generation task that takes a clinician-patient interaction (both textual and visual information) and generates a succinct synopsis of the conversation.We propose a knowledge-infused, multi-modal, multi-tasking medical domain identification and clinical conversation summary generation (MM-CliConSummation) framework.It leverages an adapter to infuse knowledge and visual features and unify the fused feature vector using a gated mechanism.Furthermore, we developed a multi-modal, multi-intent clinical conversation summarization corpus annotated with intent, symptom, and summary.The extensive set of experiments, both quantitatively and qualitatively, led to the following findings: (a) critical significance of visuals, (b) more precise and medical entity preserving summary with additional knowledge infusion, and (c) a correlation between medical department identification and clinical synopsis generation.<span class='px-1 mx-1 bg-yellow-200'>Furthermore, the dataset and source code are available at https://github.com/NLP-RL/MM-CliConSummation. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.748</span></span></p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2309.15739v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-09-27</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                InfraParis: A multi-modal and multi-task autonomous driving dataset
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Current deep neural networks (DNNs) for autonomous driving computer vision are typically trained on specific datasets that only involve a single type of data and urban scenes.Consequently, these models struggle to handle new objects, noise, nighttime conditions, and diverse scenarios, which is essential for safety-critical applications.Despite ongoing efforts to enhance the resilience of computer vision DNNs, progress has been sluggish, partly due to the absence of benchmarks featuring multiple modalities.<span class='px-1 mx-1 bg-yellow-200'>We introduce a novel and versatile dataset named InfraParis that supports multiple tasks across three modalities: RGB, depth, and infrared. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.815</span></span>We assess various state-of-the-art baseline techniques, encompassing models for the tasks of semantic segmentation, object detection, and depth estimation.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2309.15751v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
           <td class="inline-block">
             <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-09-26</p>
           </td>
@@ -761,56 +849,12 @@
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Text Classification of Cancer Clinical Trial Eligibility Criteria
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Automatic identification of clinical trials for which a patient is eligible is complicated by the fact that trial eligibility is stated in natural language.A potential solution to this problem is to employ text classification methods for common types of eligibility criteria.In this study, we focus on seven common exclusion criteria in cancer trials: prior malignancy, human immunodeficiency virus, hepatitis B, hepatitis C, psychiatric illness, drug/substance abuse, and autoimmune illness.<span class='px-1 mx-1 bg-yellow-200'>Our dataset consists of 764 phase III cancer trials with these exclusions annotated at the trial level. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.888</span></span>We experiment with common transformer models as well as a new pre-trained clinical trial BERT model.Our results demonstrate the feasibility of automatically classifying common exclusion criteria.Additionally, we demonstrate the value of a pre-trained language model specifically for clinical trials, which yields the highest average performance across all criteria.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2309.07812v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-09-14</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                MC-NeRF: Muti-Camera Neural Radiance Fields for Muti-Camera Image Acquisition Systems
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Neural Radiance Fields (NeRF) employ multi-view images for 3D scene representation and have shown remarkable performance.As one of the primary sources of multi-view images, multi-camera systems encounter challenges such as varying intrinsic parameters and frequent pose changes.Most previous NeRF-based methods often assume a global unique camera and seldom consider scenarios with multiple cameras.Besides, some pose-robust methods still remain susceptible to suboptimal solutions when poses are poor initialized.In this paper, we propose MC-NeRF, a method can jointly optimize both intrinsic and extrinsic parameters for bundle-adjusting Neural Radiance Fields.Firstly, we conduct a theoretical analysis to tackle the degenerate case and coupling issue that arise from the joint optimization between intrinsic and extrinsic parameters.Secondly, based on the proposed solutions, we introduce an efficient calibration image acquisition scheme for multi-camera systems, including the design of calibration object.Lastly, we present a global end-to-end network with training sequence that enables the regression of intrinsic and extrinsic parameters, along with the rendering network.<span class='px-1 mx-1 bg-yellow-200'>Moreover, most existing datasets are designed for unique camera, we create a new dataset that includes four different styles of multi-camera acquisition systems, allowing readers to generate custom datasets. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.913</span></span>Experiments confirm the effectiveness of our method when each image corresponds to different camera parameters.Specifically, we adopt up to 110 images with 110 different intrinsic and extrinsic parameters, to achieve 3D scene representation without providing initial poses.The Code and supplementary materials are available at https://in2-viaun.github.io/MC-NeRF.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2309.07846v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-09-14</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
                 mEBAL2 Database and Benchmark: Image-based Multispectral Eyeblink Detection
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>This work introduces a new multispectral database and novel approaches for eyeblink detection in RGB and Near-Infrared (NIR) individual images.<span class='px-1 mx-1 bg-yellow-200'>Our contributed dataset (mEBAL2, multimodal Eye Blink and Attention Level estimation, Version 2) is the largest existing eyeblink database, representing a great opportunity to improve data-driven multispectral approaches for blink detection and related applications (e.g., attention level estimation and presentation attack detection in face biometrics). <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.767</span></span>mEBAL2 includes 21,100 image sequences from 180 different students (more than 2 million labeled images in total) while conducting a number of e-learning tasks of varying difficulty or taking a real course on HTML initiation through the edX MOOC platform.mEBAL2 uses multiple sensors, including two Near-Infrared (NIR) and one RGB camera to capture facial gestures during the execution of the tasks, as well as an Electroencephalogram (EEG) band to get the cognitive activity of the user and blinking events.Furthermore, this work proposes a Convolutional Neural Network architecture as benchmark for blink detection on mEBAL2 with performances up to 97%.Different training methodologies are implemented using the RGB spectrum, NIR spectrum, and the combination of both to enhance the performance on existing eyeblink detectors.We demonstrate that combining NIR and RGB images during training improves the performance of RGB eyeblink detectors (i.e., detection based only on a RGB image).Finally, the generalization capacity of the proposed eyeblink detectors is validated in wilder and more challenging environments like the HUST-LEBW dataset to show the usefulness of mEBAL2 to train a new generation of data-driven approaches for eyeblink detection.</p>
+                  <p>This work introduces a new multispectral database and novel approaches for eyeblink detection in RGB and Near-Infrared (NIR) individual images.<span class='px-1 mx-1 bg-yellow-200'>Our contributed dataset (mEBAL2, multimodal Eye Blink and Attention Level estimation, Version 2) is the largest existing eyeblink database, representing a great opportunity to improve data-driven multispectral approaches for blink detection and related applications (e.g., attention level estimation and presentation attack detection in face biometrics). <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.766</span></span>mEBAL2 includes 21,100 image sequences from 180 different students (more than 2 million labeled images in total) while conducting a number of e-learning tasks of varying difficulty or taking a real course on HTML initiation through the edX MOOC platform.mEBAL2 uses multiple sensors, including two Near-Infrared (NIR) and one RGB camera to capture facial gestures during the execution of the tasks, as well as an Electroencephalogram (EEG) band to get the cognitive activity of the user and blinking events.Furthermore, this work proposes a Convolutional Neural Network architecture as benchmark for blink detection on mEBAL2 with performances up to 97%.Different training methodologies are implemented using the RGB spectrum, NIR spectrum, and the combination of both to enhance the performance on existing eyeblink detectors.We demonstrate that combining NIR and RGB images during training improves the performance of RGB eyeblink detectors (i.e., detection based only on a RGB image).Finally, the generalization capacity of the proposed eyeblink detectors is validated in wilder and more challenging environments like the HUST-LEBW dataset to show the usefulness of mEBAL2 to train a new generation of data-driven approaches for eyeblink detection.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
                 <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2309.07880v1' target="_blank">
@@ -858,50 +902,6 @@
                 </p>
               <p class="pb-2 pt-2 text-center">
                 <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2309.07921v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-09-13</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Contrast-Phys+: Unsupervised and Weakly-supervised Video-based Remote Physiological Measurement via Spatiotemporal Contrast
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Video-based remote physiological measurement utilizes facial videos to measure the blood volume change signal, which is also called remote photoplethysmography (rPPG).Supervised methods for rPPG measurements have been shown to achieve good performance.However, the drawback of these methods is that they require facial videos with ground truth (GT) physiological signals, which are often costly and difficult to obtain.In this paper, we propose Contrast-Phys+, a method that can be trained in both unsupervised and weakly-supervised settings.We employ a 3DCNN model to generate multiple spatiotemporal rPPG signals and incorporate prior knowledge of rPPG into a contrastive loss function.We further incorporate the GT signals into contrastive learning to adapt to partial or misaligned labels.The contrastive loss encourages rPPG/GT signals from the same video to be grouped together, while pushing those from different videos apart.<span class='px-1 mx-1 bg-yellow-200'>We evaluate our methods on five publicly available datasets that include both RGB and Near-infrared videos. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.762</span></span>Contrast-Phys+ outperforms the state-of-the-art supervised methods, even when using partially available or misaligned GT signals, or no labels at all.Additionally, we highlight the advantages of our methods in terms of computational efficiency, noise robustness, and generalization.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2309.06924v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2023-09-13</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Towards Reliable Dermatology Evaluation Benchmarks
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Benchmark datasets for digital dermatology unwittingly contain inaccuracies that reduce trust in model performance estimates.We propose a resource-efficient data cleaning protocol to identify issues that escaped previous curation.The protocol leverages an existing algorithmic cleaning strategy and is followed by a confirmation process terminated by an intuitive stopping criterion.Based on confirmation by multiple dermatologists, we remove irrelevant samples and near duplicates and estimate the percentage of label errors in six dermatology image datasets for model evaluation promoted by the International Skin Imaging Collaboration.<span class='px-1 mx-1 bg-yellow-200'>Along with this paper, we publish revised file lists for each dataset which should be used for model evaluation. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.708</span></span>Our work paves the way for more trustworthy performance assessment in digital dermatology.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2309.06961v1' target="_blank">
                   link
                 </a>
               </p>
