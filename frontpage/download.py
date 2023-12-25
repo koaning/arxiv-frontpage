@@ -54,8 +54,9 @@ def main():
                 if age_in_days(r) < 2.5 and r.primary_category.startswith("cs")]
 
     dist = [age_in_days(r) for r in results]
-    console.log(f"Minimum article age: {min(dist)}")
-    console.log(f"Maximum article age: {max(dist)}")
+    if dist:
+        console.log(f"Minimum article age: {min(dist)}")
+        console.log(f"Maximum article age: {max(dist)}")
     articles_dict = {ex['title']: ex for ex in articles}
     most_recent = list(sorted(Path("data/downloads/").glob("*.jsonl")))[-1]
     old_articles_dict = {ex['title']: ex for ex in srsly.read_jsonl(most_recent)}
