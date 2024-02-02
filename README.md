@@ -10,8 +10,6 @@ This project is an attempt at making my own frontpage of Arxiv. Every day this p
 
 This project is very much a personal one and may certainly see a bunch of changes in the future. But I figured it would be nice to host it publicly so that it may inspire other folks to make their own feed as well. 
 
-The project assumes that you're using [Prodigy](https://prodi.gy) to annotate your data. You're still free to copy the code and change it to use [alternative labelling tools](https://github.com/agermanidis/pigeon) but you will have to make some code changes to get that to work.
-
 ## Contents 
 
 - There is a `config.yml` file that contains definitions of the labels. All scripts will make assumptions based on the contents of this file. 
