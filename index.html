@@ -19,7 +19,7 @@
           <td>
             <h1 class="text-4xl pt-4 font-bold"><span class="underline">Vincent's</span> Arxiv FrontPage</h1>
             <br>
-            <p>Generated on 2024-03-04.</p><br/>
+            <p>Generated on 2024-03-05.</p><br/>
             <p class="text-sm text-gray-500 pt-2">This frontpage is made by scraping arxiv and by runnig a sentence-model that detects if the abstract describes a paper about a topic of interest. One cool feature: it all pretty much runs via Github Actions. </p>
             <br>
           </td>
@@ -29,6 +29,28 @@
             <h2 class="text-2xl tracking-tight pt-4 font-bold">New Datasets</h2>
           </td>
         </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-03-02</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                TUMTraf V2X Cooperative Perception Dataset
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Cooperative perception offers several benefits for enhancing the capabilities of autonomous vehicles and improving road safety.Using roadside sensors in addition to onboard sensors increases reliability and extends the sensor range.External sensors offer higher situational awareness for automated vehicles and prevent occlusions.We propose CoopDet3D, a cooperative multi-modal fusion model, and TUMTraf-V2X, a perception dataset, for the cooperative 3D object detection and tracking task.<span class='px-1 mx-1 bg-yellow-200'>Our dataset contains 2,000 labeled point clouds and 5,000 labeled images from five roadside and four onboard sensors. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.856</span></span>It includes 30k 3D boxes with track IDs and precise GPS and IMU data.We labeled eight categories and covered occlusion scenarios with challenging driving maneuvers, like traffic violations, near-miss events, overtaking, and U-turns.Through multiple experiments, we show that our CoopDet3D camera-LiDAR fusion model achieves an increase of +14.36 3D mAP compared to a vehicle camera-LiDAR fusion model.<span class='px-1 mx-1 bg-yellow-200'>Finally, we make our dataset, model, labeling tool, and dev-kit publicly available on our website: https://tum-traffic-dataset.github.io/tumtraf-v2x. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.773</span></span></p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2403.01316v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
           <td class="inline-block">
             <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-02-29</p>
           </td>
@@ -673,50 +695,6 @@
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                ChartX & ChartVLM: A Versatile Benchmark and Foundation Model for Complicated Chart Reasoning
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Recently, many versatile Multi-modal Large Language Models (MLLMs) have emerged continuously.However, their capacity to query information depicted in visual charts and engage in reasoning based on the queried contents remains under-explored.In this paper, to comprehensively and rigorously benchmark the ability of the off-the-shelf MLLMs in the chart domain, we construct ChartX, a multi-modal evaluation set covering 18 chart types, 7 chart tasks, 22 disciplinary topics, and high-quality chart data.Besides, we develop ChartVLM to offer a new perspective on handling multi-modal tasks that strongly depend on interpretable patterns, such as reasoning tasks in the field of charts or geometric images.We evaluate the chart-related ability of mainstream MLLMs and our ChartVLM on the proposed ChartX evaluation set.Extensive experiments demonstrate that ChartVLM surpasses both versatile and chart-related large models, achieving results comparable to GPT-4V. We believe that our study can pave the way for further exploration in creating a more comprehensive chart evaluation set and developing more interpretable multi-modal models.<span class='px-1 mx-1 bg-yellow-200'>Both ChartX and ChartVLM are available at: https://github.com/UniModal4Reasoning/ChartVLM <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.782</span></span></p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2402.12185v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-02-19</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                SlopeSeeker: A Search Tool for Exploring a Dataset of Quantifiable Trends
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Natural language and search interfaces intuitively facilitate data exploration and provide visualization responses to diverse analytical queries based on the underlying datasets.However, these interfaces often fail to interpret more complex analytical intents, such as discerning subtleties and quantifiable differences between terms like "bump" and "spike" in the context of COVID cases, for example.We address this gap by extending the capabilities of a data exploration search interface for interpreting semantic concepts in time series trends.We first create a comprehensive dataset of semantic concepts by mapping quantifiable univariate data trends such as slope and angle to crowdsourced, semantically meaningful trend labels.The dataset contains quantifiable properties that capture the slope-scalar effect of semantic modifiers like "sharply" and "gradually," as well as multi-line trends (e.g., "peak," "valley").<span class='px-1 mx-1 bg-yellow-200'>We demonstrate the utility of this dataset in SlopeSeeker, a tool that supports natural language querying of quantifiable trends, such as "show me stocks that tanked in 2010." <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.762</span></span>The tool incorporates novel scoring and ranking techniques based on semantic relevance and visual prominence to present relevant trend chart responses containing these semantic trend concepts.In addition, SlopeSeeker provides a faceted search interface for users to navigate a semantic hierarchy of concepts from general trends (e.g., "increase") to more specific ones (e.g., "sharp increase").A preliminary user evaluation of the tool demonstrates that the search interface supports greater expressivity of queries containing concepts that describe data trends.We identify potential future directions for leveraging our publicly available quantitative semantics dataset in other data domains and for novel visual analytics interfaces.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2402.12214v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-02-19</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
                 Pushing Auto-regressive Models for 3D Shape Generation at Capacity and Scalability
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
@@ -963,6 +941,28 @@
             <h2 class="text-2xl tracking-tight pt-4 font-bold">Benchmarks</h2>
           </td>
         </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-03-02</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Mitigating the Bias in the Model for Continual Test-Time Adaptation
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Continual Test-Time Adaptation (CTA) is a challenging task that aims to adapt a source pre-trained model to continually changing target domains.In the CTA setting, a model does not know when the target domain changes, thus facing a drastic change in the distribution of streaming inputs during the test-time.The key challenge is to keep adapting the model to the continually changing target domains in an online manner.We find that a model shows highly biased predictions as it constantly adapts to the chaining distribution of the target data.It predicts certain classes more often than other classes, making inaccurate over-confident predictions.This paper mitigates this issue to improve performance in the CTA scenario.To alleviate the bias issue, we make class-wise exponential moving average target prototypes with reliable target samples and exploit them to cluster the target features class-wisely.Moreover, we aim to align the target distributions to the source distribution by anchoring the target feature to its corresponding source prototype.<span class='px-1 mx-1 bg-yellow-200'>With extensive experiments, our proposed method achieves noteworthy performance gain when applied on top of existing CTA methods without substantial adaptation time overhead. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.653</span></span></p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2403.01344v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
           <td class="inline-block">
             <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-02-29</p>
           </td>
@@ -1937,20 +1937,20 @@
           </td>
         </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-02-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-03-03</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                RL-GPT: Integrating Reinforcement Learning and Code-as-policy
+                OSM: Leveraging Model Checking for Observing Dynamic 1 behaviors in Aspect-Oriented Applications
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>Large Language Models (LLMs) have demonstrated proficiency in utilizing various tools by coding, yet they face limitations in handling intricate logic and precise control. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.729</span></span>In embodied tasks, high-level planning is amenable to direct coding, while low-level actions often necessitate task-specific refinement, such as Reinforcement Learning (RL).To seamlessly integrate both modalities, we introduce a two-level hierarchical framework, RL-GPT, comprising a slow agent and a fast agent.The slow agent analyzes actions suitable for coding, while the fast agent executes coding tasks.This decomposition effectively focuses each agent on specific tasks, proving highly efficient within our pipeline.Our approach outperforms traditional RL methods and existing GPT agents, demonstrating superior efficiency.In the Minecraft game, it rapidly obtains diamonds within a single day on an RTX3090.Additionally, it achieves SOTA performance across all designated MineDojo tasks.</p>
+                  <p>In the intricate domain of software systems verification, dynamically model checking multifaceted system characteristics remains paramount, yet challenging.This research proposes the advanced observe-based statistical model-checking (OSM) framework, devised to craft executable formal models directly from foundational system code.Leveraging model checking predicates, the framework melds seamlessly with aspect-oriented programming paradigms, yielding a potent method for the analytical verification of varied behavioral attributes.Exploiting the transformative capacity of OSM framework, primary system code undergoes a systematic metamorphosis into multifaceted analysis constructs.This not only simplifies the model verification process but also orchestrates feature interactions using an innovative observing join point abstraction mechanism.Within this framework, components encompassing parsing, formal verification, computational analytics, and rigorous validation are intrinsically interwoven.<span class='px-1 mx-1 bg-yellow-200'>Marrying the principles of model checking with aspect-oriented (AO) modularization, OSM framework stands as a paragon, proficiently scrutinizing and affirming system specifications. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.601</span></span>This ensures the unyielding performance of electronic health record systems amidst shifting preconditions.<span class='px-1 mx-1 bg-yellow-200'>OSM framework offers runtime verification of both object-oriented and AO deployments, positioning itself as an indispensable open-source resource, poised to automate the enhancement of system performance and scalability. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.62</span></span></p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2402.19299v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2403.01349v1' target="_blank">
                   link
                 </a>
               </p>
@@ -1959,20 +1959,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-02-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-03-02</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Deep Learning for Cross-Domain Data Fusion in Urban Computing: Taxonomy, Advances, and Outlook
+                Improving the Validity of Automatically Generated Feedback via Reinforcement Learning
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>As cities continue to burgeon, Urban Computing emerges as a pivotal discipline for sustainable development by harnessing the power of cross-domain data fusion from diverse sources (e.g., geographical, traffic, social media, and environmental data) and modalities (e.g., spatio-temporal, visual, and textual modalities).Recently, we are witnessing a rising trend that utilizes various deep-learning methods to facilitate cross-domain data fusion in smart cities.To this end, we propose the first survey that systematically reviews the latest advancements in deep learning-based data fusion methods tailored for urban computing.Specifically, we first delve into data perspective to comprehend the role of each modality and data source.Secondly, we classify the methodology into four primary categories: feature-based, alignment-based, contrast-based, and generation-based fusion methods.Thirdly, we further categorize multi-modal urban applications into seven types: urban planning, transportation, economy, public safety, society, environment, and energy.Compared with previous surveys, we focus more on the synergy of deep learning methods with urban computing applications.<span class='px-1 mx-1 bg-yellow-200'>Furthermore, we shed light on the interplay between Large Language Models (LLMs) and urban computing, postulating future research directions that could revolutionize the field. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.642</span></span>We firmly believe that the taxonomy, progress, and prospects delineated in our survey stand poised to significantly enrich the research community.The summary of the comprehensive and up-to-date paper list can be found at https://github.com/yoshall/Awesome-Multimodal-Urban-Computing.</p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>Automatically generating feedback via large language models (LLMs) in intelligent tutoring systems and online learning platforms has the potential to improve the learning outcomes of many students. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.628</span></span>However, both feedback generation and evaluation are challenging: feedback content has to be valid especially in subjects like math, which requires models to understand the problem, the solution, and where the student's error lies.Feedback also has to be pedagogically valid to reflect effective tutoring strategies, such as explaining possible misconceptions and encouraging the student, among other desirable features.In this work, we address both problems of automatically generating and evaluating feedback while considering both correctness and alignment.First, we propose a rubric for evaluating math feedback and show that GPT-4 is able to effectively use it to annotate human-written and LLM-generated feedback.Second, we propose a framework for feedback generation that optimizes both correctness and alignment using reinforcement learning (RL).Specifically, we use GPT-4's annotations to create preferences over feedback pairs in an augmented dataset for training via direct preference optimization (DPO).<span class='px-1 mx-1 bg-yellow-200'>We show that our methods significantly increase the correctness and alignment of generated feedback with Llama 2, an open-source LLM, qualitatively analyze our generation and evaluation systems using case studies, and outline several areas for future work. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.656</span></span></p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2402.19348v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2403.01304v1' target="_blank">
                   link
                 </a>
               </p>
@@ -1981,20 +1981,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-02-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-03-02</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Prompting Explicit and Implicit Knowledge for Multi-hop Question Answering Based on Human Reading Process
+                VBART: The Turkish LLM
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>Pre-trained language models (PLMs) leverage chains-of-thought (CoT) to simulate human reasoning and inference processes, achieving proficient performance in multi-hop QA. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.614</span></span><span class='px-1 mx-1 bg-yellow-200'>However, a gap persists between PLMs' reasoning abilities and those of humans when tackling complex problems. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.628</span></span>Psychological studies suggest a vital connection between explicit information in passages and human prior knowledge during reading.Nevertheless, current research has given insufficient attention to linking input passages and PLMs' pre-training-based knowledge from the perspective of human cognition studies.In this study, we introduce a \textbf{P}rompting \textbf{E}xplicit and \textbf{I}mplicit knowledge (PEI) framework, which uses prompts to connect explicit and implicit knowledge, aligning with human reading process for multi-hop QA.We consider the input passages as explicit knowledge, employing them to elicit implicit knowledge through unified prompt reasoning.Furthermore, our model incorporates type-specific reasoning via prompts, a form of implicit knowledge.Experimental results show that PEI performs comparably to the state-of-the-art on HotpotQA.Ablation studies confirm the efficacy of our model in bridging and integrating explicit and implicit knowledge.</p>
+                  <p>We present VBART, the first Turkish sequence-to-sequence Large Language Models (LLMs) pre-trained on a large corpus from scratch.<span class='px-1 mx-1 bg-yellow-200'>VBART are compact LLMs based on good ideas leveraged from BART and mBART models and come in two sizes, Large and XLarge. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.698</span></span>Fine-tuned VBART models surpass the prior state-of-the-art results in abstractive text summarization, title generation, text paraphrasing, question answering and question generation tasks.They allow fine-tuning for future text generation tasks and datasets, carving a new path for Turkish Natural Language Processing (NLP) research.<span class='px-1 mx-1 bg-yellow-200'>Our work shows that having a pre-trained LLM for Turkish outperforms up to 3x multilingual models, improving existing results and providing efficient models for training and inference. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.643</span></span>Moreover, we show that our monolingual tokenizer is 7x more efficient than OpenAI's multilingual tokenizer.<span class='px-1 mx-1 bg-yellow-200'>Last but not least, we introduce a method to enlarge an existing pre-trained LLM and question the relevancy of Chinchilla Scaling Law to sequence-to-sequence masked language models. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.624</span></span>Our fine-tuned models, tokenizer and cleaned web corpus of 135 GB are publicly available at huggingface.co/vngrs-ai.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2402.19350v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2403.01308v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2003,20 +2003,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-02-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2024-03-02</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Watermark Stealing in Large Language Models
+                LM4OPT: Unveiling the Potential of Large Language Models in Formulating Mathematical Optimization Problems
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>LLM watermarking has attracted attention as a promising way to detect AI-generated content, with some works suggesting that current schemes may already be fit for deployment. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.687</span></span>In this work we dispute this claim, identifying watermark stealing (WS) as a fundamental vulnerability of these schemes.<span class='px-1 mx-1 bg-yellow-200'>We show that querying the API of the watermarked LLM to approximately reverse-engineer a watermark enables practical spoofing attacks, as suggested in prior work, but also greatly boosts scrubbing attacks, which was previously unnoticed. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.701</span></span>We are the first to propose an automated WS algorithm and use it in the first comprehensive study of spoofing and scrubbing in realistic settings.We show that for under $50 an attacker can both spoof and scrub state-of-the-art schemes previously considered safe, with average success rate of over 80%.<span class='px-1 mx-1 bg-yellow-200'>Our findings challenge common beliefs about LLM watermarking, stressing the need for more robust schemes. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.706</span></span>We make all our code and additional examples available at https://watermark-stealing.org.</p>
+                  <p>In the rapidly evolving field of natural language processing, the translation of linguistic descriptions into mathematical formulation of optimization problems presents a formidable challenge, demanding intricate understanding and processing capabilities from Large Language Models (LLMs).<span class='px-1 mx-1 bg-yellow-200'>This study compares prominent LLMs, including GPT-3.5, GPT-4, and Llama-2-7b, in zero-shot and one-shot settings for this task. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.726</span></span>Our findings show GPT-4's superior performance, particularly in the one-shot scenario.A central part of this research is the introduction of `LM4OPT,' a progressive fine-tuning framework for Llama-2-7b that utilizes noisy embeddings and specialized datasets.However, this research highlights a notable gap in the contextual understanding capabilities of smaller models such as Llama-2-7b compared to larger counterparts, especially in processing lengthy and complex input contexts.Our empirical investigation, utilizing the NL4Opt dataset, unveils that GPT-4 surpasses the baseline performance established by previous research, achieving an F1-score of 0.63, solely based on the problem description in natural language, and without relying on any additional named entity information.GPT-3.5 follows closely, both outperforming the fine-tuned Llama-2-7b.<span class='px-1 mx-1 bg-yellow-200'>These findings not only benchmark the current capabilities of LLMs in a novel application area but also lay the groundwork for future improvements in mathematical formulation of optimization problems from natural language input. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.638</span></span></p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2402.19361v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2403.01342v1' target="_blank">
                   link
                 </a>
               </p>
