@@ -6,7 +6,7 @@ https://koaning.github.io/arxiv-frontpage/
 
 ## What's this? 
 
-This project is an attempt at making my own frontpage of Arxiv. Every day this project does [git-scraping](https://simonwillison.net/2020/Oct/9/git-scraping/) on new Arxiv articles via [this Python API](https://pypi.org/project/arxiv/). Then, another cronjob runs a script that attemps to make recommendations based on annotations that reside in this repo. This is then comitted as a new `index.html` page which is hosted by Github pages.
+This project is an attempt at making my own frontpage of Arxiv. Every day this project does [git-scraping](https://simonwillison.net/2020/Oct/9/git-scraping/) on new Arxiv articles via [this Python API](https://pypi.org/project/arxiv/). Then, another cronjob runs a script that attempts to make recommendations based on annotations that reside in this repo. This is then committed as a new `index.html` page which is hosted by Github pages.
 
 This project is very much a personal one and may certainly see a bunch of changes in the future. But I figured it would be nice to host it publicly so that it may inspire other folks to make their own feed as well. 
 
@@ -16,7 +16,7 @@ This project is very much a personal one and may certainly see a bunch of change
 - There is a [taskfile](https://taskfile.dev/) that contains some common commands. 
 - There is a `.github` folder that contains all the cronjobs.
 - There is a `frontpage` Python module that contains all the logic to prepare data for annotation, to train sentence-models and to build the new site. 
-- There are two `benchmark*.ipynb` files that contain some scripts that I've used to run benchmarks. Some attemps done with LLMs via `spacy-llm` while others were done with [pretrained embeddings](https://github.com/koaning/embetter).
+- There are two `benchmark*.ipynb` files that contain some scripts that I've used to run benchmarks. Some attempts done with LLMs via `spacy-llm` while others were done with [pretrained embeddings](https://github.com/koaning/embetter).
 - This project assumes a `.env` file, which you can use if you intend to use weights and biases to store custom sentence transformers or use external embedding providers.
 
 ## Notes 
@@ -35,7 +35,7 @@ python -m frontpage annotate
 
 This will give a menu that you can use to select the subset selection method. You can annotate on a sentence-level or abstract-level and select from a number of tricks to find an interesting subset. 
 
-In terms of modelling, this project employes a sentence-model that makes a prediction per sentence. It's possibly not _the_ most performany modelling approach, but it is easy to interpret. It also helps make the model more understandable in the UI.
+In terms of modelling, this project employs a sentence-model that makes a prediction per sentence. It's possibly not _the_ most performant modelling approach, but it is easy to interpret. It also helps make the model more understandable in the UI.
 
 ![](/images/sentence-model.png)
 
