@@ -19,7 +19,7 @@
           <td>
             <h1 class="text-4xl pt-4 font-bold"><span class="underline">Vincent's</span> Arxiv FrontPage</h1>
             <br>
-            <p>Generated on 2025-01-30.</p><br/>
+            <p>Generated on 2025-01-31.</p><br/>
             <p class="text-sm text-gray-500 pt-2">This frontpage is made by scraping arxiv and by running a sentence-model that detects if the abstract describes a paper about a topic of interest. One cool feature: it all pretty much runs via Github Actions. </p>
             <br>
           </td>
@@ -29,6 +29,138 @@
             <h2 class="text-2xl tracking-tight pt-4 font-bold">New Datasets</h2>
           </td>
         </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                A Benchmark and Evaluation for Real-World Out-of-Distribution Detection Using Vision-Language Models
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Out-of-distribution (OOD) detection is a task that detects OOD samples during inference to ensure the safety of deployed models.However, conventional benchmarks have reached performance saturation, making it difficult to compare recent OOD detection methods.To address this challenge, we introduce three novel OOD detection benchmarks that enable a deeper understanding of method characteristics and reflect real-world conditions.First, we present ImageNet-X, designed to evaluate performance under challenging semantic shifts.Second, we propose ImageNet-FS-X for full-spectrum OOD detection, assessing robustness to covariate shifts (feature distribution shifts).<span class='px-1 mx-1 bg-yellow-200'>Finally, we propose Wilds-FS-X, which extends these evaluations to real-world datasets, offering a more comprehensive testbed. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.733</span></span>Our experiments reveal that recent CLIP-based OOD detection methods struggle to varying degrees across the three proposed benchmarks, and none of them consistently outperforms the others.We hope the community goes beyond specific benchmarks and includes more challenging conditions reflecting real-world scenarios.The code is https://github.com/hoshi23/OOD-X-Banchmarks.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18463v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                GuardReasoner: Towards Reasoning-based LLM Safeguards
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>As LLMs increasingly impact safety-critical applications, ensuring their safety using guardrails remains a key challenge.This paper proposes GuardReasoner, a new safeguard for LLMs, by guiding the guard model to learn to reason.<span class='px-1 mx-1 bg-yellow-200'>Concretely, we first create the GuardReasonerTrain dataset, which consists of 127K samples with 460K detailed reasoning steps. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.788</span></span>Then, we introduce reasoning SFT to unlock the reasoning capability of guard models.In addition, we present hard sample DPO to further strengthen their reasoning ability.In this manner, GuardReasoner achieves better performance, explainability, and generalizability.Extensive experiments and analyses on 13 benchmarks of 3 guardrail tasks demonstrate its superiority.Remarkably, GuardReasoner 8B surpasses GPT-4o+CoT by 5.74% and LLaMA Guard 3 8B by 20.84% F1 score on average.We release the training data, code, and models with different scales (1B, 3B, 8B) of GuardReasoner : https://github.com/yueliu1999/GuardReasoner/.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18492v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                WILDCHAT-50M: A Deep Dive Into the Role of Synthetic Data in Post-Training
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Language model (LLM) post-training, from DPO to distillation, can refine behaviors and unlock new skills, but the open science supporting these post-training techniques is still in its infancy.One limiting factor has been the difficulty of conducting large-scale comparative analyses of synthetic data generating models and LLM judges.<span class='px-1 mx-1 bg-yellow-200'>To close this gap, we introduce WILDCHAT-50M, the largest public chat dataset to date. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.956</span></span>We extend the existing WildChat dataset to include responses not only from GPT, but from over 50 different open-weight models, ranging in size from 0.5B to 104B parameters.We conduct an extensive comparative analysis and demonstrate the potential of this dataset by creating RE-WILD, our own public SFT mix, which outperforms the recent Tulu-3 SFT mixture from Allen AI with only 40% as many samples.<span class='px-1 mx-1 bg-yellow-200'>Our dataset, samples and code are available at https://github.com/penfever/wildchat-50m. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.905</span></span></p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18511v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Rethinking Bottlenecks in Safety Fine-Tuning of Vision Language Models
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Large Vision-Language Models (VLMs) have achieved remarkable performance across a wide range of tasks.However, their deployment in safety-critical domains poses significant challenges.Existing safety fine-tuning methods, which focus on textual or multimodal content, fall short in addressing challenging cases or disrupt the balance between helpfulness and harmlessness.Our evaluation highlights a safety reasoning gap: these methods lack safety visual reasoning ability, leading to such bottlenecks.To address this limitation and enhance both visual perception and reasoning in safety-critical contexts, we propose a novel dataset that integrates multi-image inputs with safety Chain-of-Thought (CoT) labels as fine-grained reasoning logic to improve model performance.<span class='px-1 mx-1 bg-yellow-200'>Specifically, we introduce the Multi-Image Safety (MIS) dataset, an instruction-following dataset tailored for multi-image safety scenarios, consisting of training and test splits. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.806</span></span>Our experiments demonstrate that fine-tuning InternVL2.5-8B with MIS significantly outperforms both powerful open-source models and API-based models in challenging multi-image tasks requiring safety-related visual reasoning.This approach not only delivers exceptional safety performance but also preserves general capabilities without any trade-offs.Specifically, fine-tuning with MIS increases average accuracy by 0.83% across five general benchmarks and reduces the Attack Success Rate (ASR) on multiple safety benchmarks by a large margin.Data and Models are released under: \href{https://dripnowhy.github.io/MIS/}{\texttt{https://dripnowhy.github.io/MIS/}}</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18533v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Can we Retrieve Everything All at Once? ARM: An Alignment-Oriented LLM-based Retrieval Method
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Real-world open-domain questions can be complicated, particularly when answering them involves information from multiple information sources.LLMs have demonstrated impressive performance in decomposing complex tasks into simpler steps, and previous work has used it for better retrieval in support of complex questions.However, LLM's decomposition of questions is unaware of what data is available and how data is organized, often leading to a sub-optimal retrieval performance.Recent effort in agentic RAG proposes to perform retrieval in an iterative fashion, where a followup query is derived as an action based on previous rounds of retrieval.While this provides one way of interacting with the data collection, agentic RAG's exploration of data is inefficient because successive queries depend on previous results rather than being guided by the organization of available data in the collection.To address this problem, we propose an LLM-based retrieval method -- ARM, that aims to better align the question with the organization of the data collection by exploring relationships among data objects beyond matching the utterance of the query, thus leading to a retrieve-all-at-once solution for complex queries.<span class='px-1 mx-1 bg-yellow-200'>We evaluated ARM on two datasets, Bird and OTT-QA. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.727</span></span>On Bird, it outperforms standard RAG with query decomposition by up to 5.2 pt in execution accuracy and agentic RAG (ReAct) by up to 15.9 pt.On OTT-QA, it achieves up to 5.5 pt and 19.3 pt higher F1 match scores compared to these approaches.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18539v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                UDC-VIT: A Real-World Video Dataset for Under-Display Cameras
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Under Display Camera (UDC) is an advanced imaging system that places a digital camera lens underneath a display panel, effectively concealing the camera.However, the display panel significantly degrades captured images or videos, introducing low transmittance, blur, noise, and flare issues.Tackling such issues is challenging because of the complex degradation of UDCs, including diverse flare patterns.Despite extensive research on UDC images and their restoration models, studies on videos have yet to be significantly explored.While two UDC video datasets exist, they primarily focus on unrealistic or synthetic UDC degradation rather than real-world UDC degradation.<span class='px-1 mx-1 bg-yellow-200'>In this paper, we propose a real-world UDC video dataset called UDC-VIT. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.795</span></span>Unlike existing datasets, only UDC-VIT exclusively includes human motions that target facial recognition.We propose a video-capturing system to simultaneously acquire non-degraded and UDC-degraded videos of the same scene.Then, we align a pair of captured videos frame by frame, using discrete Fourier transform (DFT).<span class='px-1 mx-1 bg-yellow-200'>We compare UDC-VIT with six representative UDC still image datasets and two existing UDC video datasets. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.787</span></span><span class='px-1 mx-1 bg-yellow-200'>Using six deep-learning models, we compare UDC-VIT and an existing synthetic UDC video dataset. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.705</span></span>The results indicate the ineffectiveness of models trained on earlier synthetic UDC video datasets, as they do not reflect the actual characteristics of UDC-degraded videos.We also demonstrate the importance of effective UDC restoration by evaluating face recognition accuracy concerning PSNR, SSIM, and LPIPS scores.UDC-VIT enables further exploration in the UDC video restoration and offers better insights into the challenge.UDC-VIT is available at our project site.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18545v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
           <td class="inline-block">
             <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
           </td>
@@ -695,138 +827,6 @@
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                MANTA: Diffusion Mamba for Efficient and Effective Stochastic Long-Term Dense Anticipation
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Our work addresses the problem of stochastic long-term dense anticipation.The goal of this task is to predict actions and their durations several minutes into the future based on provided video observations.Anticipation over extended horizons introduces high uncertainty, as a single observation can lead to multiple plausible future outcomes.To address this uncertainty, stochastic models are designed to predict several potential future action sequences.Recent work has further proposed to incorporate uncertainty modelling for observed frames by simultaneously predicting per-frame past and future actions in a unified manner.While such joint modelling of actions is beneficial, it requires long-range temporal capabilities to connect events across distant past and future time points.However, the previous work struggles to achieve such a long-range understanding due to its limited and/or sparse receptive field.To alleviate this issue, we propose a novel MANTA (MAmba for ANTicipation) network.Our model enables effective long-term temporal modelling even for very long sequences while maintaining linear complexity in sequence length.<span class='px-1 mx-1 bg-yellow-200'>We demonstrate that our approach achieves state-of-the-art results on three datasets - Breakfast, 50Salads, and Assembly101 - while also significantly improving computational and memory efficiency. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.847</span></span></p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.08837v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-15</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                CveBinarySheet: A Comprehensive Pre-built Binaries Database for IoT Vulnerability Analysis
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Binary Static Code Analysis (BSCA) is a pivotal area in software vulnerability research, focusing on the precise localization of vulnerabilities within binary executables.Despite advancements in BSCA techniques, there is a notable scarcity of comprehensive and readily usable vulnerability datasets tailored for diverse environments such as IoT, UEFI, and MCU firmware.<span class='px-1 mx-1 bg-yellow-200'>To address this gap, we present CveBinarySheet, a meticulously curated database containing 1033 CVE entries spanning from 1999 to 2024. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.822</span></span>Our dataset encompasses 16 essential third-party components, including busybox and curl, and supports five CPU architectures: x86-64, i386, MIPS, ARMv7, and RISC-V64.Each precompiled binary is available at two compiler optimization levels (O0 and O3), facilitating comprehensive vulnerability analysis under different compilation scenarios.By providing detailed metadata and diverse binary samples, CveBinarySheet aims to accelerate the development of state-of-the-art BSCA tools, binary similarity analysis, and vulnerability matching applications.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.08840v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-15</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Profile and neighbourhood complexity of graphs with excluded minors and tree-structured graphs
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>The $r$-neighbourhood complexity of a graph $G$ is the function counting, for a given integer $k$, the largest possible number, over all vertex-subsets $A$ of size $k$, of subsets of $A$ realized as the intersection between the $r$-neighbourhood of some vertex and $A$.A refinement of this notion is the $r$-profile complexity, that counts the maximum number of distinct distance-vectors from any vertex to the vertices of $A$, ignoring distances larger than $r$. Typically, in structured graph classes such as graphs of bounded VC-dimension or chordal graphs, these functions are bounded, leading to insights into their structural properties and efficient algorithms.   We improve existing bounds on the $r$-profile complexity (and thus on the $r$-neighbourhood complexity) for graphs in several structured graph classes.We show that the $r$-profile complexity of graphs excluding $K_h$ as a minor is in $O_h(r^{3h-3}k)$. For graphs of treewidth at most $t$ we give a bound in $O_t(r^{t+1}k)$, which is tight up to a function of $t$ as a factor.These bounds improve results and answer a question of Joret and Rambaud<span class='px-1 mx-1 bg-yellow-200'>[Combinatorica, 2024].    <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.702</span></span>For outerplanar graphs, we can improve our treewidth bound by a factor of $r$ and conjecture that a similar improvement holds for graphs with bounded simple treewidth.For graphs of treelength at most $\ell$, we give the upper bound in $O(k(r^2(\ell+1)^k))$.   Our bounds also imply relations between the order, diameter and metric dimension of graphs in these classes, improving results from [Beaudou et al., SIDMA 2017].</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.08895v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-15</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Empowering Agricultural Insights: RiceLeafBD - A Novel Dataset and Optimal Model Selection for Rice Leaf Disease Diagnosis through Transfer Learning Technique
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>The number of people living in this agricultural nation of ours, which is surrounded by lush greenery, is growing on a daily basis.As a result of this, the level of arable land is decreasing, as well as residential houses and industrial factories.The food crisis is becoming the main threat for us in the upcoming days.Because on the one hand, the population is increasing, and on the other hand, the amount of food crop production is decreasing due to the attack of diseases.Rice is one of the most significant cultivated crops since it provides food for more than half of the world's population.Bangladesh is dependent on rice (Oryza sativa) as a vital crop for its agriculture, but it faces a significant problem as a result of the ongoing decline in rice yield brought on by common diseases.Early disease detection is the main difficulty in rice crop cultivation.<span class='px-1 mx-1 bg-yellow-200'>In this paper, we proposed our own dataset, which was collected from the Bangladesh field, and also applied deep learning and transfer learning models for the evaluation of the datasets. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.779</span></span><span class='px-1 mx-1 bg-yellow-200'>We elaborately explain our dataset and also give direction for further research work to serve society using this dataset. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.704</span></span>We applied a light CNN model and pre-trained InceptionNet-V2, EfficientNet-V2, and MobileNet-V2 models, which achieved 91.5% performance for the EfficientNet-V2 model of this work.The results obtained assaulted other models and even exceeded approaches that are considered to be part of the state of the art.It has been demonstrated by this study that it is possible to precisely and effectively identify diseases that affect rice leaves using this unbiased datasets.After analysis of the performance of different models, the proposed datasets are significant for the society for research work to provide solutions for decreasing rice leaf disease.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.08912v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-15</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Modeling Melt Pool Features and Spatter Using Symbolic Regression and Machine Learning
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Additive manufacturing (AM) is a rapidly evolving technology that has attracted applications across a wide range of fields due to its ability to fabricate complex geometries.However, one of the key challenges in AM is achieving consistent print quality.This inconsistency is often attributed to uncontrolled melt pool dynamics, partly caused by spatter which can lead to defects.Therefore, capturing and controlling the evolution of the melt pool is crucial for enhancing process stability and part quality.In this study, we developed a framework to support decision-making in AM operations, facilitating quality control and minimizing defects via machine learning (ML) and polynomial symbolic regression models.We implemented experimentally validated computational tools as a cost-effective approach to collect large datasets from laser powder bed fusion (LPBF) processes.<span class='px-1 mx-1 bg-yellow-200'>For a dataset consisting of 281 process conditions, parameters such as melt pool dimensions (length, width, depth), melt pool geometry (area, volume), and volume indicated as spatter were extracted. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.811</span></span>Using machine learning (ML) and polynomial symbolic regression models, a high R2 of over 95 % was achieved in predicting the melt pool dimensions and geometry features for both the training and testing datasets, with either process conditions (power and velocity) or melt pool dimensions as the model inputs.In the case of volume indicated as spatter, R2 improved after logarithmic transforming the model inputs, which was either the process conditions or the melt pool dimensions.Among the investigated ML models, the ExtraTree model achieved the highest R2 values of 96.7 % and 87.5 %.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.08922v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-15</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Learning Joint Denoising, Demosaicing, and Compression from the Raw Natural Image Noise Dataset
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>This paper introduces the Raw Natural Image Noise Dataset (RawNIND), a diverse collection of paired raw images designed to support the development of denoising models that generalize across sensors, image development workflows, and styles. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.863</span></span>Two denoising methods are proposed: one operates directly on raw Bayer data, leveraging computational efficiency, while the other processes linear RGB images for improved generalization to different sensors, with both preserving flexibility for subsequent development.Both methods outperform traditional approaches which rely on developed images.Additionally, the integration of denoising and compression at the raw data level significantly enhances rate-distortion performance and computational efficiency.These findings suggest a paradigm shift toward raw data workflows for efficient and flexible image processing.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.08924v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-15</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
                 Visual WetlandBirds Dataset: Bird Species Identification and Behavior Recognition in Videos
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
@@ -909,21 +909,26 @@
           </div>
         </td>
       </tr><tr>
+          <td></td>
+          <td>
+            <h2 class="text-2xl tracking-tight pt-4 font-bold">Data Quality</h2>
+          </td>
+        </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-14</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                PokerBench: Training Large Language Models to become Professional Poker Players
+                Joint Learning of Energy-based Models and their Partition Function
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>We introduce PokerBench - a benchmark for evaluating the poker-playing abilities of large language models (LLMs).As LLMs excel in traditional NLP tasks, their application to complex, strategic games like poker poses a new challenge.Poker, an incomplete information game, demands a multitude of skills such as mathematics, reasoning, planning, strategy, and a deep understanding of game theory and human psychology.This makes Poker the ideal next frontier for large language models.PokerBench consists of a comprehensive compilation of 11,000 most important scenarios, split between pre-flop and post-flop play, developed in collaboration with trained poker players.We evaluate prominent models including GPT-4, ChatGPT 3.5, and various Llama and Gemma series models, finding that all state-of-the-art LLMs underperform in playing optimal poker.However, after fine-tuning, these models show marked improvements.We validate PokerBench by having models with different scores compete with each other, demonstrating that higher scores on PokerBench lead to higher win rates in actual poker games.Through gameplay between our fine-tuned model and GPT-4, we also identify limitations of simple supervised fine-tuning for learning optimal playing strategy, suggesting the need for more advanced methodologies for effectively training language models to excel in games.PokerBench thus presents a unique benchmark for a quick and reliable evaluation of the poker-playing ability of LLMs as well as a comprehensive benchmark to study the progress of LLMs in complex game-playing scenarios.<span class='px-1 mx-1 bg-yellow-200'>The dataset and code will be made available at: \url{https://github.com/pokerllm/pokerbench}. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.838</span></span></p>
+                  <p>Energy-based models (EBMs) offer a flexible framework for parameterizing probability distributions using neural networks.However, learning EBMs by exact maximum likelihood estimation (MLE) is generally intractable, due to the need to compute the partition function (normalization constant).In this paper, we propose a novel formulation for approximately learning probabilistic EBMs in combinatorially-large discrete spaces, such as sets or permutations.Our key idea is to jointly learn both an energy model and its log-partition, both parameterized as a neural network.Our approach not only provides a novel tractable objective criterion to learn EBMs by stochastic gradient descent (without relying on MCMC), but also a novel means to estimate the log-partition function on unseen data points.On the theoretical side, we show that our approach recovers the optimal MLE solution when optimizing in the space of continuous functions.Furthermore, we show that our approach naturally extends to the broader family of Fenchel-Young losses, allowing us to obtain the first tractable method for optimizing the sparsemax loss in combinatorially-large spaces.<span class='px-1 mx-1 bg-yellow-200'>We demonstrate our approach on multilabel classification and label ranking. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.605</span></span></p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.08328v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18528v1' target="_blank">
                   link
                 </a>
               </p>
@@ -931,11 +936,6 @@
           </div>
         </td>
       </tr><tr>
-          <td></td>
-          <td>
-            <h2 class="text-2xl tracking-tight pt-4 font-bold">Data Quality</h2>
-          </td>
-        </tr><tr>
           <td class="inline-block">
             <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-27</p>
           </td>
@@ -1029,6 +1029,248 @@
             <h2 class="text-2xl tracking-tight pt-4 font-bold">Benchmarks</h2>
           </td>
         </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                GBFRS: Robust Fuzzy Rough Sets via Granular-ball Computing
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Fuzzy rough set theory is effective for processing datasets with complex attributes, supported by a solid mathematical foundation and closely linked to kernel methods in machine learning.Attribute reduction algorithms and classifiers based on fuzzy rough set theory exhibit promising performance in the analysis of high-dimensional multivariate complex data.However, most existing models operate at the finest granularity, rendering them inefficient and sensitive to noise, especially for high-dimensional big data.Thus, enhancing the robustness of fuzzy rough set models is crucial for effective feature selection.Muiti-garanularty granular-ball computing, a recent development, uses granular-balls of different sizes to adaptively represent and cover the sample space, performing learning based on these granular-balls.This paper proposes integrating multi-granularity granular-ball computing into fuzzy rough set theory, using granular-balls to replace sample points.The coarse-grained characteristics of granular-balls make the model more robust.Additionally, we propose a new method for generating granular-balls, scalable to the entire supervised method based on granular-ball computing.A forward search algorithm is used to select feature sequences by defining the correlation between features and categories through dependence functions.<span class='px-1 mx-1 bg-yellow-200'>Experiments demonstrate the proposed model's effectiveness and superiority over baseline methods. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.725</span></span></p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18413v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Guaranteed confidence-band enclosures for PDE surrogates
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>We propose a method for obtaining statistically guaranteed confidence bands for functional machine learning techniques: surrogate models which map between function spaces, motivated by the need build reliable PDE emulators.The method constructs nested confidence sets on a low-dimensional representation (an SVD) of the surrogate model's prediction error, and then maps these sets to the prediction space using set-propagation techniques.The result are conformal-like coverage guaranteed prediction sets for functional surrogate models.We use zonotopes as basis of the set construction, due to their well studied set-propagation and verification properties.The method is model agnostic and can thus be applied to complex Sci-ML models, including Neural Operators, but also in simpler settings.<span class='px-1 mx-1 bg-yellow-200'>We also elicit a technique to capture the truncation error of the SVD, ensuring the guarantees of the method. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.604</span></span></p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18426v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                MolGraph-xLSTM: A graph-based dual-level xLSTM framework with multi-head mixture-of-experts for enhanced molecular representation and interpretability
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Predicting molecular properties is essential for drug discovery, and computational methods can greatly enhance this process.Molecular graphs have become a focus for representation learning, with Graph Neural Networks (GNNs) widely used.However, GNNs often struggle with capturing long-range dependencies.To address this, we propose MolGraph-xLSTM, a novel graph-based xLSTM model that enhances feature extraction and effectively models molecule long-range interactions.   Our approach processes molecular graphs at two scales: atom-level and motif-level.For atom-level graphs, a GNN-based xLSTM framework with jumping knowledge extracts local features and aggregates multilayer information to capture both local and global patterns effectively.Motif-level graphs provide complementary structural information for a broader molecular view.Embeddings from both scales are refined via a multi-head mixture of experts (MHMoE), further enhancing expressiveness and performance.   We validate MolGraph-xLSTM on 10 molecular property prediction datasets, covering both classification and regression tasks.<span class='px-1 mx-1 bg-yellow-200'>Our model demonstrates consistent performance across all datasets, with improvements of up to 7.03% on the BBBP dataset for classification and 7.54% on the ESOL dataset for regression compared to baselines. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.604</span></span>On average, MolGraph-xLSTM achieves an AUROC improvement of 3.18\% for classification tasks and an RMSE reduction of 3.83\% across regression datasets compared to the baseline methods.These results confirm the effectiveness of our model, offering a promising solution for molecular representation learning for drug discovery.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18439v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Clustering Properties of Self-Supervised Learning
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Self-supervised learning (SSL) methods via joint embedding architectures have proven remarkably effective at capturing semantically rich representations with strong clustering properties, magically in the absence of label supervision.Despite this, few of them have explored leveraging these untapped properties to improve themselves.In this paper, we provide an evidence through various metrics that the encoder's output $encoding$ exhibits superior and more stable clustering properties compared to other components.Building on this insight, we propose a novel positive-feedback SSL method, termed Representation Soft Assignment (ReSA), which leverages the model's clustering properties to promote learning in a self-guided manner.<span class='px-1 mx-1 bg-yellow-200'>Extensive experiments on standard SSL benchmarks reveal that models pretrained with ReSA outperform other state-of-the-art SSL methods by a significant margin. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.615</span></span>Finally, we analyze how ReSA facilitates better clustering properties, demonstrating that it effectively enhances clustering performance at both fine-grained and coarse-grained levels, shaping representations that are inherently more structured and semantically meaningful.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18452v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                A Benchmark and Evaluation for Real-World Out-of-Distribution Detection Using Vision-Language Models
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Out-of-distribution (OOD) detection is a task that detects OOD samples during inference to ensure the safety of deployed models.<span class='px-1 mx-1 bg-yellow-200'>However, conventional benchmarks have reached performance saturation, making it difficult to compare recent OOD detection methods. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.657</span></span>To address this challenge, we introduce three novel OOD detection benchmarks that enable a deeper understanding of method characteristics and reflect real-world conditions.First, we present ImageNet-X, designed to evaluate performance under challenging semantic shifts.Second, we propose ImageNet-FS-X for full-spectrum OOD detection, assessing robustness to covariate shifts (feature distribution shifts).Finally, we propose Wilds-FS-X, which extends these evaluations to real-world datasets, offering a more comprehensive testbed.Our experiments reveal that recent CLIP-based OOD detection methods struggle to varying degrees across the three proposed benchmarks, and none of them consistently outperforms the others.We hope the community goes beyond specific benchmarks and includes more challenging conditions reflecting real-world scenarios.The code is https://github.com/hoshi23/OOD-X-Banchmarks.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18463v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Integrating Spatial and Frequency Information for Under-Display Camera Image Restoration
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Under-Display Camera (UDC) houses a digital camera lens under a display panel.However, UDC introduces complex degradations such as noise, blur, decrease in transmittance, and flare.Despite the remarkable progress, previous research on UDC mainly focuses on eliminating diffraction in the spatial domain and rarely explores its potential in the frequency domain.It is essential to consider both the spatial and frequency domains effectively.For example, degradations, such as noise and blur, can be addressed by local information (e.g., CNN kernels in the spatial domain).At the same time, tackling flares may require leveraging global information (e.g., the frequency domain).In this paper, we revisit the UDC degradations in the Fourier space and figure out intrinsic frequency priors that imply the presence of the flares.Based on this observation, we propose a novel multi-level DNN architecture called SFIM.It efficiently restores UDC-distorted images by integrating local and global (the collective contribution of all points in the image) information.The architecture exploits CNNs to capture local information and FFT-based models to capture global information.SFIM comprises a spatial domain block (SDB), a Frequency Domain Block (FDB), and an Attention-based Multi-level Integration Block (AMIB).Specifically, SDB focuses more on detailed textures such as noise and blur, FDB emphasizes irregular texture loss in extensive areas such as flare, and AMIB enables effective cross-domain interaction.<span class='px-1 mx-1 bg-yellow-200'>SFIM's superior performance over state-of-the-art approaches is demonstrated through rigorous quantitative and qualitative assessments across three UDC benchmarks. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.633</span></span></p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18517v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Rethinking Bottlenecks in Safety Fine-Tuning of Vision Language Models
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Large Vision-Language Models (VLMs) have achieved remarkable performance across a wide range of tasks.However, their deployment in safety-critical domains poses significant challenges.Existing safety fine-tuning methods, which focus on textual or multimodal content, fall short in addressing challenging cases or disrupt the balance between helpfulness and harmlessness.Our evaluation highlights a safety reasoning gap: these methods lack safety visual reasoning ability, leading to such bottlenecks.To address this limitation and enhance both visual perception and reasoning in safety-critical contexts, we propose a novel dataset that integrates multi-image inputs with safety Chain-of-Thought (CoT) labels as fine-grained reasoning logic to improve model performance.Specifically, we introduce the Multi-Image Safety (MIS) dataset, an instruction-following dataset tailored for multi-image safety scenarios, consisting of training and test splits.Our experiments demonstrate that fine-tuning InternVL2.5-8B with MIS significantly outperforms both powerful open-source models and API-based models in challenging multi-image tasks requiring safety-related visual reasoning.This approach not only delivers exceptional safety performance but also preserves general capabilities without any trade-offs.<span class='px-1 mx-1 bg-yellow-200'>Specifically, fine-tuning with MIS increases average accuracy by 0.83% across five general benchmarks and reduces the Attack Success Rate (ASR) on multiple safety benchmarks by a large margin. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.654</span></span>Data and Models are released under: \href{https://dripnowhy.github.io/MIS/}{\texttt{https://dripnowhy.github.io/MIS/}}</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18533v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Mini-ResEmoteNet: Leveraging Knowledge Distillation for Human-Centered Design
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Facial Emotion Recognition has emerged as increasingly pivotal in the domain of User Experience, notably within modern usability testing, as it facilitates a deeper comprehension of user satisfaction and engagement.This study aims to extend the ResEmoteNet model by employing a knowledge distillation framework to develop Mini-ResEmoteNet models - lightweight student models - tailored for usability testing.Experiments were conducted on the FER2013 and RAF-DB datasets to assess the efficacy of three student model architectures: Student Model A, Student Model B, and Student Model C. Their development involves reducing the number of feature channels in each layer of the teacher model by approximately 50%, 75%, and 87.5%.Demonstrating exceptional performance on the FER2013 dataset, Student Model A (E1) achieved a test accuracy of 76.33%, marking a 0.21% absolute improvement over EmoNeXt.Moreover, the results exhibit absolute improvements in terms of inference speed and memory usage during inference compared to the ResEmoteNet model.<span class='px-1 mx-1 bg-yellow-200'>The findings indicate that the proposed methods surpass other state-of-the-art approaches. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.622</span></span></p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18538v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Can we Retrieve Everything All at Once? ARM: An Alignment-Oriented LLM-based Retrieval Method
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Real-world open-domain questions can be complicated, particularly when answering them involves information from multiple information sources.LLMs have demonstrated impressive performance in decomposing complex tasks into simpler steps, and previous work has used it for better retrieval in support of complex questions.However, LLM's decomposition of questions is unaware of what data is available and how data is organized, often leading to a sub-optimal retrieval performance.Recent effort in agentic RAG proposes to perform retrieval in an iterative fashion, where a followup query is derived as an action based on previous rounds of retrieval.While this provides one way of interacting with the data collection, agentic RAG's exploration of data is inefficient because successive queries depend on previous results rather than being guided by the organization of available data in the collection.To address this problem, we propose an LLM-based retrieval method -- ARM, that aims to better align the question with the organization of the data collection by exploring relationships among data objects beyond matching the utterance of the query, thus leading to a retrieve-all-at-once solution for complex queries.We evaluated ARM on two datasets, Bird and OTT-QA.On Bird, it outperforms standard RAG with query decomposition by up to 5.2 pt in execution accuracy and agentic RAG (ReAct) by up to 15.9 pt.<span class='px-1 mx-1 bg-yellow-200'>On OTT-QA, it achieves up to 5.5 pt and 19.3 pt higher F1 match scores compared to these approaches. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.628</span></span></p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18539v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Accuracy and Robustness of Weight-Balancing Methods for Training PINNs
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Physics-Informed Neural Networks (PINNs) have emerged as powerful tools for integrating physics-based models with data by minimizing both data and physics losses.<span class='px-1 mx-1 bg-yellow-200'>However, this multi-objective optimization problem is notoriously challenging, with some benchmark problems leading to unfeasible solutions. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.606</span></span>To address these issues, various strategies have been proposed, including adaptive weight adjustments in the loss function.In this work, we introduce clear definitions of accuracy and robustness in the context of PINNs and propose a novel training algorithm based on the Primal-Dual (PD) optimization framework.Our approach enhances the robustness of PINNs while maintaining comparable performance to existing weight-balancing methods.<span class='px-1 mx-1 bg-yellow-200'>Numerical experiments demonstrate that the PD method consistently achieves reliable solutions across all investigated cases and can be easily implemented, facilitating its practical adoption. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.631</span></span>The code is available at https://github.com/haoming-SHEN/Accuracy-and-Robustness-of-Weight-Balancing-Methods-for-Training-PINNs.git.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18582v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
+          <td class="inline-block">
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
+          </td>
+          <td>
+            <div x-data="{open: false}">
+              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
+                Thoughts Are All Over the Place: On the Underthinking of o1-Like LLMs
+              </span>
+              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
+                <div class="text-center pt-2"></div>
+                <p class="pt-2">
+                  <p>Large language models (LLMs) such as OpenAI's o1 have demonstrated remarkable abilities in complex reasoning tasks by scaling test-time compute and exhibiting human-like deep thinking.However, we identify a phenomenon we term underthinking, where o1-like LLMs frequently switch between different reasoning thoughts without sufficiently exploring promising paths to reach a correct solution.This behavior leads to inadequate depth of reasoning and decreased performance, particularly on challenging mathematical problems.To systematically analyze this issue, we conduct experiments on three challenging test sets and two representative open-source o1-like models, revealing that frequent thought switching correlates with incorrect responses.We introduce a novel metric to quantify underthinking by measuring token efficiency in incorrect answers.To address underthinking, we propose a decoding strategy with thought switching penalty TIP that discourages premature transitions between thoughts, encouraging deeper exploration of each reasoning path.<span class='px-1 mx-1 bg-yellow-200'>Experimental results demonstrate that our approach improves accuracy across challenging datasets without requiring model fine-tuning. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.607</span></span>Our findings contribute to understanding reasoning inefficiencies in o1-like LLMs and offer a practical solution to enhance their problem-solving capabilities.</p>
+                </p>
+              <p class="pb-2 pt-2 text-center">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18585v1' target="_blank">
+                  link
+                </a>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr><tr>
           <td class="inline-block">
             <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
           </td>
@@ -1563,50 +1805,6 @@
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Pseudocode-Injection Magic: Enabling LLMs to Tackle Graph Computational Tasks
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Graph computational tasks are inherently challenging and often demand the development of advanced algorithms for effective solutions.With the emergence of large language models (LLMs), researchers have begun investigating their potential to address these tasks.However, existing approaches are constrained by LLMs' limited capability to comprehend complex graph structures and their high inference costs, rendering them impractical for handling large-scale graphs.Inspired by human approaches to graph problems, we introduce a novel framework, PIE (Pseudocode-Injection-Enhanced LLM Reasoning for Graph Computational Tasks), which consists of three key steps: problem understanding, prompt design, and code generation.In this framework, LLMs are tasked with understanding the problem and extracting relevant information to generate correct code.The responsibility for analyzing the graph structure and executing the code is delegated to the interpreter.We inject task-related pseudocodes into the prompts to further assist the LLMs in generating efficient code.We also employ cost-effective trial-and-error techniques to ensure that the LLM-generated code executes correctly.Unlike other methods that require invoking LLMs for each individual test case, PIE only calls the LLM during the code generation phase, allowing the generated code to be reused and significantly reducing inference costs.<span class='px-1 mx-1 bg-yellow-200'>Extensive experiments demonstrate that PIE outperforms existing baselines in terms of both accuracy and computational efficiency. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.649</span></span></p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.13731v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-23</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                UGMathBench: A Diverse and Dynamic Benchmark for Undergraduate-Level Mathematical Reasoning with Large Language Models
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Large Language Models (LLMs) have made significant strides in mathematical reasoning, underscoring the need for a comprehensive and fair evaluation of their capabilities.<span class='px-1 mx-1 bg-yellow-200'>However, existing benchmarks often fall short, either lacking extensive coverage of undergraduate-level mathematical problems or probably suffering from test-set contamination. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.618</span></span>To address these issues, we introduce UGMathBench, a diverse and dynamic benchmark specifically designed for evaluating undergraduate-level mathematical reasoning with LLMs.UGMathBench comprises 5,062 problems across 16 subjects and 111 topics, featuring 10 distinct answer types.Each problem includes three randomized versions, with additional versions planned for release as leading open-source LLMs become saturated in UGMathBench.Furthermore, we propose two key metrics: effective accuracy (EAcc), which measures the percentage of correctly solved problems across all three versions, and reasoning gap ($\Delta$), which assesses reasoning robustness by calculating the difference between the average accuracy across all versions and EAcc.Our extensive evaluation of 23 leading LLMs reveals that the highest EAcc achieved is 56.3\% by OpenAI-o1-mini, with large $\Delta$ values observed across different models.This highlights the need for future research aimed at developing "large reasoning models" with high EAcc and $\Delta =0$.We anticipate that the release of UGMathBench, along with its detailed evaluation codes, will serve as a valuable resource to advance the development of LLMs in solving mathematical problems.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.13766v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-23</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
                 Rate-Distortion Region for Distributed Indirect Source Coding with Decoder Side Information
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
@@ -1843,180 +2041,26 @@
           </div>
         </td>
       </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-22</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                OnionEval: An Unified Evaluation of Fact-conflicting Hallucination for Small-Large Language Models
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Large Language Models (LLMs) are highly capable but require significant computational resources for both training and inference.Within the LLM family, smaller models (those with fewer than 10 billion parameters) also perform well across various tasks.However, these smaller models share similar limitations to their larger counterparts, including the tendency to hallucinate.Despite the existence of many benchmarks to evaluate hallucination in LLMs, few have specifically focused on small LLMs (SLLMs).<span class='px-1 mx-1 bg-yellow-200'>Additionally, SLLMs show widely varying performance across different benchmarks. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.675</span></span>In this paper, we introduce OnionEval, a multi-layer structured framework with a specific metric called the context-influence score (CI), designed to effectively assess the fact-conflicting hallucination tendencies of small LLMs across different contextual levels.Our experimental results reveal a key feature of SLLMs: they excel in factual analysis but face challenges with context reasoning.Further investigation shows that a simple Chain-of-Thought strategy can significantly reduce these limitations, improving the practical usefulness of SLLMs in real-world applications.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.12975v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-22</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Pairwise RM: Perform Best-of-N Sampling with Knockout Tournament
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Best-of-N (BoN) sampling, a common strategy for test-time scaling of Large Language Models (LLMs), relies on reward models to select the best candidate solution from multiple generations.However, traditional reward models often assign arbitrary and inconsistent scores, limiting their effectiveness.To address this, we propose a Pairwise Reward Model (Pairwise RM) combined with a knockout tournament for BoN sampling.Instead of assigning absolute scores, given one math problem, Pairwise RM evaluates two candidate solutions' correctness simultaneously.<span class='px-1 mx-1 bg-yellow-200'>This approach eliminates the need for arbitrary scoring and enables cross-validation of solutions through parallel comparison. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.654</span></span><span class='px-1 mx-1 bg-yellow-200'>In the knockout tournament, Pairwise RM conducts pairwise comparisons between candidate solutions and eliminates the incorrect ones iteratively. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.63</span></span>We construct \ourdataset, a large-scale dataset of 443K pairwise comparisons derived from NumiaMath and annotated using \texttt{gemini-1.5-flash}, and train the Pairwise RM via supervised fine-tuning.Experiments on MATH-500 and the Olympiad Bench demonstrate significant improvements over traditional discriminative reward models.And a 40\% to 60\% relative improvement is achieved on the top 50\% challenging problems.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.13007v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-22</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Paper Quality Assessment based on Individual Wisdom Metrics from Open Peer Review
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>This study proposes a data-driven framework for enhancing the accuracy and efficiency of scientific peer review through an open, bottom-up process that estimates reviewer quality.Traditional closed peer review systems, while essential for quality control, are often slow, costly, and subject to biases that can impede scientific progress.<span class='px-1 mx-1 bg-yellow-200'>Here, we introduce a method that evaluates individual reviewer reliability by quantifying agreement with community consensus scores and applying Bayesian weighting to refine paper quality assessments. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.674</span></span><span class='px-1 mx-1 bg-yellow-200'>We analyze open peer review data from two major scientific conferences, and demonstrate that reviewer-specific quality scores significantly improve the reliability of paper quality estimation. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.618</span></span>Perhaps surprisingly, we find that reviewer quality scores are unrelated to authorship quality.Our model incorporates incentive structures to recognize high-quality reviewers and encourage broader coverage of submitted papers, thereby mitigating the common "rich-get-richer" pitfall of social media.These findings suggest that open peer review, with mechanisms for estimating and incentivizing reviewer quality, offers a scalable and equitable alternative for scientific publishing, with potential to enhance the speed, fairness, and transparency of the peer review process.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.13014v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-22</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Multi-Objective Hyperparameter Selection via Hypothesis Testing on Reliability Graphs
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>In sensitive application domains, multi-objective hyperparameter selection can ensure the reliability of AI models prior to deployment, while optimizing auxiliary performance metrics.<span class='px-1 mx-1 bg-yellow-200'>The state-of-the-art Pareto Testing (PT) method guarantees statistical reliability constraints by adopting a multiple hypothesis testing framework. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.625</span></span>In PT, hyperparameters are validated one at a time, following a data-driven order determined by expected reliability levels.This paper introduces a novel framework for multi-objective hyperparameter selection that captures the interdependencies among the reliability levels of different hyperparameter configurations using a directed acyclic graph (DAG), which is termed the reliability graph (RG).The RG is constructed based on prior information and data by using the Bradley-Terry model.The proposed approach, RG-based PT (RG-PT), leverages the RG to enable the efficient, parallel testing of multiple hyperparameters at the same reliability level.By integrating False Discovery Rate (FDR) control, RG-PT ensures robust statistical reliability guarantees and is shown via experiments across diverse domains to consistently yield superior solutions for multi-objective calibration problems.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.13018v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-22</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                An Analytical Study of the Min-Sum Approximation for Polar Codes
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>The min-sum approximation is widely used in the decoding of polar codes.<span class='px-1 mx-1 bg-yellow-200'>Although it is a numerical approximation, hardly any penalties are incurred in practice. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.608</span></span>We give a theoretical justification for this.We consider the common case of a binary-input, memoryless, and symmetric channel, decoded using successive cancellation and the min-sum approximation.Under mild assumptions, we show the following.For the finite length case, we show how to exactly calculate the error probabilities of all synthetic (bit) channels in time $O(N^{1.585})$, where $N$ is the codeword length.This implies a code construction algorithm with the above complexity.For the asymptotic case, we develop two rate thresholds, denoted $R_{\mathrm{L}} = R_{\mathrm{L}}(\lambda)$ and $R_{\mathrm{U}} =R_{\mathrm{U}}(\lambda)$, where $\lambda(\cdot)$ is the labeler of the channel outputs (essentially, a quantizer).For any $0 <\beta < \frac{1}{2}$ and any code rate $R < R_{\mathrm{L}}$, there exists a family of polar codes with growing lengths such that their rates are at least $R$ and their error probabilities are at most $2^{-N^\beta}$. That is, strong polarization continues to hold under the min-sum approximation.Conversely, for code rates exceeding $R_{\mathrm{U}}$, the error probability approaches $1$ as the code-length increases, irrespective of which bits are frozen.We show that $0 < R_{\mathrm{L}} \leq R_{\mathrm{U}} \leq C$, where $C$ is the channel capacity.The last inequality is often strict, in which case the ramification of using the min-sum approximation is that we can no longer achieve capacity.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.13092v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-22</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Robust Representation Consistency Model via Contrastive Denoising
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>Robustness is essential for deep neural networks, especially in security-sensitive applications.To this end, randomized smoothing provides theoretical guarantees for certifying robustness against adversarial perturbations.Recently, diffusion models have been successfully employed for randomized smoothing to purify noise-perturbed samples before making predictions with a standard classifier.<span class='px-1 mx-1 bg-yellow-200'>While these methods excel at small perturbation radii, they struggle with larger perturbations and incur a significant computational overhead during inference compared to classical methods. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.606</span></span>To address this, we reformulate the generative modeling task along the diffusion trajectories in pixel space as a discriminative task in the latent space.Specifically, we use instance discrimination to achieve consistent representations along the trajectories by aligning temporally adjacent points.After fine-tuning based on the learned representations, our model enables implicit denoising-then-classification via a single prediction, substantially reducing inference costs.We conduct extensive experiments on various datasets and achieve state-of-the-art performance with minimal computation budget during inference.<span class='px-1 mx-1 bg-yellow-200'>For example, our method outperforms the certified accuracy of diffusion-based methods on ImageNet across all perturbation radii by 5.3% on average, with up to 11.6% at larger radii, while reducing inference costs by 85$\times$ on average. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.621</span></span>Codes are available at: https://github.com/jiachenlei/rRCM.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.13094v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-22</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                A Rate-Distortion Framework for Summarization
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p>This paper introduces an information-theoretic framework for text summarization.We define the summarizer rate-distortion function and show that it provides a fundamental lower bound on summarizer performance.We describe an iterative procedure, similar to Blahut-Arimoto algorithm, for computing this function.To handle real-world text datasets, we also propose a practical method that can calculate the summarizer rate-distortion function with limited data.<span class='px-1 mx-1 bg-yellow-200'>Finally, we empirically confirm our theoretical results by comparing the summarizer rate-distortion function with the performances of different summarizers used in practice. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.655</span></span></p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.13100v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
           <td></td>
           <td>
             <h2 class="text-2xl tracking-tight pt-4 font-bold">LLMs</h2>
           </td>
         </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Distinguished Quantized Guidance for Diffusion-based Sequence Recommendation
+                o3-mini vs DeepSeek-R1: Which One is Safer?
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>Diffusion models (DMs) have emerged as promising approaches for sequential recommendation due to their strong ability to model data distributions and generate high-quality items.Existing work typically adds noise to the next item and progressively denoises it guided by the user's interaction sequence, generating items that closely align with user interests.However, we identify two key issues in this paradigm.First, the sequences are often heterogeneous in length and content, exhibiting noise due to stochastic user behaviors.<span class='px-1 mx-1 bg-yellow-200'>Using such sequences as guidance may hinder DMs from accurately understanding user interests. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.624</span></span><span class='px-1 mx-1 bg-yellow-200'>Second, DMs are prone to data bias and tend to generate only the popular items that dominate the training dataset, thus failing to meet the personalized needs of different users. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.673</span></span>To address these issues, we propose Distinguished Quantized Guidance for Diffusion-based Sequence Recommendation (DiQDiff), which aims to extract robust guidance to understand user interests and generate distinguished items for personalized user interests within DMs.To extract robust guidance, DiQDiff introduces Semantic Vector Quantization (SVQ) to quantize sequences into semantic vectors (e.g., collaborative signals and category interests) using a codebook, which can enrich the guidance to better understand user interests.To generate distinguished items, DiQDiff personalizes the generation through Contrastive Discrepancy Maximization (CDM), which maximizes the distance between denoising trajectories using contrastive loss to prevent biased generation for different users.Extensive experiments are conducted to compare DiQDiff with multiple baseline models across four widely-used datasets.The superior recommendation performance of DiQDiff against leading approaches demonstrates its effectiveness in sequential recommendation tasks.</p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>The irruption of DeepSeek-R1 constitutes a turning point for the AI industry in general and the LLMs in particular. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.649</span></span>Its capabilities have demonstrated outstanding performance in several tasks, including creative thinking, code generation, maths and automated program repair, at apparently lower execution cost.<span class='px-1 mx-1 bg-yellow-200'>However, LLMs must adhere to an important qualitative property, i.e., their alignment with safety and human values. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.758</span></span>A clear competitor of DeepSeek-R1 is its American counterpart, OpenAI's o3-mini model, which is expected to set high standards in terms of performance, safety and cost.In this paper we conduct a systematic assessment of the safety level of both, DeepSeek-R1 (70b version) and OpenAI's o3-mini (beta version).To this end, we make use of our recently released automated safety testing tool, named ASTRAL.By leveraging this tool, we automatically and systematically generate and execute a total of 1260 unsafe test inputs on both models.<span class='px-1 mx-1 bg-yellow-200'>After conducting a semi-automated assessment of the outcomes provided by both LLMs, the results indicate that DeepSeek-R1 is highly unsafe as compared to OpenAI's o3-mini. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.642</span></span>Based on our evaluation, DeepSeek-R1 answered unsafely to 11.98% of the executed prompts whereas o3-mini only to 1.19%.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17670v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18438v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2025,20 +2069,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Ownership-based Virtual Memory for Intermittently-Powered Embedded Systems
+                CALM: Unleashing the Cross-Lingual Self-Aligning Ability of Language Model Question Answering
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>The Battery-Free Internet of Things might revolutionize our understanding of connected devices, which harvest their operational energy from the environment (e.g., using solar cells).These systems come with the major system-software challenge that the intermittently-powered IoT devices have to checkpoint their state in non-volatile memory to later resume operation with this state when sufficient energy is available.The scarce energy resources demand that only modified data is persisted to non-volatile memory before a power failure, which requires precise modification-tracking.   <span class='px-1 mx-1 bg-yellow-200'>In this paper, we present the first virtually Non-Volatile Heap (vNV-Heap) abstraction for intermittently-powered systems with guaranteed power-failure resilience and non-volatile memory safety (analogous to memory-safety for RAM). <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.627</span></span>The heap exploits ownership systems, a zero-cost (i.e., compile-time) abstraction for example implemented by Rust, to track modifications and virtualize object-persistence.To achieve power-failure resilience, our heap is designed and implemented to guarantee bounded operations by static program code analysis: As an example, the heap allows for determining a worst-case energy consumption for the operation of persisting modified and currently volatile objects.Our evaluations with our open-source implementation on an embedded hardware platform (i.e., ESP32-C3) shows that using our heap abstraction is more energy-efficient than existing approaches, while also providing runtime guarantees by static worst-case analysis bounds.</p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>Large Language Models (LLMs) are pretrained on extensive multilingual corpora to acquire both language-specific cultural knowledge and general knowledge. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.652</span></span><span class='px-1 mx-1 bg-yellow-200'>Ideally, while LLMs should provide consistent responses to culture-independent questions across languages, we observe significant performance disparities. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.775</span></span>To address this, we explore the Cross-Lingual Self-Aligning ability of Language Models (CALM) to align knowledge across languages.Specifically, for a given question, we sample multiple responses across different languages, and select the most self-consistent response as the target, leaving the remaining responses as negative examples.We then employ direct preference optimization (DPO) to align the model's knowledge across different languages.Evaluations on the MEDQA and X-CSQA datasets demonstrate CALM's effectiveness in enhancing cross-lingual knowledge question answering, both in zero-shot and retrieval augmented settings.We also found that increasing the number of languages involved in CALM training leads to even higher accuracy and consistency.We offer a qualitative analysis of how cross-lingual consistency can enhance knowledge alignment and explore the method's generalizability.The source code and data of this paper are available on GitHub.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17707v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18457v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2047,20 +2091,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                RICoTA: Red-teaming of In-the-wild Conversation with Test Attempts
+                ExeCoder: Empowering Large Language Models with Executability Representation for Code Translation
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>User interactions with conversational agents (CAs) evolve in the era of heavily guardrailed large language models (LLMs). <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.645</span></span>As users push beyond programmed boundaries to explore and build relationships with these systems, there is a growing concern regarding the potential for unauthorized access or manipulation, commonly referred to as "jailbreaking."<span class='px-1 mx-1 bg-yellow-200'>Moreover, with CAs that possess highly human-like qualities, users show a tendency toward initiating intimate sexual interactions or attempting to tame their chatbots. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.603</span></span><span class='px-1 mx-1 bg-yellow-200'>To capture and reflect these in-the-wild interactions into chatbot designs, we propose RICoTA, a Korean red teaming dataset that consists of 609 prompts challenging LLMs with in-the-wild user-made dialogues capturing jailbreak attempts. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.628</span></span><span class='px-1 mx-1 bg-yellow-200'>We utilize user-chatbot conversations that were self-posted on a Korean Reddit-like community, containing specific testing and gaming intentions with a social chatbot. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.621</span></span><span class='px-1 mx-1 bg-yellow-200'>With these prompts, we aim to evaluate LLMs' ability to identify the type of conversation and users' testing purposes to derive chatbot design implications for mitigating jailbreaking risks. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.717</span></span>Our dataset will be made publicly available via GitHub.</p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>Code translation is a crucial activity in the software development and maintenance process, and researchers have recently begun to focus on using pre-trained large language models (LLMs) for code translation. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.64</span></span><span class='px-1 mx-1 bg-yellow-200'>However, existing LLMs only learn the contextual semantics of code during pre-training, neglecting executability information closely related to the execution state of the code, which results in unguaranteed code executability and unreliable automated code translation. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.698</span></span><span class='px-1 mx-1 bg-yellow-200'>To address this issue, we propose ExeCoder, an LLM specifically designed for code translation, aimed at utilizing executability representations such as functional semantics, syntax structures, and variable dependencies to enhance the capabilities of LLMs in code translation. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.676</span></span>To evaluate the effectiveness of ExeCoder, we manually enhanced the widely used benchmark TransCoder-test, resulting in a benchmark called TransCoder-test-X that serves LLMs.<span class='px-1 mx-1 bg-yellow-200'>Evaluation of TransCoder-test-X indicates that ExeCoder achieves state-of-the-art performance in code translation, surpassing existing open-source code LLMs by over 10.88% to 38.78% and over 27.44% to 42.97% on two metrics, and even outperforms the renowned closed-source LLM GPT-4o. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.619</span></span>Website: https://execoder4trans.github.io/</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17715v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18460v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2069,20 +2113,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Using Code Generation to Solve Open Instances of Combinatorial Design Problems
+                CLoQ: Enhancing Fine-Tuning of Quantized LLMs via Calibrated LoRA Initialization
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>The Handbook of Combinatorial Designs catalogs many types of combinatorial designs, together with lists of open instances for which existence has not yet been determined.<span class='px-1 mx-1 bg-yellow-200'>We develop a constructive protocol CPro1, which uses Large Language Models (LLMs) to generate code that constructs combinatorial designs and resolves some of these open instances. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.62</span></span>The protocol starts from a definition of a particular type of design, and a verifier that reliably confirms whether a proposed design is valid.<span class='px-1 mx-1 bg-yellow-200'>The LLM selects strategies and implements them in code, and scaffolding provides automated hyperparameter tuning and execution feedback using the verifier. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.694</span></span>Most generated code fails, but by generating many candidates, the protocol automates exploration of a variety of standard methods (e.g. simulated annealing, genetic algorithms) and experimentation with variations (e.g. cost functions) to find successful approaches.Testing on 16 different types of designs, CPro1 constructs solutions to open instances for 6 of them:Symmetric and Skew Weighing Matrices, Equidistant Permutation Arrays, Packing Arrays, Balanced Ternary Designs, and Florentine Rectangles.</p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>Fine-tuning large language models (LLMs) using low-rank adaptation (LoRA) has become a highly efficient approach for downstream tasks, particularly in scenarios with limited computational resources. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.677</span></span><span class='px-1 mx-1 bg-yellow-200'>However, applying LoRA techniques to quantized LLMs poses unique challenges due to the reduced representational precision of quantized weights. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.705</span></span><span class='px-1 mx-1 bg-yellow-200'>In this paper, we introduce CLoQ (Calibrated LoRA initialization for Quantized LLMs), a simplistic initialization strategy designed to overcome these challenges. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.679</span></span><span class='px-1 mx-1 bg-yellow-200'>Our approach focuses on minimizing the layer-wise discrepancy between the original LLM and its quantized counterpart with LoRA components during initialization. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.705</span></span><span class='px-1 mx-1 bg-yellow-200'>By leveraging a small calibration dataset, CLoQ quantizes a pre-trained LLM and determines the optimal LoRA components for each layer, ensuring a strong foundation for subsequent fine-tuning. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.609</span></span>A key contribution of this work is a novel theoretical result that enables the accurate and closed-form construction of these optimal LoRA components.<span class='px-1 mx-1 bg-yellow-200'>We validate the efficacy of CLoQ across multiple tasks such as language generation, arithmetic reasoning, and commonsense reasoning, demonstrating that it consistently outperforms existing LoRA fine-tuning methods for quantized LLMs, especially at ultra low-bit widths. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.689</span></span></p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17725v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18475v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2091,20 +2135,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Early External Safety Testing of OpenAI's o3-mini: Insights from the Pre-Deployment Evaluation
+                A Tool for In-depth Analysis of Code Execution Reasoning of Large Language Models
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>Large Language Models (LLMs) have become an integral part of our daily lives. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.702</span></span>However, they impose certain risks, including those that can harm individuals' privacy, perpetuate biases and spread misinformation.These risks highlight the need for robust safety mechanisms, ethical guidelines, and thorough testing to ensure their responsible deployment.<span class='px-1 mx-1 bg-yellow-200'>Safety of LLMs is a key property that needs to be thoroughly tested prior the model to be deployed and accessible to the general users. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.784</span></span><span class='px-1 mx-1 bg-yellow-200'>This paper reports the external safety testing experience conducted by researchers from Mondragon University and University of Seville on OpenAI's new o3-mini LLM as part of OpenAI's early access for safety testing program. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.635</span></span><span class='px-1 mx-1 bg-yellow-200'>In particular, we apply our tool, ASTRAL, to automatically and systematically generate up to date unsafe test inputs (i.e., prompts) that helps us test and assess different safety categories of LLMs. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.677</span></span>We automatically generate and execute a total of 10,080 unsafe test input on a early o3-mini beta version.<span class='px-1 mx-1 bg-yellow-200'>After manually verifying the test cases classified as unsafe by ASTRAL, we identify a total of 87 actual instances of unsafe LLM behavior. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.704</span></span><span class='px-1 mx-1 bg-yellow-200'>We highlight key insights and findings uncovered during the pre-deployment external testing phase of OpenAI's latest LLM. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.652</span></span></p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>Code Executing Reasoning is becoming a new non-functional metric that assesses the ability of large language models (LLMs) in programming tasks. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.668</span></span>State-of-the-art frameworks (CodeMind or REval) and benchmarks (CruxEval) usually focus on LLM's prediction of a given code's input/output or intermediate variable states/values on limited programs.However, there is no tool for more in-depth analysis of the results.<span class='px-1 mx-1 bg-yellow-200'>Without such a tool, the observations about LLM's code execution reasoning cannot be generalized to more datasets, preventing the research community and practitioners from devising the next generation of LLMs with better code execution reasoning abilities. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.692</span></span>This paper introduces ExeRScope, a series of tools and heuristics to analyze the result of code execution reasoning frameworks to understand better the impact of code properties in the studied benchmarks on the code execution reasoning.With such tooling, analysis can be generalized to code with similar properties without the urgent need to design more benchmarks, which is a cumbersome effort.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17749v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18482v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2113,20 +2157,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Formally Verified Binary-level Pointer Analysis
+                GuardReasoner: Towards Reasoning-based LLM Safeguards
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>Binary-level pointer analysis can be of use in symbolic execution, testing, verification, and decompilation of software binaries.In various such contexts, it is crucial that the result is trustworthy, i.e., it can be formally established that the pointer designations are overapproximative.This paper presents an approach to formally proven correct binary-level pointer analysis.A salient property of our approach is that it first generically considers what proof obligations a generic abstract domain for pointer analysis must satisfy.This allows easy instantiation of different domains, varying in precision, while preserving the correctness of the analysis.In the trade-off between scalability and precision, such customization allows "meaningful" precision (sufficiently precise to ensure basic sanity properties, such as that relevant parts of the stack frame are not overwritten during function execution) while also allowing coarse analysis when pointer computations have become too obfuscated during compilation for sound and accurate bounds analysis.We experiment with three different abstract domains with high, medium, and low precision.<span class='px-1 mx-1 bg-yellow-200'>Evaluation shows that our approach is able to derive designations for memory writes soundly in COTS binaries, in a context-sensitive interprocedural fashion. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.607</span></span></p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>As LLMs increasingly impact safety-critical applications, ensuring their safety using guardrails remains a key challenge. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.74</span></span><span class='px-1 mx-1 bg-yellow-200'>This paper proposes GuardReasoner, a new safeguard for LLMs, by guiding the guard model to learn to reason. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.783</span></span>Concretely, we first create the GuardReasonerTrain dataset, which consists of 127K samples with 460K detailed reasoning steps.Then, we introduce reasoning SFT to unlock the reasoning capability of guard models.In addition, we present hard sample DPO to further strengthen their reasoning ability.In this manner, GuardReasoner achieves better performance, explainability, and generalizability.Extensive experiments and analyses on 13 benchmarks of 3 guardrail tasks demonstrate its superiority.Remarkably, GuardReasoner 8B surpasses GPT-4o+CoT by 5.74% and LLaMA Guard 3 8B by 20.84% F1 score on average.We release the training data, code, and models with different scales (1B, 3B, 8B) of GuardReasoner : https://github.com/yueliu1999/GuardReasoner/.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17766v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18492v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2135,20 +2179,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Hybrid Graphs for Table-and-Text based Question Answering using LLMs
+                CLEAR: Cue Learning using Evolution for Accurate Recognition Applied to Sustainability Data Extraction
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>Answering questions that require reasoning and aggregation across both structured (tables) and unstructured (raw text) data sources presents significant challenges.Current methods rely on fine-tuning and high-quality, human-curated data, which is difficult to obtain.Recent advances in Large Language Models (LLMs) have shown promising results for multi-hop question answering (QA) over single-source text data in a zero-shot setting, yet exploration into multi-source Table-Text QA remains limited.<span class='px-1 mx-1 bg-yellow-200'>In this paper, we present a novel Hybrid Graph-based approach for Table-Text QA that leverages LLMs without fine-tuning. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.67</span></span>Our method constructs a unified Hybrid Graph from textual and tabular data, pruning information based on the input question to provide the LLM with relevant context concisely.We evaluate our approach on the challenging Hybrid-QA and OTT-QA datasets using state-of-the-art LLMs, including GPT-3.5, GPT-4, and LLaMA-3.Our method achieves the best zero-shot performance on both datasets, improving Exact Match scores by up to 10% on Hybrid-QA and 5.4% on OTT-QA.Moreover, our approach reduces token usage by up to 53% compared to the original context.</p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>Large Language Model (LLM) image recognition is a powerful tool for extracting data from images, but accuracy depends on providing sufficient cues in the prompt - requiring a domain expert for specialized tasks. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.689</span></span>We introduce Cue Learning using Evolution for Accurate Recognition (CLEAR), which uses a combination of LLMs and evolutionary computation to generate and optimize cues such that recognition of specialized features in images is improved.It achieves this by auto-generating a novel domain-specific representation and then using it to optimize suitable textual cues with a genetic algorithm.We apply CLEAR to the real-world task of identifying sustainability data from interior and exterior images of buildings.We investigate the effects of using a variable-length representation compared to fixed-length and show how LLM consistency can be improved by refactoring from categorical to real-valued estimates.We show that CLEAR enables higher accuracy compared to expert human recognition and human-authored prompts in every task with error rates improved by up to two orders of magnitude and an ablation study evincing solution concision.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17767v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18504v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2157,20 +2201,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                2SSP: A Two-Stage Framework for Structured Pruning of LLMs
+                WILDCHAT-50M: A Deep Dive Into the Role of Synthetic Data in Post-Training
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>We propose a novel Two-Stage framework for Structured Pruning (2SSP) for pruning Large Language Models (LLMs), which combines two different strategies of pruning, namely Width and Depth Pruning.The first stage (Width Pruning) removes entire neurons, hence their corresponding rows and columns, aiming to preserve the connectivity among the pruned structures in the intermediate state of the Feed-Forward Networks in each Transformer block.This is done based on an importance score measuring the impact of each neuron over the output magnitude.The second stage (Depth Pruning), instead, removes entire Attention submodules.This is done by applying an iterative process that removes the Attention submodules with the minimum impact on a given metric of interest (in our case, perplexity).We also propose a novel mechanism to balance the sparsity rate of the two stages w.r.t.to the desired global sparsity.<span class='px-1 mx-1 bg-yellow-200'>We test 2SSP on four LLM families and three sparsity rates (25\%, 37.5\%, and 50\%), measuring the resulting perplexity over three language modeling datasets as well as the performance over six downstream tasks. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.675</span></span>Our method consistently outperforms five state-of-the-art competitors over three language modeling and six downstream tasks, with an up to two-order-of-magnitude gain in terms of pruning time.The code is available at available at \url{https://github.com/FabrizioSandri/2SSP}.</p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>Language model (LLM) post-training, from DPO to distillation, can refine behaviors and unlock new skills, but the open science supporting these post-training techniques is still in its infancy. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.701</span></span>One limiting factor has been the difficulty of conducting large-scale comparative analyses of synthetic data generating models and LLM judges.To close this gap, we introduce WILDCHAT-50M, the largest public chat dataset to date.We extend the existing WildChat dataset to include responses not only from GPT, but from over 50 different open-weight models, ranging in size from 0.5B to 104B parameters.We conduct an extensive comparative analysis and demonstrate the potential of this dataset by creating RE-WILD, our own public SFT mix, which outperforms the recent Tulu-3 SFT mixture from Allen AI with only 40% as many samples.Our dataset, samples and code are available at https://github.com/penfever/wildchat-50m.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17771v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18511v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2179,20 +2223,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Reasoning Over the Glyphs: Evaluation of LLM's Decipherment of Rare Scripts
+                Streaming DiLoCo with overlapping communication: Towards a Distributed Free Lunch
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>We explore the capabilities of LVLMs and LLMs in deciphering rare scripts not encoded in Unicode. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.645</span></span>We introduce a novel approach to construct a multimodal dataset of linguistic puzzles involving such scripts, utilizing a tokenization method for language glyphs.Our methods include the Picture Method for LVLMs and the Description Method for LLMs, enabling these models to tackle these challenges.We conduct experiments using prominent models, GPT-4o, Gemini, and Claude 3.5 Sonnet, on linguistic puzzles.Our findings reveal the strengths and limitations of current AI methods in linguistic decipherment, highlighting the impact of Unicode encoding on model performance and the challenges of modeling visual language tokens through descriptions.Our study advances understanding of AI's potential in linguistic decipherment and underscores the need for further research.</p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>Training of large language models (LLMs) is typically distributed across a large number of accelerators to reduce training time. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.715</span></span>Since internal states and parameter gradients need to be exchanged at each and every single gradient step, all devices need to be co-located using low-latency high-bandwidth communication links to support the required high volume of exchanged bits.Recently, distributed algorithms like DiLoCo have relaxed such co-location constraint: accelerators can be grouped into ``workers'', where synchronizations between workers only occur infrequently.This in turn means that workers can afford being connected by lower bandwidth communication links without affecting learning quality.However, in these methods, communication across workers still requires the same peak bandwidth as before, as the synchronizations require all parameters to be exchanged across all workers.In this paper, we improve DiLoCo in three ways.First, we synchronize only subsets of parameters in sequence, rather than all at once, which greatly reduces peak bandwidth.Second, we allow workers to continue training while synchronizing, which decreases wall clock time.Third, we quantize the data exchanged by workers, which further reduces bandwidth across workers.By properly combining these modifications, we show experimentally that we can distribute training of billion-scale parameters and reach similar quality as before, but reducing required bandwidth by two orders of magnitude.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17785v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18512v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2201,20 +2245,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                SMT-Boosted Security Types for Low-Level MPC
+                Learn from the Past: Language-conditioned Object Rearrangement with Large Language Models
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>Secure Multi-Party Computation (MPC) is an important enabling technology for data privacy in modern distributed applications.<span class='px-1 mx-1 bg-yellow-200'>We develop a new type theory to automatically enforce correctness,confidentiality, and integrity properties of protocols written in the \emph{Prelude/Overture} language framework. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.601</span></span>Judgements in the type theory are predicated on SMT verifications in a theory of finite fields, which supports precise and efficient analysis.Our approach is automated, compositional, scalable, and generalizes to arbitrary prime fields for data and key sizes.</p>
+                  <p>Object rearrangement is a significant task for collaborative robots, where they are directed to manipulate objects into a specified goal state.Determining the placement of objects is a major challenge that influences the efficiency of the rearrangement process.Most current methods heavily rely on pre-collected datasets to train the model for predicting the goal position and are restricted to specific instructions, which limits their broader applicability and effectiveness.In this paper, we propose a framework of language-conditioned object rearrangement based on the Large Language Model (LLM).Particularly, our approach mimics human reasoning by using past successful experiences as a reference to infer the desired goal position.<span class='px-1 mx-1 bg-yellow-200'>Based on LLM's strong natural language comprehension and inference ability, our method can generalise to handle various everyday objects and free-form language instructions in a zero-shot manner. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.666</span></span>Experimental results demonstrate that our methods can effectively execute the robotic rearrangement tasks, even those involving long sequential orders.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17824v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18516v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2223,20 +2267,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Learning Beyond the Surface: How Far Can Continual Pre-Training with LoRA Enhance LLMs' Domain-Specific Insight Learning?
+                Differentially Private Steering for Large Language Model Alignment
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>Large Language Models (LLMs) have demonstrated remarkable performance on various tasks, yet their ability to extract and internalize deeper insights from domain-specific datasets remains underexplored. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.661</span></span><span class='px-1 mx-1 bg-yellow-200'>In this study, we investigate how continual pre-training can enhance LLMs' capacity for insight learning across three distinct forms: declarative, statistical, and probabilistic insights. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.657</span></span><span class='px-1 mx-1 bg-yellow-200'>Focusing on two critical domains: medicine and finance, we employ LoRA to train LLMs on two existing datasets. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.673</span></span>To evaluate each insight type, we create benchmarks to measure how well continual pre-training helps models go beyond surface-level knowledge.We also assess the impact of document modification on capturing insights.<span class='px-1 mx-1 bg-yellow-200'>The results show that, while continual pre-training on original documents has a marginal effect, modifying documents to retain only essential information significantly enhances the insight-learning capabilities of LLMs. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.706</span></span></p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>Aligning Large Language Models (LLMs) with human values and away from undesirable behaviors (such as hallucination) has become increasingly important. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.693</span></span><span class='px-1 mx-1 bg-yellow-200'>Recently, steering LLMs towards a desired behavior via activation editing has emerged as an effective method to mitigate harmful generations at inference-time. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.733</span></span><span class='px-1 mx-1 bg-yellow-200'>Activation editing modifies LLM representations by preserving information from positive demonstrations (e.g., truthful) and minimising information from negative demonstrations (e.g., hallucinations). <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.699</span></span><span class='px-1 mx-1 bg-yellow-200'>When these demonstrations come from a private dataset, the aligned LLM may leak private information contained in those private samples. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.684</span></span><span class='px-1 mx-1 bg-yellow-200'>In this work, we present the first study of aligning LLM behavior with private datasets. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.647</span></span><span class='px-1 mx-1 bg-yellow-200'>Our work proposes the \textit{\underline{P}rivate \underline{S}teering for LLM \underline{A}lignment (PSA)} algorithm to edit LLM activations with differential privacy (DP) guarantees. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.629</span></span><span class='px-1 mx-1 bg-yellow-200'>We conduct extensive experiments on seven different benchmarks with open-source LLMs of different sizes (0.5B to 7B) and model families (LlaMa, Qwen, Mistral and Gemma). <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.702</span></span><span class='px-1 mx-1 bg-yellow-200'>Our results show that PSA achieves DP guarantees for LLM alignment with minimal loss in performance, including alignment metrics, open-ended text generation quality, and general-purpose reasoning. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.67</span></span><span class='px-1 mx-1 bg-yellow-200'>We also develop the first Membership Inference Attack (MIA) for evaluating and auditing the empirical privacy for the problem of LLM steering via activation editing. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.624</span></span>Our attack is tailored for activation editing and relies solely on the generated texts without their associated probabilities.Our experiments support the theoretical guarantees by showing improved guarantees for our \textit{PSA} algorithm compared to several existing non-private techniques.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17840v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18532v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2245,20 +2289,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-29</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Improving Your Model Ranking on Chatbot Arena by Vote Rigging
+                Illusions of Relevance: Using Content Injection Attacks to Deceive Retrievers, Rerankers, and LLM Judges
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>Chatbot Arena is a popular platform for evaluating LLMs by pairwise battles, where users vote for their preferred response from two randomly sampled anonymous models. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.684</span></span><span class='px-1 mx-1 bg-yellow-200'>While Chatbot Arena is widely regarded as a reliable LLM ranking leaderboard, we show that crowdsourced voting can be rigged to improve (or decrease) the ranking of a target model $m_{t}$. We first introduce a straightforward target-only rigging strategy that focuses on new battles involving $m_{t}$, identifying it via watermarking or a binary classifier, and exclusively voting for $m_{t}$ wins. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.644</span></span>However, this strategy is practically inefficient because there are over $190$ models on Chatbot Arena and on average only about $1\%$ of new battles will involve $m_{t}$. To overcome this, we propose omnipresent rigging strategies, exploiting the Elo rating mechanism of Chatbot Arena that any new vote on a battle can influence the ranking of the target model $m_{t}$, even if $m_{t}$ is not directly involved in the battle.We conduct experiments on around $1.7$ million historical votes from the Chatbot Arena Notebook, showing that omnipresent rigging strategies can improve model rankings by rigging only hundreds of new votes.While we have evaluated several defense mechanisms, our findings highlight the importance of continued efforts to prevent vote rigging.Our code is available at https://github.com/sail-sg/Rigging-ChatbotArena.</p>
+                  <p>Consider a scenario in which a user searches for information, only to encounter texts flooded with misleading or non-relevant content.This scenario exemplifies a simple yet potent vulnerability in neural Information Retrieval (IR) pipelines: content injection attacks.<span class='px-1 mx-1 bg-yellow-200'>We find that embedding models for retrieval, rerankers, and large language model (LLM) relevance judges are vulnerable to these attacks, in which adversaries insert misleading text into passages to manipulate model judgements. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.634</span></span>We identify two primary threats: (1) inserting unrelated or harmful content within passages that still appear deceptively "relevant", and (2) inserting entire queries or key query terms into passages to boost their perceived relevance.While the second tactic has been explored in prior research, we present, to our knowledge, the first empirical analysis of the first threat, demonstrating how state-of-the-art models can be easily misled.Our study systematically examines the factors that influence an attack's success, such as the placement of injected content and the balance between relevant and non-relevant material.<span class='px-1 mx-1 bg-yellow-200'>Additionally, we explore various defense strategies, including adversarial passage classifiers, retriever fine-tuning to discount manipulated content, and prompting LLM judges to adopt a more cautious approach. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.634</span></span>However, we find that these countermeasures often involve trade-offs, sacrificing effectiveness for attack robustness and sometimes penalizing legitimate documents in the process.Our findings highlight the need for stronger defenses against these evolving adversarial strategies to maintain the trustworthiness of IR systems.We release our code and scripts to facilitate further research.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17858v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18536v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2267,20 +2311,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-28</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                How Linguistics Learned to Stop Worrying and Love the Language Models
+                Can we Retrieve Everything All at Once? ARM: An Alignment-Oriented LLM-based Retrieval Method
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>Language models can produce fluent, grammatical text.Nonetheless, some maintain that language models don't really learn language and also that, even if they did, that would not be informative for the study of human learning and processing.<span class='px-1 mx-1 bg-yellow-200'>On the other side, there have been claims that the success of LMs obviates the need for studying linguistic theory and structure. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.627</span></span>We argue that both extremes are wrong.<span class='px-1 mx-1 bg-yellow-200'>LMs can contribute to fundamental questions about linguistic structure, language processing, and learning. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.642</span></span>They force us to rethink arguments about learning and are informative for major questions in linguistic theory.But they do not replace linguistic structure and theory.We offer an optimistic take on the relationship between language models and linguistics.</p>
+                  <p>Real-world open-domain questions can be complicated, particularly when answering them involves information from multiple information sources.<span class='px-1 mx-1 bg-yellow-200'>LLMs have demonstrated impressive performance in decomposing complex tasks into simpler steps, and previous work has used it for better retrieval in support of complex questions. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.727</span></span><span class='px-1 mx-1 bg-yellow-200'>However, LLM's decomposition of questions is unaware of what data is available and how data is organized, often leading to a sub-optimal retrieval performance. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.688</span></span>Recent effort in agentic RAG proposes to perform retrieval in an iterative fashion, where a followup query is derived as an action based on previous rounds of retrieval.While this provides one way of interacting with the data collection, agentic RAG's exploration of data is inefficient because successive queries depend on previous results rather than being guided by the organization of available data in the collection.<span class='px-1 mx-1 bg-yellow-200'>To address this problem, we propose an LLM-based retrieval method -- ARM, that aims to better align the question with the organization of the data collection by exploring relationships among data objects beyond matching the utterance of the query, thus leading to a retrieve-all-at-once solution for complex queries. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.684</span></span>We evaluated ARM on two datasets, Bird and OTT-QA.On Bird, it outperforms standard RAG with query decomposition by up to 5.2 pt in execution accuracy and agentic RAG (ReAct) by up to 15.9 pt.On OTT-QA, it achieves up to 5.5 pt and 19.3 pt higher F1 match scores compared to these approaches.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17047v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18539v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2289,20 +2333,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-28</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Token-by-Token Regeneration and Domain Biases: A Benchmark of LLMs on Advanced Mathematical Problem-Solving
+                Semantic Web and Creative AI -- A Technical Report from ISWS 2023
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>Large language models (LLMs) excel in many natural language tasks, yet they struggle with complex mathemat-ical problem-solving, particularly in symbolic reasoning and maintaining consistent output. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.646</span></span><span class='px-1 mx-1 bg-yellow-200'>This study evalu-ates 10 LLMs with 7 to 8 billion parameters using 945 competition-level problems from the MATH dataset. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.612</span></span>The focus is on their ability to generate executable Python code as a step in their reasoning process, involving over 9,450 code executions.The research introduces an evaluation framework using mistral-large-2411 to rate answers on a 5-point scale, which helps address inconsistencies in mathematical notation.It also examines the impact of regenerating output token-by-token on refining results.The findings reveal a significant 34.5% per-formance gap between the top commercial model (gpt-4o-mini, scoring 83.7%) and the least effective open-source model (open-codestral-mamba:v0.1, scoring 49.2%).This disparity is especially noticeable in complex areas like Number Theory.<span class='px-1 mx-1 bg-yellow-200'>While token-by-token regeneration slightly improved accuracy (+0.8%) for the model llama3.1:8b, it also reduced code execution time by 36.7%, highlighting a trade-off between efficiency and precision. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.623</span></span>The study also noted a consistent trend where harder problems correlated with lower accuracy across all models.Despite using controlled execution environments, less than 1% of the generated code was unsafe, and 3.17% of problems remained unsolved after 10 attempts, suggesting that hybrid reasoning methods may be beneficial.</p>
+                  <p>The International Semantic Web Research School (ISWS) is a week-long intensive program designed to immerse participants in the field.This document reports a collaborative effort performed by ten teams of students, each guided by a senior researcher as their mentor, attending ISWS 2023.Each team provided a different perspective to the topic of creative AI, substantiated by a set of research questions as the main subject of their investigation.The 2023 edition of ISWS focuses on the intersection of Semantic Web technologies and Creative AI.ISWS 2023 explored various intersections between Semantic Web technologies and creative AI.<span class='px-1 mx-1 bg-yellow-200'>A key area of focus was the potential of LLMs as support tools for knowledge engineering. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.778</span></span><span class='px-1 mx-1 bg-yellow-200'>Participants also delved into the multifaceted applications of LLMs, including legal aspects of creative content production, humans in the loop, decentralised approaches to multimodal generative AI models, nanopublications and AI for personal scientific knowledge graphs, commonsense knowledge in automatic story and narrative completion, generative AI for art critique, prompt engineering, automatic music composition, commonsense prototyping and conceptual blending, and elicitation of tacit knowledge. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.702</span></span>As Large Language Models and semantic technologies continue to evolve, new exciting prospects are emerging: a future where the boundaries between creative expression and factual knowledge become increasingly permeable and porous, leading to a world of knowledge that is both informative and inspiring.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17084v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18542v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2311,20 +2355,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-28</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                CRSet: Non-Interactive Verifiable Credential Revocation with Metadata Privacy for Issuers and Everyone Else
+                SAM2Act: Integrating Visual Foundation Model with A Memory Architecture for Robotic Manipulation
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>Like any digital certificate, Verifiable Credentials (VCs) require a way to revoke them in case of an error or key compromise. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.602</span></span><span class='px-1 mx-1 bg-yellow-200'>Existing solutions for VC revocation, most prominently Bitstring Status List, are not viable for many use cases since they leak the issuer's behavior, which in turn leaks internal business metrics. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.611</span></span>For instance, exact staff fluctuation through issuance and revocation of employee IDs.We introduce CRSet, a revocation mechanism that allows an issuer to encode revocation information for years worth of VCs as a Bloom filter cascade.Padding is used to provide deniability for issuer metrics.Issuers periodically publish this filter cascade on a decentralized storage system.Relying Parties (RPs) can download it to perform any number of revocation checks locally.Compared to existing solutions, CRSet protects the metadata of subject, RPs, and issuer equally.At the same time, it is non-interactive, making it work with wallet devices having limited hardware power and drop-in compatible with existing VC exchange protocols and wallet applications.We present a prototype using the Ethereum blockchain as decentralized storage.The recently introduced blob-carrying transactions, enabling cheaper data writes, allow us to write each CRSet directly to the chain.We built software for issuers and RPs that we successfully tested end-to-end with an existing publicly available wallet agents and the OpenID for Verifiable Credentials protocols.Storage and bandwidth costs paid by issuers and RP are higher than for Bitstring Status List, but still manageable at around 1 MB for an issuer issuing hundreds of thousands of VCs annually and covering decades.</p>
+                  <p>Robotic manipulation systems operating in diverse, dynamic environments must exhibit three critical abilities: multitask interaction, generalization to unseen scenarios, and spatial memory.While significant progress has been made in robotic manipulation, existing approaches often fall short in generalization to complex environmental variations and addressing memory-dependent tasks.To bridge this gap, we introduce SAM2Act, a multi-view robotic transformer-based policy that leverages multi-resolution upsampling with visual representations from large-scale foundation model.SAM2Act achieves a state-of-the-art average success rate of 86.8% across 18 tasks in the RLBench benchmark, and demonstrates robust generalization on The Colosseum benchmark, with only a 4.3% performance gap under diverse environmental perturbations.Building on this foundation, we propose SAM2Act+, a memory-based architecture inspired by SAM2, which incorporates a memory bank, an encoder, and an attention mechanism to enhance spatial memory.To address the need for evaluating memory-dependent tasks, we introduce MemoryBench, a novel benchmark designed to assess spatial memory and action recall in robotic manipulation.<span class='px-1 mx-1 bg-yellow-200'>SAM2Act+ achieves competitive performance on MemoryBench, significantly outperforming existing approaches and pushing the boundaries of memory-enabled robotic systems. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.6</span></span>Project page: https://sam2act.github.io/</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17089v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18564v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2333,20 +2377,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-28</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Unlocking Transparent Alignment Through Enhanced Inverse Constitutional AI for Principle Extraction
+                Token-Hungry, Yet Precise: DeepSeek R1 Highlights the Need for Multi-Step Reasoning Over Speed in MATH
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>Traditional methods for aligning Large Language Models (LLMs), such as Reinforcement Learning from Human Feedback (RLHF) and Direct Preference Optimization (DPO), rely on implicit principles, limiting interpretability. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.603</span></span>Constitutional AI (CAI) offers an explicit, rule-based framework for guiding model outputs.Building on this, we refine the Inverse Constitutional AI (ICAI) algorithm, which extracts constitutions from preference datasets.By improving principle generation, clustering, and embedding processes, our approach enhances the accuracy and generalizability of extracted principles across synthetic and real-world datasets.While in-context alignment yields modest improvements, our results highlight the potential of these principles to foster more transparent and adaptable alignment methods, offering a promising direction for future advancements beyond traditional fine-tuning.</p>
+                  <p>This study investigates the performance of the DeepSeek R1 language model on 30 challenging mathematical problems derived from the MATH dataset, problems that previously proved unsolvable by other models under time constraints.Unlike prior work, this research removes time limitations to explore whether DeepSeek R1's architecture, known for its reliance on token-based reasoning, can achieve accurate solutions through a multi-step process.The study compares DeepSeek R1 with four other models (gemini-1.5-flash-8b, gpt-4o-mini-2024-07-18, llama3.1:8b, and mistral-8b-latest) across 11 temperature settings.Results demonstrate that DeepSeek R1 achieves superior accuracy on these complex problems but generates significantly more tokens than other models, confirming its token-intensive approach.The findings highlight a trade-off between accuracy and efficiency in mathematical problem-solving with large language models: while DeepSeek R1 excels in accuracy, its reliance on extensive token generation may not be optimal for applications requiring rapid responses.<span class='px-1 mx-1 bg-yellow-200'>The study underscores the importance of considering task-specific requirements when selecting an LLM and emphasizes the role of temperature settings in optimizing performance. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.684</span></span></p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17112v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18576v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2355,20 +2399,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-28</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Optimizing Large Language Model Training Using FP4 Quantization
+                Thoughts Are All Over the Place: On the Underthinking of o1-Like LLMs
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>The growing computational demands of training large language models (LLMs) necessitate more efficient methods. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.635</span></span>Quantized training presents a promising solution by enabling low-bit arithmetic operations to reduce these costs.While FP8 precision has demonstrated feasibility, leveraging FP4 remains a challenge due to significant quantization errors and limited representational capacity.This work introduces the first FP4 training framework for LLMs, addressing these challenges with two key innovations: a differentiable quantization estimator for precise weight updates and an outlier clamping and compensation strategy to prevent activation collapse.To ensure stability, the framework integrates a mixed-precision training scheme and vector-wise quantization.Experimental results demonstrate that our FP4 framework achieves accuracy comparable to BF16 and FP8, with minimal degradation, scaling effectively to 13B-parameter LLMs trained on up to 100B tokens.With the emergence of next-generation hardware supporting FP4, our framework sets a foundation for efficient ultra-low precision training.</p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>Large language models (LLMs) such as OpenAI's o1 have demonstrated remarkable abilities in complex reasoning tasks by scaling test-time compute and exhibiting human-like deep thinking. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.615</span></span><span class='px-1 mx-1 bg-yellow-200'>However, we identify a phenomenon we term underthinking, where o1-like LLMs frequently switch between different reasoning thoughts without sufficiently exploring promising paths to reach a correct solution. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.724</span></span>This behavior leads to inadequate depth of reasoning and decreased performance, particularly on challenging mathematical problems.To systematically analyze this issue, we conduct experiments on three challenging test sets and two representative open-source o1-like models, revealing that frequent thought switching correlates with incorrect responses.We introduce a novel metric to quantify underthinking by measuring token efficiency in incorrect answers.To address underthinking, we propose a decoding strategy with thought switching penalty TIP that discourages premature transitions between thoughts, encouraging deeper exploration of each reasoning path.Experimental results demonstrate that our approach improves accuracy across challenging datasets without requiring model fine-tuning.<span class='px-1 mx-1 bg-yellow-200'>Our findings contribute to understanding reasoning inefficiencies in o1-like LLMs and offer a practical solution to enhance their problem-solving capabilities. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.722</span></span></p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17116v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18585v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2377,20 +2421,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-28</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Histoires Morales: A French Dataset for Assessing Moral Alignment
+                Inkspire: Supporting Design Exploration with Generative AI through Analogical Sketching
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>Aligning language models with human values is crucial, especially as they become more integrated into everyday life.While models are often adapted to user preferences, it is equally important to ensure they align with moral norms and behaviours in real-world social situations.<span class='px-1 mx-1 bg-yellow-200'>Despite significant progress in languages like English and Chinese, French has seen little attention in this area, leaving a gap in understanding how LLMs handle moral reasoning in this language. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.723</span></span>To address this gap, we introduce Histoires Morales, a French dataset derived from Moral Stories, created through translation and subsequently refined with the assistance of native speakers to guarantee grammatical accuracy and adaptation to the French cultural context.We also rely on annotations of the moral values within the dataset to ensure their alignment with French norms.Histoires Morales covers a wide range of social situations, including differences in tipping practices, expressions of honesty in relationships, and responsibilities toward animals.To foster future research, we also conduct preliminary experiments on the alignment of multilingual models on French and English data and the robustness of the alignment.<span class='px-1 mx-1 bg-yellow-200'>We find that while LLMs are generally aligned with human moral norms by default, they can be easily influenced with user-preference optimization for both moral and immoral data. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.699</span></span></p>
+                  <p>With recent advancements in the capabilities of Text-to-Image (T2I) AI models, product designers have begun experimenting with them in their work.However, T2I models struggle to interpret abstract language and the current user experience of T2I tools can induce design fixation rather than a more iterative, exploratory process.To address these challenges, we developed Inkspire, a sketch-driven tool that supports designers in prototyping product design concepts with analogical inspirations and a complete sketch-to-design-to-sketch feedback loop.<span class='px-1 mx-1 bg-yellow-200'>To inform the design of Inkspire, we conducted an exchange session with designers and distilled design goals for improving T2I interactions. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.616</span></span>In a within-subjects study comparing Inkspire to ControlNet, we found that Inkspire supported designers with more inspiration and exploration of design ideas, and improved aspects of the co-creative process by allowing designers to effectively grasp the current state of the AI to guide it towards novel design intentions.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17117v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18588v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2399,20 +2443,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-28</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                The Asymptotic Capacity of Byzantine Symmetric Private Information Retrieval and Its Consequences
+                Foundational Models for 3D Point Clouds: A Survey and Outlook
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>We consider the problem of finding the asymptotic capacity of symmetric private information retrieval (SPIR) with $B$ Byzantine servers.Prior to finding the capacity, a definition for the Byzantine servers is needed since in the literature there are two different definitions.<span class='px-1 mx-1 bg-yellow-200'>In \cite{byzantine_tpir}, where it was first defined, the Byzantine servers can send any symbol from the storage, their received queries and some independent random symbols. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.614</span></span><span class='px-1 mx-1 bg-yellow-200'>In \cite{unresponsive_byzantine_1}, Byzantine servers send any random symbol independently of their storage and queries. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.602</span></span><span class='px-1 mx-1 bg-yellow-200'>It is clear that these definitions are not identical, especially when \emph{symmetric} privacy is required. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.623</span></span>To that end, we define Byzantine servers, inspired by \cite{byzantine_tpir}, as the servers that can share everything, before and after the scheme initiation.In this setting, we find an upper bound, for an infinite number of messages case, that should be satisfied for all schemes that protect against this setting and develop a scheme that achieves this upper bound.Hence, we identify the capacity of the problem.</p>
+                  <p>The 3D point cloud representation plays a crucial role in preserving the geometric fidelity of the physical world, enabling more accurate complex 3D environments.While humans naturally comprehend the intricate relationships between objects and variations through a multisensory system, artificial intelligence (AI) systems have yet to fully replicate this capacity.To bridge this gap, it becomes essential to incorporate multiple modalities.Models that can seamlessly integrate and reason across these modalities are known as foundation models (FMs).The development of FMs for 2D modalities, such as images and text, has seen significant progress, driven by the abundant availability of large-scale datasets.However, the 3D domain has lagged due to the scarcity of labelled data and high computational overheads.In response, recent research has begun to explore the potential of applying FMs to 3D tasks, overcoming these challenges by leveraging existing 2D knowledge.<span class='px-1 mx-1 bg-yellow-200'>Additionally, language, with its capacity for abstract reasoning and description of the environment, offers a promising avenue for enhancing 3D understanding through large pre-trained language models (LLMs). <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.62</span></span>Despite the rapid development and adoption of FMs for 3D vision tasks in recent years, there remains a gap in comprehensive and in-depth literature reviews.This article aims to address this gap by presenting a comprehensive overview of the state-of-the-art methods that utilize FMs for 3D visual understanding.We start by reviewing various strategies employed in the building of various 3D FMs.Then we categorize and summarize use of different FMs for tasks such as perception tasks.Finally, the article offers insights into future directions for research and development in this field.To help reader, we have curated list of relevant papers on the topic: https://github.com/vgthengane/Awesome-FMs-in-3D.</p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17124v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18594v1' target="_blank">
                   link
                 </a>
               </p>
@@ -2421,64 +2465,20 @@
         </td>
       </tr><tr>
           <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-28</p>
+            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-30</p>
           </td>
           <td>
             <div x-data="{open: false}">
               <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                Enhancements to P4TG: Performance, Protocols, and Automation
+                DeltaLLM: Compress LLMs with Low-Rank Deltas between Shared Weights
               </span>
               <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
                 <div class="text-center pt-2"></div>
                 <p class="pt-2">
-                  <p>The P4-based traffic generator (P4TG) is a hardware-based traffic generator (TG) running on the Intel Tofino 1 ASIC.The TG can generate up to 1 Tb/s of traffic and directly measures rates, packet loss, and other metrics in the data plane.Many researchers and industrial partners have used it since its publication in 2023 and new features have been requested to be incorporated into P4TG.In this work, we provide an overview of the recently added features of P4TG.These enhancements include new traffic generation capabilities including IPv6 and segment routing v6 (SRv6) support and various encapsulation protocols such as VLAN, QinQ, VxLAN, and MPLS.<span class='px-1 mx-1 bg-yellow-200'>Further, P4TG is ported to the Intel Tofino 2 platform enabling a generation capability of up to 4 Tb/s. The enhancements to P4TG also provide an improved user experience facilitating automated testing based on RFC 2544, report generation, and visualization. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.601</span></span></p>
+                  <p><span class='px-1 mx-1 bg-yellow-200'>We introduce DeltaLLM, a new post-training compression technique to reduce the memory footprint of LLMs. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.693</span></span><span class='px-1 mx-1 bg-yellow-200'>We propose an alternative way of structuring LLMs with weight sharing between layers in subsequent Transformer blocks, along with additional low-rank difference matrices between them. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.72</span></span><span class='px-1 mx-1 bg-yellow-200'>For training, we adopt the progressing module replacement method and show that the lightweight training of the low-rank modules with approximately 30M-40M tokens is sufficient to achieve performance on par with LLMs of comparable sizes trained from scratch. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.685</span></span>We release the resultant models, DeltaLLAMA and DeltaPHI, with a 12% parameter reduction, retaining 90% of the performance of the base Llama and Phi models on common knowledge and reasoning benchmarks.Our method also outperforms compression techniques JointDrop, LaCo, ShortGPT and SliceGPT with the same number of parameters removed.For example, DeltaPhi 2.9B with a 24% reduction achieves similar average zero-shot accuracies as recovery fine-tuned SlicedPhi 3.3B with a 12% reduction, despite being approximately 400M parameters smaller with no fine-tuning applied.<span class='px-1 mx-1 bg-yellow-200'>This work provides new insights into LLM architecture design and compression methods when storage space is critical. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.743</span></span></p>
                 </p>
               <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17127v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-28</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                ASTRAL: Automated Safety Testing of Large Language Models
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>Large Language Models (LLMs) have recently gained attention due to their ability to understand and generate sophisticated human-like content. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.699</span></span>However, ensuring their safety is paramount as they might provide harmful and unsafe responses.<span class='px-1 mx-1 bg-yellow-200'>Existing LLM testing frameworks address various safety-related concerns (e.g., drugs, terrorism, animal abuse) but often face challenges due to unbalanced and obsolete datasets. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.682</span></span><span class='px-1 mx-1 bg-yellow-200'>In this paper, we present ASTRAL, a tool that automates the generation and execution of test cases (i.e., prompts) for testing the safety of LLMs. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.684</span></span>First, we introduce a novel black-box coverage criterion to generate balanced and diverse unsafe test inputs across a diverse set of safety categories as well as linguistic writing characteristics (i.e., different style and persuasive writing techniques).<span class='px-1 mx-1 bg-yellow-200'>Second, we propose an LLM-based approach that leverages Retrieval Augmented Generation (RAG), few-shot prompting strategies and web browsing to generate up-to-date test inputs. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.649</span></span><span class='px-1 mx-1 bg-yellow-200'>Lastly, similar to current LLM test automation techniques, we leverage LLMs as test oracles to distinguish between safe and unsafe test outputs, allowing a fully automated testing approach. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.712</span></span><span class='px-1 mx-1 bg-yellow-200'>We conduct an extensive evaluation on well-known LLMs, revealing the following key findings: i) GPT3.5 outperforms other LLMs when acting as the test oracle, accurately detecting unsafe responses, and even surpassing more recent LLMs (e.g., GPT-4), as well as LLMs that are specifically tailored to detect unsafe LLM outputs (e.g., LlamaGuard); ii) the results confirm that our approach can uncover nearly twice as many unsafe LLM behaviors with the same number of test inputs compared to currently used static datasets; and iii) our black-box coverage criterion combined with web browsing can effectively guide the LLM on generating up-to-date unsafe test inputs, significantly increasing the number of unsafe LLM behaviors. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.687</span></span></p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17132v1' target="_blank">
-                  link
-                </a>
-              </p>
-            </div>
-          </div>
-        </td>
-      </tr><tr>
-          <td class="inline-block">
-            <p class='font-bold text-black px-2 mx-1 text-xs w-24'>2025-01-28</p>
-          </td>
-          <td>
-            <div x-data="{open: false}">
-              <span @click="open = ! open" class="hover:underline cursor-pointer decoration-2 decoration-green-600 text-gray-800 text-sm">
-                FactCG: Enhancing Fact Checkers with Graph-Based Multi-Hop Data
-              </span>
-              <div x-show="open" x-collapse.duration.500ms class="text-sm text-gray-500 pt-2">
-                <div class="text-center pt-2"></div>
-                <p class="pt-2">
-                  <p><span class='px-1 mx-1 bg-yellow-200'>Prior research on training grounded factuality classification models to detect hallucinations in large language models (LLMs) has relied on public natural language inference (NLI) data and synthetic data. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.606</span></span><span class='px-1 mx-1 bg-yellow-200'>However, conventional NLI datasets are not well-suited for document-level reasoning, which is critical for detecting LLM hallucinations. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.657</span></span><span class='px-1 mx-1 bg-yellow-200'>Recent approaches to document-level synthetic data generation involve iteratively removing sentences from documents and annotating factuality using LLM-based prompts. <span style='font-size: 0.65rem;' class='text-purple-500 font-bold'>0.633</span></span>While effective, this method is computationally expensive for long documents and limited by the LLM's capabilities.In this work, we analyze the differences between existing synthetic training data used in state-of-the-art models and real LLM output claims.Based on our findings, we propose a novel approach for synthetic data generation, CG2C, that leverages multi-hop reasoning on context graphs extracted from documents.Our fact checker model, FactCG, demonstrates improved performance with more connected reasoning, using the same backbone models.Experiments show it even outperforms GPT-4-o on the LLM-Aggrefact benchmark with much smaller model size.</p>
-                </p>
-              <p class="pb-2 pt-2 text-center">
-                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.17144v1' target="_blank">
+                <a class="underline decoration-2 text-green-600 text-md pt-2" href='http://arxiv.org/abs/2501.18596v1' target="_blank">
                   link
                 </a>
               </p>
